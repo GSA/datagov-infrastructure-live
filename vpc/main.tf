@@ -1,3 +1,11 @@
+provider "aws" {
+  region = "${var.aws_region}"
+}
+
+terraform {
+  backend "s3" {}
+}
+
 module "vpc" {
   source = "github.com/terraform-community-modules/tf_aws_vpc"
 
@@ -17,3 +25,4 @@ module "vpc" {
     "Terraform" = "true"
   }
 }
+
