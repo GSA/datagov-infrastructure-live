@@ -6,15 +6,6 @@ terraform {
   backend "s3" {}
 }
 
-data "terraform_remote_state" "vpc" {
-  backend = "s3"
-  config {
-    bucket = "datagov-terraform-state"
-    key    = "prod/vpc/terraform.tfstate"    
-    region = "us-east-1"
-  }
-}
-
 # elb security group
 resource "aws_security_group" "elb-sg" {
   name        = "elb-sg-tf"
