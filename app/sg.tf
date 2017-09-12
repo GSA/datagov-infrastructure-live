@@ -120,3 +120,7 @@ resource "aws_security_group" "ssh-sg" {
   }
 
 }
+
+#output "db_sg_id" {
+#  value = "${module.vpc.database_subnets}"
+#}
