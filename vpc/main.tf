@@ -16,8 +16,8 @@ module "vpc" {
   public_subnets   = ["10.0.101.0/24", "10.0.102.0/24"]
   database_subnets = ["10.0.201.0/24", "10.0.202.0/24"]
 
+  enable_dns_support = "true"
   enable_nat_gateway = "true"
-  single_nat_gateway = "true"
 
   azs      = ["us-east-1a", "us-east-1b"]
 
@@ -25,21 +25,4 @@ module "vpc" {
     "Terraform" = "true"
   }
 
-}
-
-output "vpc_id" {
-  value = "${module.vpc.vpc_id}"
-}
-
-
-output "private_subnets" {
-  value = "${module.vpc.private_subnets}"
-}
-
-output "public_subnets" {
-  value = "${module.vpc.public_subnets}"
-}
-
-output "database_subnets" {
-  value = "${module.vpc.database_subnets}"
 }
