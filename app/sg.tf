@@ -70,21 +70,6 @@ resource "aws_security_group" "solr-sg" {
   }
 }
 
-# postgres security group
-resource "aws_security_group" "postgres-sg" {
-  name        = "postgres-sg-tf"
-  description = "Postgres security group"
-  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
-
-  ingress {
-    from_port       = 54321
-    to_port         = 54321
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.web-sg.id}", "${aws_security_group.harvester-sg.id}"]
-  }
-
-}
-
 # jumpbox security group
 resource "aws_security_group" "jumpbox-sg" {
   name        = "jumpbox-sg-tf"

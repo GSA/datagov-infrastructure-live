@@ -4,9 +4,6 @@ resource "aws_alb" "web_alb" {
   internal        = false
   security_groups = ["${aws_security_group.elb-sg.id}"]
   subnets         = ["${data.terraform_remote_state.vpc.public_subnets}"]
-
-  enable_deletion_protection = true
-
 }
 
 # web alb listeners #

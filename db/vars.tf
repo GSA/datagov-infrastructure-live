@@ -1,3 +1,7 @@
+variable "aws_region" {
+  default = "us-east-1"
+}
+
 variable "db_allocated_storage" {
   default = "10"
 }
@@ -27,7 +31,7 @@ variable "db_username" {
 }
 
 variable "db_password" {
-  default = "ckan"
+  default = "ckanckan"
 }
 
 variable "db_subnet_group_name" {
@@ -36,6 +40,10 @@ variable "db_subnet_group_name" {
 
 variable "db_parameter_group_name" {
   default = "default.postgres9.6"
+}
+
+variable "db_skip_final_snapshot" {
+  default = "true"
 }
 
 variable "db_multi_az" {

@@ -1,5 +1,14 @@
 variable "aws_region" {
-  description = "The AWS region to deploy to (e.g. us-east-1)"
+  default = "us-east-1"
+}
+
+### jumpbox ###
+variable "jumpbox_ami" {
+  default = "ami-a5a98fde"
+}
+
+variable "jumpbox_instance_type" {
+  default = "t2.micro"
 }
 
 ### Launch Configurations ###
@@ -20,11 +29,23 @@ variable "web_lc_instance_type" {
   default = "t2.micro"
 }
 
-variable "web_lc_associate_public_ip_address" {
-  default = false
+## harvester ##
+variable "harvester_lc_ami" {
+  default = "ami-24ddf75f"
 }
 
-## harvester ##
+variable "harvester_lc_instance_type" {
+  default = "t2.micro"
+}
+
+## solr ##
+variable "solr_lc_ami" {
+  default = "ami-ffa98384"
+}
+
+variable "solr_lc_instance_type" {
+  default = "t2.micro"
+}
 
 
 ### Auto-Scaling Groups ###
@@ -40,4 +61,30 @@ variable "asg_web_max_size" {
 
 variable "asg_web_desired_capacity" {
   default = "2"
+}
+
+## harvester ##
+variable "asg_harvester_mix_size" {
+  default = "1"
+}
+
+variable "asg_harvester_max_size" {
+  default = "1"
+}
+
+variable "asg_harvester_desired_capacity" {
+  default = "1"
+}
+
+## solr ##
+variable "asg_solr_mix_size" {
+  default = "1"
+}
+
+variable "asg_solr_max_size" {
+  default = "1"
+}
+
+variable "asg_solr_desired_capacity" {
+  default = "1"
 }
