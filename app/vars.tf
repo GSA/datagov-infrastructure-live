@@ -22,7 +22,7 @@ variable "key_name" {
 
 ## web ##
 variable "web_lc_ami" {
-  default = "ami-bd93efab"
+  default = "ami-2b2f0650"
 }
 
 variable "web_lc_instance_type" {
