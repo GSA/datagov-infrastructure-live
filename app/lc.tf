@@ -1,4 +1,5 @@
 # web launch configuration
+
 resource "aws_launch_configuration" "web_lc" {
   name_prefix                 = "catalog-web-tf-"
   image_id                    = "${var.web_lc_ami}"
@@ -27,6 +28,13 @@ resource "aws_launch_configuration" "harvester_lc" {
 }
 
 # solr launch configuration
+data "template_file" "solr_user_data" {
+  template = "${file("${path.module}/templates/create_core.tpl")}"
+  vars {
+    app = "catalog"
+  }
+}
+
 resource "aws_launch_configuration" "solr_lc" {
   name_prefix                 = "solr-solr-tf-"
   image_id                    = "${var.solr_lc_ami}"
@@ -34,6 +42,7 @@ resource "aws_launch_configuration" "solr_lc" {
   associate_public_ip_address = false
   key_name                    = "${var.key_name}"
   security_groups             = [ "${aws_security_group.solr-sg.id}", "${aws_security_group.ssh-sg.id}" ]
+  user_data                   = "${data.template_file.solr_user_data.rendered}" 
 
   lifecycle {
     create_before_destroy = true

@@ -2,7 +2,7 @@
 resource "aws_alb" "web_alb" {
   name            = "web-alb-tf"
   internal        = false
-  security_groups = ["${aws_security_group.elb-sg.id}"]
+  security_groups = ["${aws_security_group.alb-sg.id}"]
   subnets         = ["${data.terraform_remote_state.vpc.public_subnets}"]
 }
 
