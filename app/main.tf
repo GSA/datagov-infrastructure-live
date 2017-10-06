@@ -14,3 +14,12 @@ data "terraform_remote_state" "vpc" {
     region = "us-east-1"
   }
 }
+
+data "terraform_remote_state" "db" {
+  backend = "s3"
+  config {
+    bucket = "datagov-terraform-state"
+    key    = "prod/db/terraform.tfstate"    
+    region = "us-east-1"
+  }
+}

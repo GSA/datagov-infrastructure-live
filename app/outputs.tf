@@ -5,3 +5,7 @@ output "web_sg_id" {
 output "harvester_sg_id" {
   value = "${aws_security_group.harvester-sg.id}"
 }
+
+output "solr_server" {
+  value = "${aws_security_group.harvester-sg.id}"
+}
