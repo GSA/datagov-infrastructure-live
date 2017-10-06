@@ -22,6 +22,7 @@ resource "aws_launch_configuration" "web_lc" {
   lifecycle {
     create_before_destroy = true
   }
+
 }
 
 # harvester launch configuration

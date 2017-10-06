@@ -19,6 +19,9 @@ resource "aws_autoscaling_group" "web_asg" {
   lifecycle {
     create_before_destroy = true
   }
+
+  depends_on = ["aws_autoscaling_group.solr_asg"]
+  
 }
 
 ### harvester autoscaling group ###
@@ -41,6 +44,9 @@ resource "aws_autoscaling_group" "harvester_asg" {
   lifecycle {
     create_before_destroy = true
   }
+
+  depends_on = ["aws_autoscaling_group.solr_asg"]
+
 }
 
 ### solr autoscaling group ###

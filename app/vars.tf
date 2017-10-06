@@ -56,11 +56,11 @@ variable "asg_web_mix_size" {
 }
 
 variable "asg_web_max_size" {
-  default = "2"
+  default = "1"
 }
 
 variable "asg_web_desired_capacity" {
-  default = "2"
+  default = "1"
 }
 
 ## harvester ##

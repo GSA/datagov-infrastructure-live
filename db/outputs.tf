@@ -11,5 +11,5 @@ output "db_password" {
 }
 
 output "db_server" {
-  value = "${aws_db_instance.ckan.endpoint}"
+  value = "${aws_db_instance.ckan.address}"
 }

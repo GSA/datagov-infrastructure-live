@@ -22,8 +22,8 @@ psql -c "create extension postgis_topology;"
 psql -c "alter schema tiger owner to rds_superuser;"
 psql -c "alter schema tiger_data owner to rds_superuser;"
 psql -c "alter schema topology owner to rds_superuser;"
-psql -c "CREATE FUNCTION exec(text) returns text language plpgsql volatile AS $f$ BEGIN EXECUTE $1; RETURN $1; END; $f$;'
-psql -c "SELECT exec('ALTER TABLE ' || quote_ident(s.nspname) || '.' || quote_ident(s.relname) || ' OWNER TO rds_superuser;') \
+psql -c 'CREATE FUNCTION exec(text) returns text language plpgsql volatile AS $f$ BEGIN EXECUTE $1; RETURN $1; END; $f$;'
+psql -P pager=off -c "SELECT exec('ALTER TABLE ' || quote_ident(s.nspname) || '.' || quote_ident(s.relname) || ' OWNER TO rds_superuser;') \
   FROM ( \
     SELECT nspname, relname \
     FROM pg_class c JOIN pg_namespace n ON (c.relnamespace = n.oid) \
@@ -35,3 +35,7 @@ s;"
 ckan db init
 ckan --plugin=ckanext-report report initdb
 #chdir=/usr/lib/ckan/bin/ ./pycsw-ckan.py -c setup_db -f /etc/ckan/pycsw-all.cfg
+
+# fix this aws ec2 weird issue: https://forums.aws.amazon.com/message.jspa?messageID=495274
+echo "127.0.0.1 $(hostname)" >> /etc/hosts
+service apache2 restart
