@@ -10,7 +10,7 @@ data "terraform_remote_state" "vpc" {
   backend = "s3"
   config {
     bucket = "datagov-terraform-state"
-    key    = "prod/vpc/terraform.tfstate"    
+    key    = "${var.env}/vpc/terraform.tfstate"    
     region = "us-east-1"
   }
 }
@@ -19,7 +19,7 @@ data "terraform_remote_state" "db" {
   backend = "s3"
   config {
     bucket = "datagov-terraform-state"
-    key    = "prod/db/terraform.tfstate"    
+    key    = "${var.env}/db/terraform.tfstate"    
     region = "us-east-1"
   }
 }
