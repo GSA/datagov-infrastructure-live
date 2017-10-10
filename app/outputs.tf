@@ -9,3 +9,7 @@ output "harvester_sg_id" {
 output "solr_server" {
   value = "${aws_security_group.harvester-sg.id}"
 }
+
+output "web_alb_dns" {
+  value = "${aws_alb.web_alb.dns_name}"
+}
