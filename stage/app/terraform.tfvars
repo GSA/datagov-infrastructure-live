@@ -1,7 +1,7 @@
 # Terragrunt config
 terragrunt = {
   terraform {
-    source = "git::git@github.com:GSA/datagov-infrastructure-modules.git//db"
+    source = "git::git@github.com:GSA/datagov-infrastructure-modules.git//app"
   }
 
   include {
@@ -9,7 +9,7 @@ terragrunt = {
   }
 
   dependencies {
-    paths = ["../vpc"]
+    paths = ["../db"]
   }
 
 }

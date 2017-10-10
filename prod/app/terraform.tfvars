@@ -9,10 +9,11 @@ terragrunt = {
   }
 
   dependencies {
-    paths = ["../vpc"]
+    paths = ["../db"]
   }
 
 }
 
 # Module config
 aws_region = "us-east-1"
+asg_web_mix_size = 2
