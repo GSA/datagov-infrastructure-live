@@ -73,9 +73,10 @@ resource "aws_security_group" "harvester-sg" {
   egress {
     from_port       = 0
     to_port         = 0
-    protocol        = "tcp"
+    protocol        = "-1"
     cidr_blocks     = ["0.0.0.0/0"]
   }
+
 }
 
 # solr security group
@@ -83,7 +84,6 @@ resource "aws_security_group" "solr-sg" {
   name        = "solr-sg-tf"
   description = "Solr security group"
   vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
-
 
   ingress {
     from_port       = 8080
@@ -95,9 +95,10 @@ resource "aws_security_group" "solr-sg" {
   egress {
     from_port       = 0
     to_port         = 0
-    protocol        = "tcp"
+    protocol        = "-1"
     cidr_blocks     = ["0.0.0.0/0"]
   }
+
 }
 
 # jumpbox security group
