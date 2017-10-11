@@ -12,3 +12,5 @@ terragrunt = {
 
 # Module config
 aws_region = "us-east-1"
+env        = "dev"
+vpc_name   = "dev-datagov-tf"

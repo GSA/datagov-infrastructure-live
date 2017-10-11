@@ -16,4 +16,7 @@ terragrunt = {
 
 # Module config
 aws_region = "us-east-1"
-asg_web_mix_size = 2
+asg_web_mix_size         = 2
+asg_web_max_size         = 2
+asg_web_desired_capacity = 2
+env = "prod"
