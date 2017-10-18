@@ -1,7 +1,7 @@
 # Terragrunt config
 terragrunt = {
   terraform {
-    source = "git::git@github.com:GSA/datagov-infrastructure-modules//vpc"
+    source = "github.com/GSA/datagov-infrastructure-modules//vpc"
   }
 
   include {
