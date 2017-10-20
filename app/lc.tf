@@ -1,4 +1,15 @@
 # web launch configuration
+data "aws_ami" "catalog_web" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["catalog-web*"]
+  }
+
+  owners = ["587807691409"]
+}
+
 data "template_file" "web_user_data" {
   template = "${file("${path.module}/templates/configure_web.tpl")}"
   vars {
@@ -12,7 +23,7 @@ data "template_file" "web_user_data" {
 
 resource "aws_launch_configuration" "web_lc" {
   name_prefix                 = "catalog-web-tf-"
-  image_id                    = "${var.web_lc_ami}"
+  image_id                    = "${data.aws_ami.catalog_web.id}"
   instance_type               = "${var.web_lc_instance_type}"
   associate_public_ip_address = true
   key_name                    = "${var.key_name}"
@@ -26,6 +37,17 @@ resource "aws_launch_configuration" "web_lc" {
 }
 
 # harvester launch configuration
+data "aws_ami" "catalog_harvester" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["catalog-harvester*"]
+  }
+
+  owners = ["587807691409"]
+}
+
 data "template_file" "harvester_user_data" {
   template = "${file("${path.module}/templates/configure_harvester.tpl")}"
   vars {
@@ -39,7 +61,7 @@ data "template_file" "harvester_user_data" {
 
 resource "aws_launch_configuration" "harvester_lc" {
   name_prefix                 = "catalog-harvester-tf-"
-  image_id                    = "${var.harvester_lc_ami}"
+  image_id                    = "${data.aws_ami.catalog_harvester.id}"
   instance_type               = "${var.harvester_lc_instance_type}"
   associate_public_ip_address = false
   key_name                    = "${var.key_name}"
@@ -53,6 +75,17 @@ resource "aws_launch_configuration" "harvester_lc" {
 }
 
 # solr launch configuration
+data "aws_ami" "solr" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["solr*"]
+  }
+
+  owners = ["587807691409"]
+}
+
 data "template_file" "solr_user_data" {
   template = "${file("${path.module}/templates/create_core.tpl")}"
   vars {
@@ -62,7 +95,7 @@ data "template_file" "solr_user_data" {
 
 resource "aws_launch_configuration" "solr_lc" {
   name_prefix                 = "solr-solr-tf-"
-  image_id                    = "${var.solr_lc_ami}"
+  image_id                    = "${data.aws_ami.solr.id}"
   instance_type               = "${var.solr_lc_instance_type}"
   associate_public_ip_address = false
   key_name                    = "${var.key_name}"
