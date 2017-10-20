@@ -5,20 +5,8 @@
 - Install terragrunt: https://github.com/gruntwork-io/terragrunt#install-terragrunt
 
 
-### To provision the whole stack (vpc, app, db):
-
-
-` # cd {env} `
-
-` # terragrunt apply-all `
-
-##### i.e.:
-` # cd dev `
-
-` # terragrunt apply-all `
-
-### To provision individual modules (vpc or app or db): #####
-### NOTE: app depends on db and db depends on vpc #####
+### To provision individual modules (vpc or app or db): ####
+### ***NOTE: app depends on db and db depends on vpc, also you will most likely need to provide the name of the vpc through an input variable since it might already exist *** ####
 `# cd {env}\{module} `
 
 `# terragrunt apply`
