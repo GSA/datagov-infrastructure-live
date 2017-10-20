@@ -1,6 +1,6 @@
 ### web autoscaling group ###
 resource "aws_autoscaling_group" "web_asg" {
-  name_prefix                 = "catalog-web-asg-tf-"
+  name                        = "asg-${aws_launch_configuration.web_lc.name}"
   launch_configuration        = "${aws_launch_configuration.web_lc.name}"
   min_size                    = "${var.asg_web_mix_size}"
   max_size                    = "${var.asg_web_max_size}"
@@ -29,7 +29,7 @@ resource "aws_autoscaling_group" "web_asg" {
 
 ### harvester autoscaling group ###
 resource "aws_autoscaling_group" "harvester_asg" {
-  name_prefix                 = "catalog-harvester-asg-tf-"
+  name                        = "asg-${aws_launch_configuration.harvester_lc.name}"
   launch_configuration        = "${aws_launch_configuration.harvester_lc.name}"
   min_size                    = "${var.asg_harvester_mix_size}"
   max_size                    = "${var.asg_harvester_max_size}"
@@ -54,7 +54,7 @@ resource "aws_autoscaling_group" "harvester_asg" {
 
 ### solr autoscaling group ###
 resource "aws_autoscaling_group" "solr_asg" {
-  name_prefix                 = "catalog-solr-asg-tf-"
+  name                        = "asg-${aws_launch_configuration.solr_lc.name"
   launch_configuration        = "${aws_launch_configuration.solr_lc.name}"
   min_size                    = "${var.asg_solr_mix_size}"
   max_size                    = "${var.asg_solr_max_size}"
