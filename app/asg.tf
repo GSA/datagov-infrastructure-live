@@ -5,8 +5,11 @@ resource "aws_autoscaling_group" "web_asg" {
   min_size                    = "${var.asg_web_mix_size}"
   max_size                    = "${var.asg_web_max_size}"
   desired_capacity            = "${var.asg_web_desired_capacity}"
-  vpc_zone_identifier         = [ "${data.terraform_remote_state.vpc.public_subnets}" ]
+  wait_for_elb_capacity       = 1
+  health_check_grace_period   = 300
+  health_check_type i         = "ELB"
   target_group_arns           = [ "${aws_alb_target_group.web_tg.arn}" ]
+  vpc_zone_identifier         = [ "${data.terraform_remote_state.vpc.public_subnets}" ]
 
   tags = [
     {
