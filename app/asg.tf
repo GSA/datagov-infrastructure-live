@@ -7,7 +7,7 @@ resource "aws_autoscaling_group" "web_asg" {
   desired_capacity            = "${var.asg_web_desired_capacity}"
   wait_for_elb_capacity       = 1
   health_check_grace_period   = 300
-  health_check_type i         = "ELB"
+  health_check_type           = "ELB"
   target_group_arns           = [ "${aws_alb_target_group.web_tg.arn}" ]
   vpc_zone_identifier         = [ "${data.terraform_remote_state.vpc.public_subnets}" ]
 
@@ -54,7 +54,7 @@ resource "aws_autoscaling_group" "harvester_asg" {
 
 ### solr autoscaling group ###
 resource "aws_autoscaling_group" "solr_asg" {
-  name                        = "asg-${aws_launch_configuration.solr_lc.name"
+  name                        = "asg-${aws_launch_configuration.solr_lc.name}"
   launch_configuration        = "${aws_launch_configuration.solr_lc.name}"
   min_size                    = "${var.asg_solr_mix_size}"
   max_size                    = "${var.asg_solr_max_size}"
