@@ -64,7 +64,7 @@ variable "asg_web_max_size" {
 }
 
 variable "asg_web_desired_capacity" {
-  default = "2"
+  default = "1"
 }
 
 ## harvester ##
