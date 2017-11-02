@@ -22,7 +22,7 @@ psql -c "create extension postgis_topology;"
 psql -c "alter schema tiger owner to rds_superuser;"
 psql -c "alter schema tiger_data owner to rds_superuser;"
 psql -c "alter schema topology owner to rds_superuser;"
-psql -c 'CREATE FUNCTION exec(text) returns text language plpgsql volatile AS $f$ BEGIN EXECUTE $1; RETURN $1; END; $f$;'
+psql -P pager=off -c 'CREATE FUNCTION exec(text) returns text language plpgsql volatile AS $f$ BEGIN EXECUTE $1; RETURN $1; END; $f$;'
 psql -P pager=off -c "SELECT exec('ALTER TABLE ' || quote_ident(s.nspname) || '.' || quote_ident(s.relname) || ' OWNER TO rds_superuser;') \
   FROM ( \
     SELECT nspname, relname \
