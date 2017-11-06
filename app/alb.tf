@@ -24,6 +24,11 @@ resource "aws_alb_target_group" "web_tg" {
   port        = 80
   protocol    = "HTTP"
   vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
+
+  health_check {
+    path                = "/dataset"
+  }
+
 }
 
 ## solr application load balancer ##
