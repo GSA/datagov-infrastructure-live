@@ -1,0 +1,37 @@
+[0m[1mdata.terraform_remote_state.vpc: Refreshing state...[0m
+[0m[1mdata.terraform_remote_state.db: Refreshing state...[0m
+[0m[1mdata.template_file.solr_user_data: Refreshing state...[0m
+[0m[1maws_alb_target_group.solr_tg: Refreshing state... (ID: arn:aws:elasticloadbalancing:us-east-1:...404165304021500000001/3d40d91742e6c722)[0m
+[0m[1maws_security_group.jumpbox-sg: Refreshing state... (ID: sg-d6da369f)[0m
+[0m[1maws_alb_target_group.web_tg: Refreshing state... (ID: arn:aws:elasticloadbalancing:us-east-1:...404165304022900000002/ebcd40bed16fe07c)[0m
+[0m[1maws_security_group.alb-sg: Refreshing state... (ID: sg-592dc110)[0m
+[0m[1mdata.aws_ami.catalog_web: Refreshing state...[0m
+[0m[1maws_security_group.harvester-sg: Refreshing state... (ID: sg-b8da36f1)[0m
+[0m[1mdata.aws_ami.catalog_harvester: Refreshing state...[0m
+[0m[1mdata.aws_ami.solr: Refreshing state...[0m
+[0m[1maws_alb.web_alb: Refreshing state... (ID: arn:aws:elasticloadbalancing:us-east-1:...r/app/web-alb-test-tf/ac4b44baddbc180f)[0m
+[0m[1maws_security_group.web-sg: Refreshing state... (ID: sg-13d8345a)[0m
+[0m[1maws_security_group.solr-alb-sg: Refreshing state... (ID: sg-3bc22e72)[0m
+[0m[1maws_security_group.solr-sg: Refreshing state... (ID: sg-66d4382f)[0m
+[0m[1maws_alb.solr_alb: Refreshing state... (ID: arn:aws:elasticloadbalancing:us-east-1:.../app/solr-alb-test-tf/6c930b79b0246408)[0m
+[0m[1maws_alb_listener.web_alb_Listener: Refreshing state... (ID: arn:aws:elasticloadbalancing:us-east-1:...t-tf/ac4b44baddbc180f/5fbce6f25e602dfa)[0m
+[0m[1maws_security_group.ssh-sg: Refreshing state... (ID: sg-67d4382e)[0m
+[0m[1maws_instance.catalog-jumpbox: Refreshing state... (ID: i-0c68b9a85bc9fd1c9)[0m
+[0m[1maws_launch_configuration.solr_lc: Refreshing state... (ID: solr-solr-tf-20180404165316543500000003)[0m
+[0m[1maws_alb_listener.solr_alb_Listener: Refreshing state... (ID: arn:aws:elasticloadbalancing:us-east-1:...t-tf/6c930b79b0246408/9ef39307bce9ae4c)[0m
+[0m[1mdata.template_file.harvester_user_data: Refreshing state...[0m
+[0m[1mdata.template_file.web_user_data: Refreshing state...[0m
+[0m[1maws_launch_configuration.web_lc: Refreshing state... (ID: catalog-web-tf-20180404165547012300000005)[0m
+[0m[1maws_launch_configuration.harvester_lc: Refreshing state... (ID: catalog-harvester-tf-20180404165547002100000004)[0m
+[0m[1maws_autoscaling_group.solr_asg: Refreshing state... (ID: asg-solr-solr-tf-20180404165316543500000003)[0m
+[0m[1maws_autoscaling_group.harvester_asg: Refreshing state... (ID: asg-catalog-harvester-tf-20180404165547002100000004)[0m
+[0m[1maws_autoscaling_group.web_asg: Refreshing state... (ID: asg-catalog-web-tf-20180404165547012300000005)[0m
+[0m[1m[32m
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.[0m
+[0m[1m[32m
+Outputs:
+
+harvester_sg_id = sg-b8da36f1
+solr_server = sg-b8da36f1
+web_alb_dns = web-alb-test-tf-937713920.us-east-1.elb.amazonaws.com
+web_sg_id = sg-13d8345a[0m
