@@ -13,3 +13,7 @@ output "solr_server" {
 output "web_alb_dns" {
   value = "${aws_alb.web_alb.dns_name}"
 }
+
+output "jumpbox_dns" {
+  value = "${aws_instance.catalog-jumpbox.public_dns}"
+}
