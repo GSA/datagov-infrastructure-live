@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  validate:
+    docker:
+      - image: hashicorp/terraform
+        entrypoint: ["/bin/sh"]
+    steps:
+      - checkout
+      - run:
+          name: install terragrunt
+          command: |
+            curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.17.1/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
+            chmod +x /usr/local/bin/terragrunt
+      - run:
+          name: validate test
+          command: |
+            cd test
+            terragrunt validate-all
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - validate
