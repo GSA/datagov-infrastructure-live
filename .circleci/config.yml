@@ -14,11 +14,74 @@ jobs:
       - run:
           name: validate test
           command: |
-            cd test
+            cd test-ci
             terragrunt validate-all
+
+  plan:
+    docker:
+      - image: hashicorp/terraform
+        entrypoint: ["/bin/sh"]
+    environment:
+      terragrunt_env: test-ci
+      terragrunt_module: app
+    steps:
+      - checkout
+      - run:
+          name: install terragrunt
+          command: |
+            curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.17.1/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
+            chmod +x /usr/local/bin/terragrunt
+      - run:
+          name: terragrunt plan
+          command: |
+            cd $terragrunt_env/$terragrunt_module
+            terragrunt plan -out=${terragrunt_module}.tfplan
+      - persist_to_workspace:
+          root: .
+          paths:
+            - $terragrunt_env/$terragrunt_module/.terragrunt-cache
+
+  apply:
+    docker:
+      - image: hashicorp/terraform
+        entrypoint: ["/bin/sh"]
+    environment:
+      terragrunt_env: test-ci
+      terragrunt_module: app
+    steps:
+      - checkout
+      - run:
+          name: install terragrunt
+          command: |
+            curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.17.1/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
+            chmod +x /usr/local/bin/terragrunt
+      - attach_workspace:
+          at: .
+      - run:
+          name: terragrunt apply
+          command: |
+            cd $terragrunt_env/$terragrunt_module
+            terragrunt apply ${terragrunt_module}.tfplan
 
 workflows:
   version: 2
   commit:
     jobs:
       - validate
+
+      - plan:
+          requires:
+            - validate
+
+      - hold:
+          type: approval
+          requires:
+            - plan
+          filters:
+            branches:
+              only:
+                - cd
+
+      - apply:
+          requires:
+            - hold

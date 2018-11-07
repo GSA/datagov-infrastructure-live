@@ -40,3 +40,11 @@ variable to specify a local modules directory.
 
     $ cd test/vpc
     $ terragrunt apply --terragrunt-source ../../../datagov-infrastructure-modules//vpc
+
+
+## Continuous delivery
+
+The `master` branch is automatically deployed by CI. We use a `datagov-ci` IAM
+user in AWS configured with access to terraform state bucket and minimal policy
+tailored to our terraform modules. You may need to update this policy if new AWS
+resources are added to the modules.
