@@ -6,6 +6,11 @@ data "aws_ami" "jumpbox_ami" {
     values = ["jumpbox*"]
   }
 
+  filter {
+    name   = "tag:env"
+    values = ["${var.env}"]
+  }
+
   owners = ["587807691409"]
 }
 
