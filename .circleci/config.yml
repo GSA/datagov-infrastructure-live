@@ -39,7 +39,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - $terragrunt_env/$terragrunt_module/.terragrunt-cache
+            - test-ci/app/.terragrunt-cache
 
   apply:
     docker:
