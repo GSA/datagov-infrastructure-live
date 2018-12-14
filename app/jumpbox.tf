@@ -72,7 +72,7 @@ resource "aws_instance" "catalog-jumpbox" {
   associate_public_ip_address = true
 
   tags {
-    Name  = "catalog-jumpbox"
+    Name  = "jumpbox1tf"
     env   = "${var.env}"
     group = "jumpbox"
   }
