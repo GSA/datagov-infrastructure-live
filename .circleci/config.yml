@@ -23,7 +23,6 @@ jobs:
         entrypoint: ["/bin/sh"]
     environment:
       terragrunt_env: test-ci
-      terragrunt_module: app
     steps:
       - checkout
       - run:
@@ -34,11 +33,21 @@ jobs:
       - run:
           name: terragrunt plan
           command: |
-            cd $terragrunt_env/$terragrunt_module
-            terragrunt plan -out=${terragrunt_module}.tfplan
+            cd $terragrunt_env
+
+            cd ./vpc
+            terragrunt plan -out=vpc.tfplan
+
+            cd ../db
+            terragrunt plan -out=db.tfplan
+
+            cd ../app
+            terragrunt plan -out=app.tfplan
       - persist_to_workspace:
           root: .
           paths:
+            - test-ci/vpc/.terragrunt-cache
+            - test-ci/db/.terragrunt-cache
             - test-ci/app/.terragrunt-cache
 
   apply:
@@ -47,7 +56,6 @@ jobs:
         entrypoint: ["/bin/sh"]
     environment:
       terragrunt_env: test-ci
-      terragrunt_module: app
     steps:
       - checkout
       - run:
@@ -60,8 +68,16 @@ jobs:
       - run:
           name: terragrunt apply
           command: |
-            cd $terragrunt_env/$terragrunt_module
-            terragrunt apply ${terragrunt_module}.tfplan
+            cd $terragrunt_env
+
+            cd ./vpc
+            terragrunt apply vpc.tfplan
+
+            cd ../db
+            terragrunt apply db.tfplan
+
+            cd ../app
+            terragrunt apply app.tfplan
 
 workflows:
   version: 2

@@ -33,6 +33,14 @@ e.g.
     $ terragrunt apply
 
 
+## Secrets
+
+The following secrets are defined in our CI/CD system (CircleCI). Each is
+defined as an environment variable `TF_VAR_variable_name`.
+
+**db_password** the password to set for the database user.
+
+
 ## Development
 
 Include the `--terragrunt-source` option or `TERRAGRUNT_SOURCE` environment
