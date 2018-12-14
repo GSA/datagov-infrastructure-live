@@ -11,18 +11,15 @@ jobs:
           command: |
             curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.17.1/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
             chmod +x /usr/local/bin/terragrunt
-      - run:
-          name: validate test
-          command: |
-            cd test-ci
-            terragrunt validate-all
+      - run: apk add make
+      - run: make validate
 
   plan:
     docker:
       - image: hashicorp/terraform
         entrypoint: ["/bin/sh"]
     environment:
-      terragrunt_env: test-ci
+      TERRAGRUNT_ENV: test-ci
     steps:
       - checkout
       - run:
@@ -30,19 +27,10 @@ jobs:
           command: |
             curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.17.1/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
             chmod +x /usr/local/bin/terragrunt
+      - run: apk add make
       - run:
           name: terragrunt plan
-          command: |
-            cd $terragrunt_env
-
-            cd ./vpc
-            terragrunt plan -out=vpc.tfplan
-
-            cd ../db
-            terragrunt plan -out=db.tfplan
-
-            cd ../app
-            terragrunt plan -out=app.tfplan
+          command: make plan
       - persist_to_workspace:
           root: .
           paths:
@@ -55,7 +43,7 @@ jobs:
       - image: hashicorp/terraform
         entrypoint: ["/bin/sh"]
     environment:
-      terragrunt_env: test-ci
+      TERRAGRUNT_ENV: test-ci
     steps:
       - checkout
       - run:
@@ -63,21 +51,12 @@ jobs:
           command: |
             curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.17.1/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
             chmod +x /usr/local/bin/terragrunt
+      - run: apk add make
       - attach_workspace:
           at: .
       - run:
           name: terragrunt apply
-          command: |
-            cd $terragrunt_env
-
-            cd ./vpc
-            terragrunt apply vpc.tfplan
-
-            cd ../db
-            terragrunt apply db.tfplan
-
-            cd ../app
-            terragrunt apply app.tfplan
+          command: make apply
 
 workflows:
   version: 2

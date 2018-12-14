@@ -49,6 +49,12 @@ variable to specify a local modules directory.
     $ cd test/vpc
     $ terragrunt apply --terragrunt-source ../../../datagov-infrastructure-modules//vpc
 
+To run all the modules for a single environment, use `make`.
+
+    $ make plan
+    # check the output
+    $ make apply
+
 
 ## Continuous delivery
 
