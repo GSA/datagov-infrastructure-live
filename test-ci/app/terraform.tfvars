@@ -1,7 +1,7 @@
 # Terragrunt config
 terragrunt = {
   terraform {
-    source  = "github.com/GSA/datagov-infrastructure-modules.git//app?ref=ec2-instances"
+    source  = "github.com/GSA/datagov-infrastructure-modules.git//app"
   }
 
   include {
