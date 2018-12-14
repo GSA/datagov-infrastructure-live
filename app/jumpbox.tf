@@ -34,6 +34,8 @@ resource "aws_iam_role" "jumpbox" {
 EOF
 }
 
+# This allows the jumpbox to query the AWS API for EC2 and RDS resources for
+# the Ansible dynamic inventory.
 resource "aws_iam_role_policy" "jumpbox" {
   name = "jumpbox_dynamic_inventory_policy"
   role = "${aws_iam_role.jumpbox.id}"
@@ -70,7 +72,8 @@ resource "aws_instance" "catalog-jumpbox" {
   associate_public_ip_address = true
 
   tags {
-    Name = "catalog-jumpbox"
-    env  = "${var.env}"
+    Name  = "catalog-jumpbox"
+    env   = "${var.env}"
+    group = "jumpbox"
   }
 }
