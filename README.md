@@ -35,6 +35,15 @@ e.g.
 
 ## Secrets
 
+Get a copy of `secrets.tfvars` from a fellow developer. If you're creating a new
+environment, copy the template file and fill it out. The `secrets.tfvars` file
+should exist in the root directory of the environment.
+
+    $ cp secrets.tfvars.sample new-environment/secrets.tfvars
+
+
+## Secrets
+
 The following secrets are defined in our CI/CD system (CircleCI). Each is
 defined as an environment variable `TF_VAR_variable_name`.
 
@@ -54,6 +63,36 @@ To run all the modules for a single environment, use `make`.
     $ make plan
     # check the output
     $ make apply
+
+
+## Playbook testing
+
+The instances created use the SSH key configured with the `key_name` variable.
+SSH with agent forwarding so that your key will accessible from the jump box.
+This also makes it easier to push to GitHub when configured with ssh access.
+
+Terragrunt output will show you the jumpbox DNS.
+
+    $ terragrunt output
+    ...
+    jumpbox_dns = ec2-100-24-52-149.compute-1.amazonaws.com
+
+Then ssh into the jumpbox with the ubuntu user.
+
+    $ ssh -A -l ubuntu ec2-100-24-52-149.compute-1.amazonaws.com
+
+Clone the datagov-deploy repo and setup your environment.
+
+    $ git clone git@github.com:GSA/datagov-deploy.git
+    $ virtualenv venv
+    $ source venv/bin/activate
+    $ pip install -U setuptools
+    $ pip install -r datagov-deploy/requirements.txt
+    $ echo fakepassword > ~/ansible-secret.txt
+    $ cd datagov-deploy/ansible
+
+The jumpbox is configured with an IAM role (`jumpbox_dynamic_inventory_role`)
+that allows it to fetch ec2 information without setting AWS access keys.
 
 
 ## Continuous delivery
