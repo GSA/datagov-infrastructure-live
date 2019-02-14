@@ -23,11 +23,18 @@ data "template_file" "web_user_data" {
   }
 }
 
+resource "aws_lb_target_group_attachment" "catalog_web" {
+  count            = 1
+  target_group_arn = "${aws_alb_target_group.web_tg.arn}"
+  target_id        = "${element(aws_instance.catalog-web.*.id, count.index)}"
+  port             = 80
+}
+
 resource "aws_instance" "catalog-web" {
-  count           = 1
-  ami             = "${data.aws_ami.catalog_web.id}"
-  instance_type   = "${var.web_lc_instance_type}"
-  security_groups = ["${aws_security_group.web-sg.id}", "${aws_security_group.ssh-sg.id}"]
+  count                  = 1
+  ami                    = "${data.aws_ami.catalog_web.id}"
+  instance_type          = "${var.web_lc_instance_type}"
+  vpc_security_group_ids = ["${aws_security_group.web-sg.id}", "${aws_security_group.ssh-sg.id}"]
 
   # TODO this should be dynamic based on count
   subnet_id = "${data.terraform_remote_state.vpc.public_subnets[0]}"
@@ -72,10 +79,10 @@ data "template_file" "harvester_user_data" {
 }
 
 resource "aws_instance" "catalog-harvester" {
-  count           = 1
-  ami             = "${data.aws_ami.catalog_harvester.id}"
-  instance_type   = "${var.harvester_lc_instance_type}"
-  security_groups = ["${aws_security_group.harvester-sg.id}", "${aws_security_group.ssh-sg.id}"]
+  count                  = 1
+  ami                    = "${data.aws_ami.catalog_harvester.id}"
+  instance_type          = "${var.harvester_lc_instance_type}"
+  vpc_security_group_ids = ["${aws_security_group.harvester-sg.id}", "${aws_security_group.ssh-sg.id}"]
 
   # TODO this should be dynamic based on count
   subnet_id = "${data.terraform_remote_state.vpc.public_subnets[0]}"

@@ -18,10 +18,10 @@ data "template_file" "solr_user_data" {
 }
 
 resource "aws_instance" "solr" {
-  count           = 1
-  ami             = "${data.aws_ami.solr.id}"
-  instance_type   = "${var.solr_lc_instance_type}"
-  security_groups = ["${aws_security_group.solr-sg.id}", "${aws_security_group.ssh-sg.id}"]
+  count                  = 1
+  ami                    = "${data.aws_ami.solr.id}"
+  instance_type          = "${var.solr_lc_instance_type}"
+  vpc_security_group_ids = ["${aws_security_group.solr-sg.id}", "${aws_security_group.ssh-sg.id}"]
 
   # TODO this should be dynamic based on count
   subnet_id = "${data.terraform_remote_state.vpc.public_subnets[0]}"

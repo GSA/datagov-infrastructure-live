@@ -51,7 +51,6 @@ variable "solr_lc_instance_type" {
   default = "t2.micro"
 }
 
-
 ### Auto-Scaling Groups ###
 
 ## web ##
