@@ -1,3 +1,20 @@
+provider "aws" {
+  region = "${var.aws_region}"
+}
+
+terraform {
+  backend "s3" {}
+}
+
+data "terraform_remote_state" "vpc" {
+  backend = "s3"
+  config {
+    bucket = "datagov-terraform-state"
+    key    = "${var.env}/vpc/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 data "aws_ami" "jumpbox_ami" {
   most_recent = true
 
@@ -12,6 +29,26 @@ data "aws_ami" "jumpbox_ami" {
   }
 
   owners = ["587807691409"]
+}
+
+resource "aws_security_group" "default" {
+  name        = "${var.env}-jumpbox-sg-tf"
+  description = "Jumpbox security group"
+  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_iam_role" "jumpbox" {
@@ -62,10 +99,10 @@ resource "aws_iam_instance_profile" "jumpbox" {
   role = "${aws_iam_role.jumpbox.name}"
 }
 
-resource "aws_instance" "catalog-jumpbox" {
+resource "aws_instance" "jumpbox" {
   ami                         = "${data.aws_ami.jumpbox_ami.id}"
-  instance_type               = "${var.jumpbox_instance_type}"
-  vpc_security_group_ids      = ["${aws_security_group.jumpbox-sg.id}"]
+  instance_type               = "${var.instance_type}"
+  vpc_security_group_ids      = ["${aws_security_group.default.id}"]
   subnet_id                   = "${data.terraform_remote_state.vpc.public_subnets[0]}"
   key_name                    = "${var.key_name}"
   iam_instance_profile        = "${aws_iam_instance_profile.jumpbox.name}"

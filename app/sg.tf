@@ -96,27 +96,6 @@ resource "aws_security_group" "solr-sg" {
   }
 }
 
-# jumpbox security group
-resource "aws_security_group" "jumpbox-sg" {
-  name        = "${var.env}-jumpbox-sg-tf"
-  description = "Jumpbox security group"
-  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 # ssh security group
 resource "aws_security_group" "ssh-sg" {
   name        = "${var.env}-ssh-sg-tf"
@@ -127,6 +106,6 @@ resource "aws_security_group" "ssh-sg" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = ["${aws_security_group.jumpbox-sg.id}"]
+    security_groups = ["${data.terraform_remote_state.jumpbox.security_group_id}"]
   }
 }

@@ -6,15 +6,6 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-### jumpbox ###
-variable "jumpbox_ami" {
-  default = "ami-a5a98fde"
-}
-
-variable "jumpbox_instance_type" {
-  default = "t2.micro"
-}
-
 ### Launch Configurations ###
 variable "web_lc_name" {
   default = "catalog-web-tf"
