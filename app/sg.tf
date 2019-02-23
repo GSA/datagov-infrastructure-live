@@ -95,17 +95,3 @@ resource "aws_security_group" "solr-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-# ssh security group
-resource "aws_security_group" "ssh-sg" {
-  name        = "${var.env}-ssh-sg-tf"
-  description = "ssh security group"
-  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
-
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = ["${data.terraform_remote_state.jumpbox.security_group_id}"]
-  }
-}

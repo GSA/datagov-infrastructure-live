@@ -8,6 +8,7 @@ terraform {
 
 data "terraform_remote_state" "vpc" {
   backend = "s3"
+
   config {
     bucket = "datagov-terraform-state"
     key    = "${var.env}/vpc/terraform.tfstate"
@@ -51,6 +52,19 @@ resource "aws_security_group" "default" {
   }
 }
 
+resource "aws_security_group" "jumpbox_access" {
+  name        = "${var.env}-jumpbox-access-sg-tf"
+  description = "Allows SSH access from jumpbox."
+  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
+
+  ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.default.id}"]
+  }
+}
+
 resource "aws_iam_role" "jumpbox" {
   name = "jumpbox_dynamic_inventory_role"
 
@@ -64,7 +78,7 @@ resource "aws_iam_role" "jumpbox" {
         "Service": "ec2.amazonaws.com"
       },
       "Effect": "Allow",
-      "Sid": ""
+      "Sid": "JumpboxDynamicInventoryAssumeRole"
     }
   ]
 }
@@ -84,7 +98,9 @@ resource "aws_iam_role_policy" "jumpbox" {
     {
       "Action": [
         "ec2:Describe*",
-        "rds:Describe*"
+        "rds:Describe*",
+        "route53:ListHostedZones",
+        "route53:ListResourceRecordSets"
       ],
       "Effect": "Allow",
       "Resource": "*"
@@ -109,8 +125,12 @@ resource "aws_instance" "jumpbox" {
   associate_public_ip_address = true
 
   tags {
-    Name  = "jumpbox1tf"
+    Name  = "datagov-jump1tf"
     env   = "${var.env}"
     group = "jumpbox"
+  }
+
+  provisioner "remote-exec" {
+    script = "bin/provision.sh"
   }
 }

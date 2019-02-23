@@ -26,5 +26,4 @@ module "vpc" {
   tags {
     "Terraform" = "true"
   }
-
 }

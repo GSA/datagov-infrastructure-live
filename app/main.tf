@@ -16,6 +16,16 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+data "terraform_remote_state" "jumpbox" {
+  backend = "s3"
+
+  config {
+    bucket = "datagov-terraform-state"
+    key    = "${var.env}/jumpbox/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 data "terraform_remote_state" "db" {
   backend = "s3"
 
