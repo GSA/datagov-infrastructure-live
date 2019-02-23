@@ -17,3 +17,4 @@ terragrunt = {
 # Module config
 key_name   = "adborden"
 env        = "test-ci"
+aws_region = "us-east-1"

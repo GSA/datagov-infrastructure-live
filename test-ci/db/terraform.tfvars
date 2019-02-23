@@ -24,3 +24,4 @@ terragrunt = {
 
 ## Module config
 env        = "test-ci"
+aws_region = "us-east-1"

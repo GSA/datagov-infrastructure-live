@@ -13,3 +13,4 @@ terragrunt = {
 # Module config
 vpc_name   = "test-datagov-ci"
 env        = "test-ci"
+aws_region = "us-east-1"
