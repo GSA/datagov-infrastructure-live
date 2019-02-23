@@ -20,17 +20,45 @@ _Note: production and staging environments are hosted in BSP and are
 
 ## Usage
 
-*NOTE: `app` depends on `db` which depends on `vpc`. You will most likely need
-to provide the name of the vpc through an input variable since it might already
-exist.*
+cd into the environment you wish to work with.
 
-    $ cd {env}\{module}
+    $ cd test
+
+Run terraform plan in all the modules using terragrunt.
+
+    $ terragrunt plan-all
+
+If the plan looks good, apply it.
+
+    $ terragrunt apply-all
+
+Alternatively, you can work with a single module.
+
+    $ cd test\vpc
     $ terragrunt apply
 
-e.g.
 
-    $ cd dev\vpc
+### First-time apply for environment
+
+Terragrunt plan-all/apply-all can't handle `terraform_remote_state` that hasn't
+been initialized yet. Therefore, you need to apply each module, one at a time
+in the correct dependency order.
+
+If you see this error, that's the issue:
+
+```
+Error: Error running plan: 1 error(s) occurred:
+
+* module.database.aws_security_group.postgres-sg: 1 error(s) occurred:
+
+* module.database.aws_security_group.postgres-sg: Resource 'data.terraform_remote_state.vpc' does not have attribute 'vpc_id' for variable 'data.terraform_remote_state.vpc.vpc_id'
+```
+
+To resolve, cd into the module and run terragrunt.
+
+    $ cd test/vpc
     $ terragrunt apply
+    $ cd ..
 
 
 ## Development
@@ -38,5 +66,6 @@ e.g.
 Include the `--terragrunt-source` option or `TERRAGRUNT_SOURCE` environment
 variable to specify a local modules directory.
 
-    $ cd test/vpc
-    $ terragrunt apply --terragrunt-source ../../../datagov-infrastructure-modules//vpc
+    $ cd test
+    $ terragrunt plan-all --terragrunt-source ../../../datagov-infrastructure-modules
+    $ terragrunt apply-all --terragrunt-source ../../../datagov-infrastructure-modules
