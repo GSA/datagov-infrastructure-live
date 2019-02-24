@@ -38,6 +38,31 @@ Alternatively, you can work with a single module.
     $ terragrunt apply
 
 
+### Connecting to the jumpbox
+
+Forward your ssh agent so that you have access to the ssh key to connect to
+other instances.
+
+    $ ssh -A -l ubuntu $jumbox_dns
+
+The jumpbox dns is an output variable.
+
+    $ cd $env/jumpbox
+    $ terragrunt output
+
+When the jumpbox is first created, you'll need to bootstrap it to run ansible.
+
+```bash
+git clone git@github.com:GSA/datagov-deploy.git
+virtualenv venv
+source venv/bin/activate
+pip install -U setuptools
+pip install -r datagov-dedupe/requirements.txt
+cat <<EOF > ~/.ssh/config
+StrictHostKeyChecking=no
+EOF
+```
+
 ### First-time apply for environment
 
 Terragrunt plan-all/apply-all can't handle `terraform_remote_state` that hasn't
