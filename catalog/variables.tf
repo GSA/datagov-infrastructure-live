@@ -7,6 +7,10 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
+variable "db_password" {
+  description = "Master password for the database."
+}
+
 variable "env" {
   description = "The name of the environment to tag/name resources."
 }

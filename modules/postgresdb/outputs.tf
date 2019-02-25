@@ -14,3 +14,7 @@ output "db_password" {
 output "db_server" {
   value = "${module.database.db_server}"
 }
+
+output "security_group" {
+  value = "${module.database.security_group}"
+}

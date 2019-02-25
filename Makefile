@@ -1,4 +1,13 @@
-SUBDIRS := $(wildcard */.)
+SUBDIRS := \
+  app \
+  catalog \
+  jumpbox \
+  solr \
+  vpc \
+  modules/db \
+  modules/postgresdb \
+  modules/stateful \
+  modules/web
 
 test: $(SUBDIRS)
 $(SUBDIRS):

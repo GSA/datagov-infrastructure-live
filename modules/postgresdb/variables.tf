@@ -1,8 +1,3 @@
-variable "aws_region" {
-  description = "The AWS region to create instances."
-  default     = "us-east-1"
-}
-
 variable "env" {
   description = "Name of the environment."
 }
@@ -17,7 +12,7 @@ variable "db_name" {
 
 variable "db_username" {
   description = "User to create for the database."
-  default = "dbuser"
+  default     = "dbuser"
 }
 
 variable "db_password" {
@@ -26,7 +21,13 @@ variable "db_password" {
 
 variable "db_skip_final_snapshot" {
   description = "Create a final snapshot on destroy?"
-  default  = true
+  default     = true
 }
 
+variable "database_subnet_group" {
+  description = "DB subnet group name to create the database in."
+}
 
+variable "vpc_id" {
+  description = "Id of the VPC to create the database resources in."
+}
