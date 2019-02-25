@@ -17,17 +17,16 @@ variable "key_name" {
   description = "SSH key pair name to configure this instance for access."
 }
 
-variable "ami_filter_name" {
-  description = "Filter string to find a matching AMI to use for EC2 web instances."
-  default     = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
+variable "ami_id" {
+  description = "AMI Id to use for EC2 web instances."
 }
 
-variable "web_instance_count" {
+variable "instance_count" {
   description = "Number of EC2 web instances to create."
   default     = 1
 }
 
-variable "web_instance_type" {
+variable "instance_type" {
   description = "EC2 instance type for web instances."
   default     = "t2.micro"
 }
@@ -52,3 +51,21 @@ variable "lb_target_groups" {
     health_check_path = "/"
   }]
 }
+
+variable "public_subnets" {
+  type        = "list"
+  description = "List of public subnets to attach load balancers to."
+}
+
+variable "private_subnets" {
+  type        = "list"
+  description = "List of private subnets to attach instances to."
+}
+
+variable "security_groups" {
+  type        = "list"
+  description = "Additional security groups to attach to instances."
+  default     = []
+}
+
+variable "vpc_id" {}
