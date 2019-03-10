@@ -50,7 +50,7 @@ data "aws_ami" "ubuntu" {
 module "db_ckan" {
   source = "../modules/postgresdb"
 
-  db_name               = "ckan_db"
+  db_name               = "catalog_ckan_db"
   db_password           = "${var.db_ckan_password}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
   db_username           = "ckan_master"
@@ -61,7 +61,7 @@ module "db_ckan" {
 module "db_pycsw" {
   source = "../modules/postgresdb"
 
-  db_name               = "pycsw_db"
+  db_name               = "catalog_pycsw_db"
   db_password           = "${var.db_pycsw_password}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
   db_username           = "pycsw_master"

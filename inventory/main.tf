@@ -52,7 +52,7 @@ data "aws_ami" "ubuntu" {
 module "db_ckan" {
   source = "../modules/postgresdb"
 
-  db_name               = "ckan_db"
+  db_name               = "inventory_ckan_db"
   db_password           = "${var.db_ckan_password}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
   db_username           = "ckan_master"
@@ -63,7 +63,7 @@ module "db_ckan" {
 module "db_datapusher" {
   source = "../modules/postgresdb"
 
-  db_name               = "datapusher_db"
+  db_name               = "inventory_datapusher_db"
   db_password           = "${var.db_datapusher_password}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
   db_username           = "datapusher_master"
@@ -74,7 +74,7 @@ module "db_datapusher" {
 module "db_datastore" {
   source = "../modules/postgresdb"
 
-  db_name               = "datastore_db"
+  db_name               = "inventory_datastore_db"
   db_password           = "${var.db_datastore_password}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
   db_username           = "datastore_master"
