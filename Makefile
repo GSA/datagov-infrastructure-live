@@ -1,6 +1,7 @@
 SUBDIRS := \
   app \
   catalog \
+  inventory \
   jumpbox \
   solr \
   vpc \
