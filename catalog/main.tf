@@ -47,13 +47,24 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-module "db" {
+module "db_ckan" {
   source = "../modules/postgresdb"
 
-  db_name               = "catalog_db"
-  db_password           = "${var.db_password}"
+  db_name               = "ckan_db"
+  db_password           = "${var.db_ckan_password}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
-  db_username           = "catalog_master"
+  db_username           = "ckan_master"
+  env                   = "${var.env}"
+  vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
+}
+
+module "db_pycsw" {
+  source = "../modules/postgresdb"
+
+  db_name               = "pycsw_db"
+  db_password           = "${var.db_pycsw_password}"
+  database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
+  db_username           = "pycsw_master"
   env                   = "${var.env}"
   vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
 }
@@ -69,7 +80,7 @@ module "web" {
   name            = "catalog"
   private_subnets = "${data.terraform_remote_state.vpc.private_subnets}"
   public_subnets  = "${data.terraform_remote_state.vpc.public_subnets}"
-  security_groups = ["${data.terraform_remote_state.jumpbox.security_group_id}", "${module.db.security_group}"]
+  security_groups = ["${data.terraform_remote_state.jumpbox.security_group_id}", "${module.db_ckan.security_group}", "${module.db_pycsw.security_group}"]
   vpc_id          = "${data.terraform_remote_state.vpc.vpc_id}"
 }
 
@@ -81,7 +92,7 @@ resource "aws_instance" "harvester" {
   instance_type               = "${var.harvester_instance_type}"
   key_name                    = "${var.key_name}"
   subnet_id                   = "${element(data.terraform_remote_state.vpc.private_subnets, count.index)}"
-  vpc_security_group_ids      = ["${data.terraform_remote_state.jumpbox.security_group_id}", "${module.db.security_group}"]
+  vpc_security_group_ids      = ["${data.terraform_remote_state.jumpbox.security_group_id}", "${module.db_ckan.security_group}", "${module.db_pycsw.security_group}"]
 
   tags {
     Name  = "${format("catalog-harvester%dtf", count.index + 1)}"
