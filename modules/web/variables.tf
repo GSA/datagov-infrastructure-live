@@ -44,12 +44,13 @@ variable "lb_target_groups" {
   type        = "list"
   description = "Target group to attach to the load balancer."
 
-  default = [{
-    name              = "default"
-    backend_protocol  = "HTTPS"
-    backend_port      = "443"
-    health_check_path = "/"
-  }]
+  # example
+  # lb_target_groups = [{
+  #   name              = "${var.env}-${var.name}"
+  #   backend_protocol  = "HTTPS"
+  #   backend_port      = "443"
+  #   health_check_path = "/"
+  # }]
 }
 
 variable "public_subnets" {

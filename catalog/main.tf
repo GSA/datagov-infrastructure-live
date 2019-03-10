@@ -82,6 +82,13 @@ module "web" {
   public_subnets  = "${data.terraform_remote_state.vpc.public_subnets}"
   security_groups = ["${data.terraform_remote_state.jumpbox.security_group_id}", "${module.db_ckan.security_group}", "${module.db_pycsw.security_group}"]
   vpc_id          = "${data.terraform_remote_state.vpc.vpc_id}"
+
+  lb_target_groups = [{
+    name              = "catalog-web-${var.env}"
+    backend_protocol  = "HTTP"
+    backend_port      = "80"
+    health_check_path = "/api"
+  }]
 }
 
 resource "aws_instance" "harvester" {

@@ -102,4 +102,11 @@ module "web" {
   ]
 
   vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
+
+  lb_target_groups = [{
+    name              = "inventory-web-${var.env}"
+    backend_protocol  = "HTTP"
+    backend_port      = "80"
+    health_check_path = "/api"
+  }]
 }
