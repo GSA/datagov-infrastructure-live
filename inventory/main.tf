@@ -85,14 +85,17 @@ module "db_datastore" {
 module "web" {
   source = "../modules/web"
 
-  ami_id          = "${data.aws_ami.ubuntu.id}"
-  ansible_group   = "inventory_web"
-  env             = "${var.env}"
-  instance_count  = "${var.web_instance_count}"
-  key_name        = "${var.key_name}"
-  name            = "inventory"
-  private_subnets = "${data.terraform_remote_state.vpc.private_subnets}"
-  public_subnets  = "${data.terraform_remote_state.vpc.public_subnets}"
+  ami_id           = "${data.aws_ami.ubuntu.id}"
+  ansible_group    = "inventory_web"
+  dns_zone_public  = "${data.terraform_remote_state.vpc.dns_zone_public}"
+  dns_zone_private = "${data.terraform_remote_state.vpc.dns_zone_private}"
+  env              = "${var.env}"
+  instance_count   = "${var.web_instance_count}"
+  key_name         = "${var.key_name}"
+  name             = "inventory"
+  private_subnets  = "${data.terraform_remote_state.vpc.private_subnets}"
+  public_subnets   = "${data.terraform_remote_state.vpc.public_subnets}"
+  vpc_id           = "${data.terraform_remote_state.vpc.vpc_id}"
 
   security_groups = [
     "${data.terraform_remote_state.jumpbox.security_group_id}",
@@ -101,7 +104,6 @@ module "web" {
     "${module.db_datastore.security_group}",
   ]
 
-  vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
 
   lb_target_groups = [{
     name              = "inventory-web-${var.env}"
