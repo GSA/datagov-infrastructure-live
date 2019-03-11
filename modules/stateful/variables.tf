@@ -7,6 +7,10 @@ variable "availability_zones" {
   description = "List of availability zones to create EBS volumes in."
 }
 
+variable "dns_zone" {
+  description = "DNS zone to create hostname records."
+}
+
 variable "ebs_size" {
   default = 10
 }

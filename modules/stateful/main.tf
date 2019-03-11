@@ -1,3 +1,8 @@
+data "aws_route53_zone" "default" {
+  name         = "${var.dns_zone}"
+  private_zone = true
+}
+
 resource "aws_ebs_volume" "default" {
   count = "${var.instance_count}"
 
@@ -32,8 +37,14 @@ resource "aws_instance" "default" {
       "group", var.ansible_group
     ),
     var.tags)}"
+}
 
-  lifecycle {
-    create_before_destroy = true
-  }
+resource "aws_route53_record" "default" {
+  count = "${var.instance_count}"
+
+  name    = "${format(var.instance_name_format, count.index + 1)}"
+  zone_id = "${data.aws_route53_zone.default.zone_id}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["${element(aws_instance.default.*.private_dns, count.index)}"]
 }

@@ -85,15 +85,16 @@ resource "aws_security_group" "solr_access" {
 module "solr" {
   source = "../modules/stateful"
 
-  instance_count       = "${var.instance_count}"
   ami_id               = "${data.aws_ami.ubuntu.id}"
+  ansible_group        = "solr"
   availability_zones   = "${data.terraform_remote_state.vpc.azs}"
+  dns_zone             = "${data.terraform_remote_state.vpc.dns_zone_private}"
   ebs_size             = "${var.ebs_size}"
   env                  = "${var.env}"
+  instance_count       = "${var.instance_count}"
+  instance_name_format = "datagovsolr%dtf"
   key_name             = "${var.key_name}"
-  ansible_group        = "solr"
+  security_groups      = ["${aws_security_group.default.id}", "${data.terraform_remote_state.jumpbox.security_group_id}"]
   subnets              = "${data.terraform_remote_state.vpc.private_subnets}"
   vpc_id               = "${data.terraform_remote_state.vpc.vpc_id}"
-  instance_name_format = "datagovsolr%dtf"
-  security_groups      = ["${aws_security_group.default.id}", "${data.terraform_remote_state.jumpbox.security_group_id}"]
 }
