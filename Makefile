@@ -1,5 +1,4 @@
 SUBDIRS := \
-  app \
   catalog \
   inventory \
   jumpbox \
