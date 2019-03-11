@@ -72,16 +72,24 @@ module "db_pycsw" {
 module "web" {
   source = "../modules/web"
 
-  ami_id          = "${data.aws_ami.ubuntu.id}"
-  ansible_group   = "catalog_web"
-  env             = "${var.env}"
-  instance_count  = "${var.web_instance_count}"
-  key_name        = "${var.key_name}"
-  name            = "catalog"
-  private_subnets = "${data.terraform_remote_state.vpc.private_subnets}"
-  public_subnets  = "${data.terraform_remote_state.vpc.public_subnets}"
-  security_groups = ["${data.terraform_remote_state.jumpbox.security_group_id}", "${module.db_ckan.security_group}", "${module.db_pycsw.security_group}"]
-  vpc_id          = "${data.terraform_remote_state.vpc.vpc_id}"
+  ami_id           = "${data.aws_ami.ubuntu.id}"
+  ansible_group    = "catalog_web"
+  dns_zone_public  = "${data.terraform_remote_state.vpc.dns_zone_public}"
+  dns_zone_private = "${data.terraform_remote_state.vpc.dns_zone_private}"
+  env              = "${var.env}"
+  instance_count   = "${var.web_instance_count}"
+  key_name         = "${var.key_name}"
+  name             = "catalog"
+  private_subnets  = "${data.terraform_remote_state.vpc.private_subnets}"
+  public_subnets   = "${data.terraform_remote_state.vpc.public_subnets}"
+
+  security_groups = [
+    "${data.terraform_remote_state.jumpbox.security_group_id}",
+    "${module.db_ckan.security_group}",
+    "${module.db_pycsw.security_group}",
+  ]
+
+  vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
 
   lb_target_groups = [{
     name              = "catalog-web-${var.env}"
@@ -91,23 +99,23 @@ module "web" {
   }]
 }
 
-resource "aws_instance" "harvester" {
-  count = "${var.harvester_instance_count}"
+module "harvester" {
+  source = "../modules/stateless"
 
-  ami                         = "${data.aws_ami.ubuntu.id}"
-  associate_public_ip_address = false
-  instance_type               = "${var.harvester_instance_type}"
-  key_name                    = "${var.key_name}"
-  subnet_id                   = "${element(data.terraform_remote_state.vpc.private_subnets, count.index)}"
-  vpc_security_group_ids      = ["${data.terraform_remote_state.jumpbox.security_group_id}", "${module.db_ckan.security_group}", "${module.db_pycsw.security_group}"]
+  ami_id               = "${data.aws_ami.ubuntu.id}"
+  ansible_group        = "catalog_harvester"
+  dns_zone             = "${data.terraform_remote_state.vpc.dns_zone_private}"
+  env                  = "${var.env}"
+  instance_count       = "${var.harvester_instance_count}"
+  instance_name_format = "catalog-harvester%dtf"
+  instance_type        = "${var.harvester_instance_type}"
+  key_name             = "${var.key_name}"
+  subnets              = "${data.terraform_remote_state.vpc.private_subnets}"
+  vpc_id               = "${data.terraform_remote_state.vpc.vpc_id}"
 
-  tags {
-    Name  = "${format("catalog-harvester%dtf", count.index + 1)}"
-    env   = "${var.env}"
-    group = "catalog_harvester"
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
+  security_groups = [
+    "${data.terraform_remote_state.jumpbox.security_group_id}",
+    "${module.db_ckan.security_group}",
+    "${module.db_pycsw.security_group}",
+  ]
 }
