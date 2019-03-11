@@ -17,3 +17,7 @@ output "public_subnets" {
 output "database_subnet_group" {
   value = "${module.vpc.database_subnet_group}"
 }
+
+output "dns_zone" {
+  value = "${aws_route53_zone.default.name}"
+}

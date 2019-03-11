@@ -6,6 +6,18 @@ terraform {
   backend "s3" {}
 }
 
+resource "aws_route53_zone" "default" {
+  name = "${var.dns_zone}"
+
+  vpc {
+    vpc_id = "${module.vpc.vpc_id}"
+  }
+
+  tags = {
+    env = "${var.env}"
+  }
+}
+
 module "vpc" {
   source  = "github.com/terraform-aws-modules/terraform-aws-vpc"
   version = "1.57.0"
