@@ -16,20 +16,25 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
-data "aws_ami" "jumpbox_ami" {
+data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["jumpbox*"]
+    values = ["${var.ami_filter_name}"]
   }
 
   filter {
-    name   = "tag:env"
-    values = ["${var.env}"]
+    name   = "virtualization-type"
+    values = ["hvm"]
   }
 
-  owners = ["587807691409"]
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
 
 data "aws_route53_zone" "public" {
@@ -125,7 +130,7 @@ resource "aws_iam_instance_profile" "jumpbox" {
 }
 
 resource "aws_instance" "jumpbox" {
-  ami                         = "${data.aws_ami.jumpbox_ami.id}"
+  ami                         = "${data.aws_ami.ubuntu.id}"
   instance_type               = "${var.instance_type}"
   vpc_security_group_ids      = ["${aws_security_group.default.id}"]
   subnet_id                   = "${data.terraform_remote_state.vpc.public_subnets[0]}"
@@ -139,13 +144,18 @@ resource "aws_instance" "jumpbox" {
     group = "jumpbox"
   }
 
+  connection {
+    type     = "ssh"
+    user     = "ubuntu"
+  }
+
   provisioner "remote-exec" {
     script = "bin/provision.sh"
   }
 }
 
 resource "aws_route53_record" "public" {
-  name    = "${var.env}-jump1tf"
+  name    = "datagov-jump1tf"
   zone_id = "${data.aws_route53_zone.public.zone_id}"
 
   type    = "A"

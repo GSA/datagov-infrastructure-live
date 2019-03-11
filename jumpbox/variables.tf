@@ -1,3 +1,8 @@
+variable "ami_filter_name" {
+  description = "Filter string to find a matching AMI to use for EC2."
+  default     = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
+}
+
 variable "aws_region" {
   description = "The AWS region to create instances."
   default     = "us-east-1"

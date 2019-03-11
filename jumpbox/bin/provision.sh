@@ -4,9 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-apt update
-apt full-upgrade
+sudo apt update
 
-apt install -y \
+sudo apt install -y \
   python3-dev \
   python-virtualenv
