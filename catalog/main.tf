@@ -26,6 +26,16 @@ data "terraform_remote_state" "jumpbox" {
   }
 }
 
+data "terraform_remote_state" "solr" {
+  backend = "s3"
+
+  config {
+    bucket = "datagov-terraform-state"
+    key    = "${var.env}/solr/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -85,6 +95,7 @@ module "web" {
 
   security_groups = [
     "${data.terraform_remote_state.jumpbox.security_group_id}",
+    "${data.terraform_remote_state.solr.security_group_id}",
     "${module.db_ckan.security_group}",
     "${module.db_pycsw.security_group}",
   ]
@@ -115,6 +126,7 @@ module "harvester" {
 
   security_groups = [
     "${data.terraform_remote_state.jumpbox.security_group_id}",
+    "${data.terraform_remote_state.solr.security_group_id}",
     "${module.db_ckan.security_group}",
     "${module.db_pycsw.security_group}",
   ]
