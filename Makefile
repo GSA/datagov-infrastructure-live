@@ -8,6 +8,7 @@ SUBDIRS := \
   modules/db \
   modules/postgresdb \
   modules/stateful \
+  modules/stateless \
   modules/web
 
 test: $(SUBDIRS)
