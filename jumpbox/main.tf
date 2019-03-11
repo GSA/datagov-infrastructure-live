@@ -32,6 +32,15 @@ data "aws_ami" "jumpbox_ami" {
   owners = ["587807691409"]
 }
 
+data "aws_route53_zone" "public" {
+  name = "${data.terraform_remote_state.vpc.dns_zone_public}"
+}
+
+data "aws_route53_zone" "private" {
+  name         = "${data.terraform_remote_state.vpc.dns_zone_private}"
+  private_zone = true
+}
+
 resource "aws_security_group" "default" {
   name        = "${var.env}-jumpbox-sg-tf"
   description = "Jumpbox security group"
@@ -133,4 +142,22 @@ resource "aws_instance" "jumpbox" {
   provisioner "remote-exec" {
     script = "bin/provision.sh"
   }
+}
+
+resource "aws_route53_record" "public" {
+  name    = "${var.env}-jump1tf"
+  zone_id = "${data.aws_route53_zone.public.zone_id}"
+
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.jumpbox.public_ip}"]
+}
+
+resource "aws_route53_record" "private" {
+  name    = "datagov-jump1tf"
+  zone_id = "${data.aws_route53_zone.private.zone_id}"
+
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["${aws_instance.jumpbox.private_dns}"]
 }

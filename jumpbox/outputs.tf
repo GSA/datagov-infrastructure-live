@@ -3,5 +3,5 @@ output "security_group_id" {
 }
 
 output "jumpbox_dns" {
-  value = "${aws_instance.jumpbox.public_dns}"
+  value = "${aws_route53_record.public.fqdn}"
 }
