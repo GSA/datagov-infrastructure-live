@@ -6,12 +6,42 @@ terraform {
   backend "s3" {}
 }
 
+data "aws_route53_zone" "parent" {
+  name = "${var.dns_zone}"
+}
+
 resource "aws_route53_zone" "public" {
   name = "${var.env}.${var.dns_zone}"
 
   tags = {
     env = "${var.env}"
   }
+}
+
+resource "aws_route53_record" "public_zone" {
+  zone_id = "${data.aws_route53_zone.parent.zone_id}"
+  name    = "${aws_route53_zone.public.name}"
+  type    = "NS"
+  ttl     = "300"
+  records = [
+    "${aws_route53_zone.public.name_servers.0}",
+    "${aws_route53_zone.public.name_servers.1}",
+    "${aws_route53_zone.public.name_servers.2}",
+    "${aws_route53_zone.public.name_servers.3}",
+  ]
+}
+
+resource "aws_route53_record" "private_zone" {
+  zone_id = "${aws_route53_zone.public.zone_id}"
+  name    = "${aws_route53_zone.private.name}"
+  type    = "NS"
+  ttl     = "300"
+  records = [
+    "${aws_route53_zone.private.name_servers.0}",
+    "${aws_route53_zone.private.name_servers.1}",
+    "${aws_route53_zone.private.name_servers.2}",
+    "${aws_route53_zone.private.name_servers.3}",
+  ]
 }
 
 resource "aws_route53_zone" "private" {

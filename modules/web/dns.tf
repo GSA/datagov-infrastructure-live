@@ -1,18 +1,22 @@
-data "aws_route53_zone" "default" {
-  name = "${var.dns_zone_name}."
+data "aws_route53_zone" "public" {
+  name = "${var.dns_zone_public}"
 }
 
 resource "aws_route53_record" "lb" {
-  zone_id = "${data.aws_route53_zone.default.zone_id}"
-  name    = "${var.name}-${var.env}"
+  zone_id = "${data.aws_route53_zone.public.zone_id}"
+  name    = "${var.name}"
   type    = "CNAME"
   ttl     = 300
   records = ["${module.lb.dns_name}"]
 }
 
 resource "aws_acm_certificate" "lb" {
-  domain_name       = "${var.name}-${var.env}.${var.dns_zone_name}"
+  domain_name       = "${var.name}.${var.dns_zone_public}"
   validation_method = "DNS"
+
+  tags = {
+    env = "${var.env}"
+  }
 
   lifecycle {
     create_before_destroy = true
@@ -23,7 +27,7 @@ resource "aws_acm_certificate" "lb" {
 resource "aws_route53_record" "lb_cert_validation" {
   name    = "${aws_acm_certificate.lb.domain_validation_options.0.resource_record_name}"
   type    = "${aws_acm_certificate.lb.domain_validation_options.0.resource_record_type}"
-  zone_id = "${data.aws_route53_zone.default.zone_id}"
+  zone_id = "${data.aws_route53_zone.public.zone_id}"
   records = ["${aws_acm_certificate.lb.domain_validation_options.0.resource_record_value}"]
   ttl     = 60
 }

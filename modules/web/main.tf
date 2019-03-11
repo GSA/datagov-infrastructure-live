@@ -1,3 +1,8 @@
+data "aws_route53_zone" "private" {
+  name         = "${var.dns_zone_private}"
+  private_zone = true
+}
+
 resource "aws_security_group" "web" {
   name        = "${var.name}-${var.env}-web-sg-tf"
   description = "Web security group"
@@ -46,4 +51,14 @@ resource "aws_instance" "web" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+resource "aws_route53_record" "web" {
+  count = "${var.instance_count}"
+
+  name    = "${var.name}-web${count.index + 1}tf"
+  zone_id = "${data.aws_route53_zone.private.zone_id}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["${element(aws_instance.web.*.private_dns, count.index)}"]
 }

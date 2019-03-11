@@ -35,9 +35,12 @@ variable "ansible_group" {
   description = "Name of the ansible group to tag web instances with."
 }
 
-variable "dns_zone_name" {
-  description = "The DNS zone in Route 53 to create DNS records under."
-  default     = "datagov.us"
+variable "dns_zone_public" {
+  description = "The DNS zone in Route 53 to create public DNS records under for the load balancer."
+}
+
+variable "dns_zone_private" {
+  description = "The internal DNS zone in to create host records under."
 }
 
 variable "lb_target_groups" {
