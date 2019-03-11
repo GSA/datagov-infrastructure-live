@@ -57,37 +57,13 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-# TODO the databases can all live in a single RDS instance. Playbooks should
-# create individual databases and users from a single RDS instance.
-module "db_ckan" {
+module "db" {
   source = "../modules/postgresdb"
 
-  db_name               = "inventory_ckan_db"
-  db_password           = "${var.db_ckan_password}"
+  db_name               = "inventory_db"
+  db_password           = "${var.db_password}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
-  db_username           = "ckan_master"
-  env                   = "${var.env}"
-  vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
-}
-
-module "db_datapusher" {
-  source = "../modules/postgresdb"
-
-  db_name               = "inventory_datapusher_db"
-  db_password           = "${var.db_datapusher_password}"
-  database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
-  db_username           = "datapusher_master"
-  env                   = "${var.env}"
-  vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
-}
-
-module "db_datastore" {
-  source = "../modules/postgresdb"
-
-  db_name               = "inventory_datastore_db"
-  db_password           = "${var.db_datastore_password}"
-  database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
-  db_username           = "datastore_master"
+  db_username           = "inventory_master"
   env                   = "${var.env}"
   vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
 }
@@ -110,10 +86,7 @@ module "web" {
   security_groups = [
     "${data.terraform_remote_state.jumpbox.security_group_id}",
     "${data.terraform_remote_state.solr.security_group_id}",
-    "${module.db_ckan.security_group}",
-    "${module.db_datapusher.security_group}",
-    # TODO we're limited to 5 security groups per interface
-    #"${module.db_datastore.security_group}",
+    "${module.db.security_group}",
   ]
 
   lb_target_groups = [{

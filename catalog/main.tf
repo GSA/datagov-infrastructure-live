@@ -57,24 +57,13 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-module "db_ckan" {
+module "db" {
   source = "../modules/postgresdb"
 
-  db_name               = "catalog_ckan_db"
-  db_password           = "${var.db_ckan_password}"
+  db_name               = "catalog_db"
+  db_password           = "${var.db_password}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
-  db_username           = "ckan_master"
-  env                   = "${var.env}"
-  vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
-}
-
-module "db_pycsw" {
-  source = "../modules/postgresdb"
-
-  db_name               = "catalog_pycsw_db"
-  db_password           = "${var.db_pycsw_password}"
-  database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
-  db_username           = "pycsw_master"
+  db_username           = "catalog_master"
   env                   = "${var.env}"
   vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
 }
@@ -96,8 +85,7 @@ module "web" {
   security_groups = [
     "${data.terraform_remote_state.jumpbox.security_group_id}",
     "${data.terraform_remote_state.solr.security_group_id}",
-    "${module.db_ckan.security_group}",
-    "${module.db_pycsw.security_group}",
+    "${module.db.security_group}",
   ]
 
   vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
@@ -127,7 +115,6 @@ module "harvester" {
   security_groups = [
     "${data.terraform_remote_state.jumpbox.security_group_id}",
     "${data.terraform_remote_state.solr.security_group_id}",
-    "${module.db_ckan.security_group}",
-    "${module.db_pycsw.security_group}",
+    "${module.db.security_group}",
   ]
 }

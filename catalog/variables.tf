@@ -7,12 +7,8 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "db_ckan_password" {
-  description = "Master password for the catalog ckan database."
-}
-
-variable "db_pycsw_password" {
-  description = "Master password for the pycsw database."
+variable "db_password" {
+  description = "Master password for the catalog database server."
 }
 
 variable "env" {

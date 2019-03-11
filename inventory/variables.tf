@@ -7,16 +7,8 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "db_ckan_password" {
-  description = "Master password for the CKAN database."
-}
-
-variable "db_datapusher_password" {
-  description = "Master password for the datapusher database."
-}
-
-variable "db_datastore_password" {
-  description = "Master password for the datastore database."
+variable "db_password" {
+  description = "Master password for the inventory database server."
 }
 
 variable "env" {
