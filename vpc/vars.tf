@@ -3,7 +3,8 @@ variable "aws_region" {
 }
 
 variable "dns_zone" {
-  description = "The DNS zone to create for this VPC."
+  description = "The parent DNS zone to create the VPC zone within."
+  default     = "datagov.us"
 }
 
 variable "vpc_name" {

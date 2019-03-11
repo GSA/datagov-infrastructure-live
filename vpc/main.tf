@@ -6,8 +6,16 @@ terraform {
   backend "s3" {}
 }
 
-resource "aws_route53_zone" "default" {
-  name = "${var.dns_zone}"
+resource "aws_route53_zone" "public" {
+  name = "${var.env}.${var.dns_zone}"
+
+  tags = {
+    env = "${var.env}"
+  }
+}
+
+resource "aws_route53_zone" "private" {
+  name = "internal.${var.env}.${var.dns_zone}"
 
   vpc {
     vpc_id = "${module.vpc.vpc_id}"

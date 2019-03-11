@@ -18,6 +18,10 @@ output "database_subnet_group" {
   value = "${module.vpc.database_subnet_group}"
 }
 
-output "dns_zone" {
-  value = "${aws_route53_zone.default.name}"
+output "dns_zone_public" {
+  value = "${aws_route53_zone.public.name}"
+}
+
+output "dns_zone_private" {
+  value = "${aws_route53_zone.private.name}"
 }
