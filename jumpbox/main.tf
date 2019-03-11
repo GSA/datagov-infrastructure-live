@@ -80,7 +80,7 @@ resource "aws_security_group" "jumpbox_access" {
 }
 
 resource "aws_iam_role" "jumpbox" {
-  name = "jumpbox_dynamic_inventory_role"
+  name = "jumpbox_dynamic_inventory_role-${var.env}"
 
   assume_role_policy = <<EOF
 {
@@ -125,7 +125,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "jumpbox" {
-  name = "jumpbox_profile"
+  name = "jumpbox_profile-${var.env}"
   role = "${aws_iam_role.jumpbox.name}"
 }
 
