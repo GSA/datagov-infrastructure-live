@@ -8,6 +8,14 @@ used in
 See datagov-infrastructure-live for development instructions.
 
 
+## Modules
+
+Modules in `modules/` are true Terraform modules. Top-level modules like
+`catalog/` are terragrunt modules. The Terraform modules are building blocks and
+consumed by the top-level terragrunt modules. The terragrunt modules encapsulate
+a full configuration for a Data.gov component.
+
+
 ## Working with ansible
 
 We use AWS dynamic inventory for ansible in our test environments. The dynamic
@@ -34,4 +42,4 @@ Tests include light terraform syntax validation. Don't forget to run the tests.
 
 You might also want to standardize the syntax in your files.
 
-   $ terraform fmt
+    $ terraform fmt

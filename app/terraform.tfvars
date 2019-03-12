@@ -1,5 +1,0 @@
-terragrunt = {
-  dependencies {
-    paths = ["../vpc"]
-  }
-}

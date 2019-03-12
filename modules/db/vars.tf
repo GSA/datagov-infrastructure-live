@@ -2,10 +2,6 @@ variable "env" {
   default = "dev"
 }
 
-variable "aws_region" {
-  default = "us-east-1"
-}
-
 variable "db_allocated_storage" {
   default = "10"
 }
@@ -19,7 +15,7 @@ variable "db_engine" {
 }
 
 variable "db_engine_version" {
- default = "9.6.1"
+  default = "9.6.1"
 }
 
 variable "db_instance_class" {
@@ -38,7 +34,7 @@ variable "db_password" {
   default = "ckanckan"
 }
 
-variable "db_subnet_group_name" {
+variable "database_subnet_group" {
   default = "ckan_database_subnet_group"
 }
 
@@ -52,4 +48,8 @@ variable "db_skip_final_snapshot" {
 
 variable "db_multi_az" {
   default = "false"
+}
+
+variable "vpc_id" {
+  description = "Id of the VPC to create the database resources in."
 }

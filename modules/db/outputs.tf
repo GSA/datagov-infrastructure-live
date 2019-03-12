@@ -12,5 +12,9 @@ output "db_password" {
 }
 
 output "db_server" {
-  value = "${aws_db_instance.ckan.address}"
+  value = "${aws_db_instance.default.address}"
+}
+
+output "security_group" {
+  value = "${aws_security_group.db_access.id}"
 }

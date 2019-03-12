@@ -1,8 +1,18 @@
-SUBDIRS := $(wildcard */.)
+SUBDIRS := \
+  catalog \
+  inventory \
+  jumpbox \
+  solr \
+  vpc \
+  modules/db \
+  modules/postgresdb \
+  modules/stateful \
+  modules/stateless \
+  modules/web
 
 test: $(SUBDIRS)
 $(SUBDIRS):
 	terraform init -backend=false $@
-	terraform validate -var-file=test.tfvars $@
+	terraform validate -check-variables=false $@
 
 .PHONY: test $(SUBDIRS)
