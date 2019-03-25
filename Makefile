@@ -1,10 +1,12 @@
 SUBDIRS := \
   catalog \
+  crm \
   inventory \
   jumpbox \
   solr \
   vpc \
   modules/db \
+  modules/mysql \
   modules/postgresdb \
   modules/stateful \
   modules/stateless \
