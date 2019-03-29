@@ -4,14 +4,15 @@ SUBDIRS := \
   dashboard \
   inventory \
   jumpbox \
-  solr \
-  vpc \
   modules/db \
   modules/mysql \
   modules/postgresdb \
   modules/stateful \
   modules/stateless \
-  modules/web
+  modules/web \
+  solr \
+  vpc \
+  wordpress
 
 test: $(SUBDIRS)
 $(SUBDIRS):
