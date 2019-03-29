@@ -1,6 +1,7 @@
 SUBDIRS := \
   catalog \
   crm \
+  dashboard \
   inventory \
   jumpbox \
   solr \
