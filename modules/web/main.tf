@@ -53,6 +53,17 @@ resource "aws_instance" "web" {
   }
 }
 
+resource "aws_lb_target_group_attachment" "lb" {
+  # Some fancy math here. We need an attachment for each instance in each
+  # target group. So (instance * target_groups) total attachments. We process all
+  # instances for a single target group by using integer division. Then move onto
+  # the next target group and process all instances.
+  count = "${var.instance_count * length(var.lb_target_groups)}"
+
+  target_group_arn = "${element(module.lb.target_group_arns, count.index / length(module.lb.target_group_arns))}"
+  target_id        = "${element(aws_instance.web.*.id, count.index)}"
+}
+
 resource "aws_route53_record" "web" {
   count = "${var.instance_count}"
 
