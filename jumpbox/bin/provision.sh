@@ -6,6 +6,8 @@ set -o nounset
 
 sudo apt update
 
+# Dependencies to run ansible
 sudo apt install -y \
-  python3-dev \
+  build-essential \
+  python-dev \
   python-virtualenv
