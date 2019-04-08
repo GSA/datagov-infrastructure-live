@@ -73,6 +73,7 @@ module "web" {
 
   ami_id           = "${data.aws_ami.ubuntu.id}"
   ansible_group    = "inventory_web"
+  bastion_host     = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
   dns_zone_public  = "${data.terraform_remote_state.vpc.dns_zone_public}"
   dns_zone_private = "${data.terraform_remote_state.vpc.dns_zone_private}"
   env              = "${var.env}"

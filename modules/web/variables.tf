@@ -3,6 +3,11 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
+variable "bastion_host" {
+  description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
+  default     = ""
+}
+
 variable "name" {
   description = "Name slug to use as a prefix or name for resources."
   type        = "string"
