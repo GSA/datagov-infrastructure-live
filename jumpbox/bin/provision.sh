@@ -9,5 +9,6 @@ sudo apt update
 # Dependencies to run ansible
 sudo apt install -y \
   build-essential \
+  git \
   python-dev \
   python-virtualenv
