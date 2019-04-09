@@ -23,6 +23,7 @@ resource "aws_route53_record" "public_zone" {
   name    = "${aws_route53_zone.public.name}"
   type    = "NS"
   ttl     = "300"
+
   records = [
     "${aws_route53_zone.public.name_servers.0}",
     "${aws_route53_zone.public.name_servers.1}",
@@ -36,6 +37,7 @@ resource "aws_route53_record" "private_zone" {
   name    = "${aws_route53_zone.private.name}"
   type    = "NS"
   ttl     = "300"
+
   records = [
     "${aws_route53_zone.private.name_servers.0}",
     "${aws_route53_zone.private.name_servers.1}",
