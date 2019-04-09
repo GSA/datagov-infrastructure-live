@@ -12,7 +12,7 @@ data "terraform_remote_state" "vpc" {
   config {
     bucket = "datagov-terraform-state"
     key    = "${var.env}/vpc/terraform.tfstate"
-    region = "us-east-1"
+    region = "${var.aws_region}"
   }
 }
 
