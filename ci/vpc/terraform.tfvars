@@ -1,14 +1,14 @@
 # Terragrunt config
 terragrunt = {
   terraform {
-    source = "github.com/GSA/datagov-infrastructure-modules//vpc"
+    source = "github.com/gsa/datagov-infrastructure-modules.git//vpc?ref=v1.0.0"
   }
 
   include {
     path = "${find_in_parent_folders()}"
   }
-
 }
 
 # Module config
-aws_region = "us-east-1"
+env        = "ci"
+vpc_name   = "datagov-ci"

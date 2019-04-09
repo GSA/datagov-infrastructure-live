@@ -1,7 +1,7 @@
 # Terragrunt config
 terragrunt = {
   terraform {
-    source = "github.com/GSA/datagov-infrastructure-modules.git//app"
+    source = "github.com/GSA/datagov-infrastructure-modules.git//jumpbox?ref=v1.0.0"
   }
 
   include {
@@ -9,11 +9,10 @@ terragrunt = {
   }
 
   dependencies {
-    paths = ["../db"]
+    paths = ["../vpc"]
   }
-
 }
 
 # Module config
-aws_region = "us-east-1"
-env        = "dev"
+env        = "ci"
+key_name   = "adborden"
