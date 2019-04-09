@@ -68,21 +68,46 @@ The jumpbox dns is an output variable in the jumpbox module.
     $ terragrunt output
 
 When the jumpbox is first created, you'll need to bootstrap it to run ansible.
+You can copy/paste these scripts into your terminal.
+
+First, install pyenv.
 
 ```bash
-git clone https://github.com/GSA/datagov-deploy.git
-virtualenv venv
-source venv/bin/activate
-pip install -U setuptools
-pip install -r datagov-dedupe/requirements.txt
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
+Setup SSH.
+
+```bash
 cat <<EOF > ~/.ssh/config
 StrictHostKeyChecking=no
+
+Host *.datagov.us
+    User ubuntu
+    IdentityFile ~/.ssh/authorized_keys
 EOF
 ```
 
-Symlink the inventory to avoid having to specify it with ansible.
+Then setup datagov-deploy.
 
-    $ sudo ln -s /home/ubuntu/datagov-deploy/ansible/inventories/${environment} /etc/ansible/hosts
+```bash
+git clone https://github.com/GSA/datagov-deploy.git
+cd datagov-deploy
+pip install --user pipenv
+pipenv install
+```
+
+Symlink the inventory to avoid having to specify it with ansible. _Note: You'll have to
+replace the placeholder `${environment}` with the name of your inventory._
+
+```bash
+sudo mkdir /etc/ansible
+sudo ln -s /home/ubuntu/datagov-deploy/ansible/inventories/${environment} /etc/ansible/hosts
+```
 
 
 ### First-time apply for environment
