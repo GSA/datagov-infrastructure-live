@@ -11,4 +11,5 @@ sudo apt install -y \
   build-essential \
   git \
   python-dev \
-  python-virtualenv
+  python-virtualenv \
+  zlib1g-dev
