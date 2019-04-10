@@ -14,7 +14,7 @@ jobs:
       - run:
           name: validate test
           command: |
-            cd test
+            cd ci
             terragrunt validate-all
 
 workflows:
