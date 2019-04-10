@@ -17,10 +17,13 @@ _Note: production and staging environments are hosted in BSP and are
 - Install terraform: https://www.terraform.io/intro/getting-started/install.html
 - Install terragrunt: https://github.com/gruntwork-io/terragrunt#install-terragrunt
 
-## Environments
+## Sandbox environments
+
+This describes the various sandbox environments and their purpose.
 
 Name | Description | Jumpbox
 ---- | ----------- | -------
+`bionic`   | For testing playbooks against Ubuntu Bionic. | datagov-jump1tf.bionic.datagov.us
 `ci`   | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | datagov-jump1tf.ci.datagov.us
 `test` | Deprecated. This environment will be deleted once other environments are in place. | datagov-jump1t.datagov.us
 
@@ -77,6 +80,7 @@ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
 echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
