@@ -101,7 +101,7 @@ Then setup datagov-deploy.
 ```bash
 git clone https://github.com/GSA/datagov-deploy.git
 cd datagov-deploy
-pip install --user pipenv
+pip3 install --user pipenv
 pipenv install
 ```
 
