@@ -15,4 +15,4 @@ terragrunt = {
 
 # Module config
 env        = "ci"
-key_name   = "adborden"
+key_name   = "datagov-sandbox"

@@ -23,5 +23,5 @@ terragrunt = {
 
 # Module config
 env        = "bionic"
-key_name   = "adborden"
+key_name   = "datagov-sandbox"
 ami_filter_name = "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*"
