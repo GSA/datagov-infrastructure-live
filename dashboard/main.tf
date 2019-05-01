@@ -80,7 +80,7 @@ module "web" {
 
   lb_target_groups = [{
     name              = "dashboard-web-${var.env}"
-    backend_protocol  = "HTTP"
+    backend_protocol  = "HTTPS"
     backend_port      = "443"
     health_check_path = "/"
   }]
