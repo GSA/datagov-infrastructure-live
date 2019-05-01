@@ -28,6 +28,6 @@ variable "harvester_instance_count" {
 }
 
 variable "harvester_instance_type" {
-  description = "Number of harvester instances to create."
-  default     = "t2.micro"
+  description = "Instance type to use for harvesters."
+  default     = "t3.small"
 }
