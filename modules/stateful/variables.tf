@@ -7,6 +7,11 @@ variable "availability_zones" {
   description = "List of availability zones to create EBS volumes in."
 }
 
+variable "bastion_host" {
+  description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
+  default     = ""                                                                     # unset
+}
+
 variable "dns_zone" {
   description = "DNS zone to create hostname records."
 }

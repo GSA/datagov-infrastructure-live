@@ -39,6 +39,40 @@ resource "aws_instance" "default" {
     var.tags)}"
 }
 
+# Provision stateful instance only after EBS volumes are attached
+resource "null_resource" "default" {
+  triggers {
+    attachment_ids = "${aws_volume_attachment.default.id}"
+  }
+
+  connection {
+    type = "ssh"
+    user = "ubuntu"
+    host = "${aws_instance.default.private_ip}"
+
+    bastion_host = "${var.bastion_host != "" ? var.bastion_host : aws_instance.default.private_ip}"
+  }
+
+  provisioner "file" {
+    # initialize stateful EBS
+    # TODO the path here is very strange, not sure if this is a terragrunt
+    # thing, nested module thing, or terraform thing.
+    source = "../modules/stateful/bin/initialize-stateful.sh"
+
+    destination = "/tmp/initialize-stateful.sh"
+  }
+
+  provisioner "remote-exec" {
+    # install Ansible executor dependencies and initialize EBS
+    inline = [
+      "sudo apt-get update",
+      "sudo apt-get install -y python",
+      "chmod +x /tmp/initialize-stateful.sh",
+      "sudo /tmp/initialize-stateful.sh",
+    ]
+  }
+}
+
 resource "aws_route53_record" "default" {
   count = "${var.instance_count}"
 

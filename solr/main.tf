@@ -88,6 +88,7 @@ module "solr" {
   ami_id               = "${data.aws_ami.ubuntu.id}"
   ansible_group        = "solr"
   availability_zones   = "${data.terraform_remote_state.vpc.azs}"
+  bastion_host         = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
   dns_zone             = "${data.terraform_remote_state.vpc.dns_zone_private}"
   ebs_size             = "${var.ebs_size}"
   env                  = "${var.env}"

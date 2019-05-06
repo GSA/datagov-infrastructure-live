@@ -145,8 +145,8 @@ resource "aws_instance" "jumpbox" {
   }
 
   connection {
-    type     = "ssh"
-    user     = "ubuntu"
+    type = "ssh"
+    user = "ubuntu"
   }
 
   provisioner "remote-exec" {

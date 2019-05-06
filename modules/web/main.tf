@@ -51,6 +51,21 @@ resource "aws_instance" "web" {
   lifecycle {
     create_before_destroy = true
   }
+
+  provisioner "remote-exec" {
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+
+      bastion_host = "${var.bastion_host != "" ? var.bastion_host : aws_instance.default.private_ip}"
+    }
+
+    # install Ansible executor dependencies
+    inline = [
+      "sudo apt-get update",
+      "sudo apt-get install -y python",
+    ]
+  }
 }
 
 resource "aws_lb_target_group_attachment" "lb" {

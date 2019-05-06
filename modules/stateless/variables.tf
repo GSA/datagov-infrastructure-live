@@ -6,6 +6,11 @@ variable "ansible_group" {
   description = "Name of the ansible group to tag web instances with."
 }
 
+variable "bastion_host" {
+  description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
+  default     = ""
+}
+
 variable "dns_zone" {
   description = "Internal DNS zone to create host records for."
 }
