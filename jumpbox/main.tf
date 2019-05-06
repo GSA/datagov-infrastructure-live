@@ -155,7 +155,7 @@ resource "aws_instance" "jumpbox" {
 }
 
 resource "aws_route53_record" "public" {
-  name    = "datagov-jump1tf"
+  name    = "jump"
   zone_id = "${data.aws_route53_zone.public.zone_id}"
 
   type    = "A"
