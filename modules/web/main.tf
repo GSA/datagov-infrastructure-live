@@ -57,7 +57,7 @@ resource "aws_instance" "web" {
       type = "ssh"
       user = "ubuntu"
 
-      bastion_host = "${var.bastion_host != "" ? var.bastion_host : aws_instance.default.private_ip}"
+      bastion_host = "${var.bastion_host != "" ? var.bastion_host : aws_instance.web.private_ip}"
     }
 
     # install Ansible executor dependencies
