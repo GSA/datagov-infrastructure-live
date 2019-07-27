@@ -132,6 +132,7 @@ module "harvester" {
 
   ami_id               = "${data.aws_ami.ubuntu.id}"
   ansible_group        = "catalog_harvester"
+  bastion_host         = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
   dns_zone             = "${data.terraform_remote_state.vpc.dns_zone_private}"
   env                  = "${var.env}"
   instance_count       = "${var.harvester_instance_count}"
