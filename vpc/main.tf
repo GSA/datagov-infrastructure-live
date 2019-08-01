@@ -59,8 +59,8 @@ resource "aws_route53_zone" "private" {
 }
 
 module "vpc" {
-  source  = "github.com/terraform-aws-modules/terraform-aws-vpc"
-  version = "1.57.0"
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "1.67.0"
 
   name = "${var.vpc_name}"
 
