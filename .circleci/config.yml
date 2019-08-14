@@ -9,7 +9,7 @@ jobs:
       - run:
           name: install terragrunt
           command: |
-            curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.17.1/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
+            curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.19/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
             chmod +x /usr/local/bin/terragrunt
       - run:
           name: validate test
