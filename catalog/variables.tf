@@ -22,6 +22,11 @@ variable "web_instance_count" {
   default     = 1
 }
 
+variable "web_instance_type" {
+  description = "Instance type to use for web."
+  default     = "t3.small"
+}
+
 variable "harvester_instance_count" {
   description = "Number of harvester instances to create."
   default     = 1
