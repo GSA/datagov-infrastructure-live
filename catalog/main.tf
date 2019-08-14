@@ -78,6 +78,7 @@ module "web" {
   dns_zone_private = "${data.terraform_remote_state.vpc.dns_zone_private}"
   env              = "${var.env}"
   instance_count   = "${var.web_instance_count}"
+  instance_type    = "${var.web_instance_type}"
   key_name         = "${var.key_name}"
   name             = "catalog"
   private_subnets  = "${data.terraform_remote_state.vpc.private_subnets}"
