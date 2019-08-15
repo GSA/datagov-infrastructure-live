@@ -2,7 +2,7 @@ version: 2
 jobs:
   validate:
     docker:
-      - image: hashicorp/terraform
+      - image: hashicorp/terraform:0.11.14
         entrypoint: ["/bin/sh"]
     environment:
       # Only in terragrunt v0.19
@@ -12,7 +12,7 @@ jobs:
       - run:
           name: install terragrunt
           command: |
-            curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.19/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
+            curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.7/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
             chmod +x /usr/local/bin/terragrunt
       - run:
           name: validate test
@@ -21,7 +21,7 @@ jobs:
           # credentials. We could upgrade to v0.19 with terraform v0.12.
           command: |
             cd ci
-            echo no tests
+            terragrunt validate-all
 
 workflows:
   version: 2
