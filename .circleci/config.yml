@@ -14,14 +14,16 @@ jobs:
           command: |
             curl -L 'https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.7/terragrunt_linux_amd64' > /usr/local/bin/terragrunt
             chmod +x /usr/local/bin/terragrunt
+      # TODO https://github.com/gruntwork-io/terragrunt/issues/597
+      # Terragrunt <=v0.18.x does not support running validate-all without
+      # credentials. We could upgrade to v0.19 with terraform v0.12.
       - run:
-          name: validate test
-          # TODO https://github.com/gruntwork-io/terragrunt/issues/597
-          # Terragrunt <=v0.18.x does not support running validate-all without
-          # credentials. We could upgrade to v0.19 with terraform v0.12.
-          command: |
-            cd ci
-            terragrunt validate-all
+          name: validate ci
+          command: cd ci && terragrunt validate-all
+      - run:
+          name: validate bionic
+          command: cd bionic && terragrunt validate-all
+
 
 workflows:
   version: 2
