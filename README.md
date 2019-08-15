@@ -74,10 +74,11 @@ First, install pyenv.
 
 ```bash
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
-source ~/.bash_profile
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 Setup SSH.
@@ -97,7 +98,7 @@ Then setup datagov-deploy.
 ```bash
 git clone https://github.com/GSA/datagov-deploy.git
 cd datagov-deploy
-pip install --user pipenv
+pip3 install --user pipenv
 pipenv install
 ```
 
