@@ -1,7 +1,7 @@
 # Terragrunt config
 terragrunt = {
   terraform {
-    source = "github.com/GSA/datagov-infrastructure-modules.git//jumpbox?ref=v1.2.2"
+    source = "github.com/GSA/datagov-infrastructure-modules.git//jumpbox?ref=v1.2.3"
   }
 
   include {

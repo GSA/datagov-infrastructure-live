@@ -1,7 +1,7 @@
 # Terragrunt config
 terragrunt = {
   terraform {
-    source = "github.com/gsa/datagov-infrastructure-modules.git//crm?ref=v1.2.2"
+    source = "github.com/gsa/datagov-infrastructure-modules.git//crm?ref=v1.2.3"
 
     extra_arguments "secrets" {
       commands = ["${get_terraform_commands_that_need_vars()}"]
