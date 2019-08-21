@@ -26,7 +26,7 @@ resource "aws_instance" "default" {
   instance_type          = "${var.instance_type}"
   vpc_security_group_ids = ["${var.security_groups}"]
 
-  associate_public_ip_address = false
+  associate_public_ip_address = "${var.associate_public_ip_address}"
   subnet_id                   = "${element(var.subnets, count.index)}"
   key_name                    = "${var.key_name}"
 

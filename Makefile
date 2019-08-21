@@ -3,6 +3,7 @@ SUBDIRS := \
   crm \
   dashboard \
   inventory \
+  jenkins \
   jumpbox \
   modules/db \
   modules/mysql \
