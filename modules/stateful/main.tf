@@ -23,6 +23,7 @@ resource "aws_instance" "default" {
   count = "${var.instance_count}"
 
   ami                    = "${var.ami_id}"
+  iam_instance_profile   = "${var.iam_instance_profile}"
   instance_type          = "${var.instance_type}"
   vpc_security_group_ids = ["${var.security_groups}"]
 

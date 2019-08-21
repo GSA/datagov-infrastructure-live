@@ -87,6 +87,57 @@ resource "aws_route53_record" "public" {
   records = ["${module.jenkins.instance_public_ip}"]
 }
 
+resource "aws_iam_role" "jenkins" {
+  name = "jenkins_dynamic_inventory_role-${var.env}"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": "JenkinsDynamicInventoryAssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+# This allows jenkins to query the AWS API for EC2 and RDS resources for
+# the Ansible dynamic inventory.
+resource "aws_iam_role_policy" "jenkins" {
+  name = "jenkins_dynamic_inventory_policy"
+  role = "${aws_iam_role.jenkins.id}"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ec2:Describe*",
+        "rds:Describe*",
+        "route53:ListHostedZones",
+        "route53:ListResourceRecordSets"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_instance_profile" "jenkins" {
+  name = "jenkins_profile-${var.env}"
+  role = "${aws_iam_role.jenkins.name}"
+}
+
+
 module "jenkins" {
   source = "../modules/stateful"
 
@@ -98,6 +149,7 @@ module "jenkins" {
   dns_zone                    = "${data.terraform_remote_state.vpc.dns_zone_private}"
   ebs_size                    = "${var.ebs_size}"
   env                         = "${var.env}"
+  iam_instance_profile        = "${aws_iam_instance_profile.jenkins.name}"
   instance_count              = "1"
   instance_name_format        = "jenkins%dtf"
   instance_type               = "t2.medium"

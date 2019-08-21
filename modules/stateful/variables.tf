@@ -48,6 +48,11 @@ variable "ansible_group" {
   description = "Name of the ansible group to tag web instances with."
 }
 
+variable "iam_instance_profile" {
+  description = "The IAM instance profile name to pass to the stateful EC2 instances."
+  default     = ""
+}
+
 variable "tags" {
   type        = "map"
   description = "Map of key/value pairs describing tags to create for instances"
