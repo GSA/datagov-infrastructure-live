@@ -99,7 +99,7 @@ Then setup datagov-deploy.
 git clone https://github.com/GSA/datagov-deploy.git
 cd datagov-deploy
 pip3 install --user pipenv
-pipenv install
+pipenv sync
 ```
 
 Symlink the inventory to avoid having to specify it with ansible. _Note: You'll have to
