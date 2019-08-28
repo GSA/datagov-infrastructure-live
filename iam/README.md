@@ -23,8 +23,8 @@ Manage Data.gov sandbox access through Infrastructure as Code.
 
 ### New users
 
-Create a new user module within `main.tf`. You can copy from an existing
-resources. Make sure the user is in the `developer` group which enforces MFA.
+Create a new user module within `users.tf`. You can copy from an existing
+resource. Make sure the user is in the `developers` group which enforces MFA.
 
 ```
 module "firstname_lastname" {
@@ -48,4 +48,4 @@ _Note: the new user may have to sign out and back in again._
 
 ### Removing a user
 
-Remove the user's entry from `main.tf`.
+Remove the user's entry from `users.tf`.
