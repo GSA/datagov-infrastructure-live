@@ -2,7 +2,7 @@ resource "aws_iam_group" "developers" {
   name = "developers"
 }
 
-resource "aws_iam_group_policy_attachment" "test-attach" {
+resource "aws_iam_group_policy_attachment" "developers" {
   group      = "${aws_iam_group.developers.name}"
   policy_arn = "${aws_iam_policy.enforce_mfa.arn}"
 }
