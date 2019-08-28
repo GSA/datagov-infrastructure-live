@@ -23,28 +23,29 @@ Manage Data.gov sandbox access through Infrastructure as Code.
 
 ### New users
 
-Add the `aws_iam_user` and `aws_iam_user_group_membership` resources. Make sure
-the user is in the `developer` group which enforces MFA.
+Create a new user module within `main.tf`. You can copy from an existing
+resources. Make sure the user is in the `developer` group which enforces MFA.
 
-Apply the changes to create the user.
+```
+module "firstname_lastname" {
+  source  = "./user"
+  name = "firstname.lastname@gsa.gov"
+  groups = ["developers"]
+}
+```
 
-    $ terraform apply
-
-Log into IAM to enable console access and set a temporary password for the user.
+Once applied, log into IAM to enable console access and set a temporary password
+for the user.
 
 ![Screenshot showing how to enable IAM console access](./docs/enable_new_user.png)
 
-At this point, the user can login with the temporary password. They'll have to
-set a new password and enable MFA before they can do anything else.
+At this point, the user can login with the temporary password. From the AWS
+console, click their username -> My Security Credentials. They will have to
+enable MFA and change their password before they can do anything else.
 
 _Note: the new user may have to sign out and back in again._
 
 
 ### Removing a user
 
-Remove the user's `aws_iam_user` and `aws_iam_user_group_membership` resources.
-Then apply the changes.
-
-_Note: make sure `force_destroy = true` has been applied prior to removing the
-resources. Otherwise you might run into a DeleteConflict with the user's login
-profile._
+Remove the user's entry from `main.tf`.
