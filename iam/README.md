@@ -20,6 +20,15 @@ Manage Data.gov sandbox access through Infrastructure as Code.
 
 ## Usage
 
+Changes are applied automatically through [continuous
+deployment](https://circleci.com/gh/GSA/workflows/datagov-infrastructure-live).
+As part of the PR review, you should check that the `iam-plan` includes only
+expected changes.
+
+The `master` branch will actually apply changes. Be sure to check the `iam-plan`
+step before [approving the
+workflow](https://circleci.com/gh/GSA/workflows/datagov-infrastructure-live).
+
 
 ### New users
 
