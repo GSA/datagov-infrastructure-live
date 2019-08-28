@@ -6,3 +6,21 @@ module "aaron_borden" {
     "Admin"
   ]
 }
+
+module "adam_kariv" {
+  source = "./user"
+  name   = "akariv@viderum.com"
+  groups = [
+    "developers",
+    "datagov-ckan-multi"
+  ]
+}
+
+module "anuar_ustayev" {
+  source = "./user"
+  name   = "austayev@viderum.com"
+  groups = [
+    "developers",
+    "datagov-ckan-multi"
+  ]
+}
