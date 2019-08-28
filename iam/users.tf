@@ -9,3 +9,12 @@ module "test_iam2" {
   name   = "test_iam2"
   groups = ["developers"]
 }
+
+module "aaron_borden" {
+  source = "./user"
+  name   = "aaron.borden@gsa.gov"
+  groups = [
+    "developers",
+    "Admin"
+  ]
+}
