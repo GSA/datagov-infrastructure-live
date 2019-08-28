@@ -24,9 +24,72 @@ jobs:
           name: validate bionic
           command: cd bionic && terragrunt validate-all
 
+  iam-validate:
+    docker:
+      - image: hashicorp/terraform:latest
+        entrypoint: ["/bin/sh"]
+    steps:
+      - checkout
+      - run:
+          name: terraform validate
+          command: |
+            cd iam
+            terraform init -backend=false
+            terraform validate
+
+  iam-plan:
+    docker:
+      - image: hashicorp/terraform:latest
+        entrypoint: ["/bin/sh"]
+    steps:
+      - checkout
+      - run:
+          name: terraform plan
+          command: |
+            cd iam
+            terraform init
+            terraform plan -out=tfplan.plan
+      - persist_to_workspace:
+          root: .
+          paths:
+            - iam/tfplan.plan
+
+  iam-apply:
+    docker:
+      - image: hashicorp/terraform:latest
+        entrypoint: ["/bin/sh"]
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: terraform apply
+          command: |
+            cd iam
+            terraform init
+            terraform apply tfplan.plan
+
 
 workflows:
   version: 2
   commit:
     jobs:
       - validate
+      - iam-validate
+      - iam-plan:
+          requires:
+            - iam-validate
+
+      - iam-approve:
+          type: approval
+          requires:
+            - iam-plan
+          filters:
+            branches:
+              only:
+                - master
+                - feature/iam
+
+      - iam-apply:
+          requires:
+            - iam-approve
