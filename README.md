@@ -21,8 +21,8 @@ _Note: production and staging environments are hosted in BSP and are
 
 Name | Description | Jumpbox
 ---- | ----------- | -------
-`ci`   | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | datagov-jump1tf.ci.datagov.us
-`test` | Deprecated. This environment will be deleted once other environments are in place. | datagov-jump1t.datagov.us
+`bionic`   | Environment to support the Ubuntu Bionic migration. | jump.bionic.datagov.us
+`ci`       | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | jump.ci.datagov.us
 
 
 ## Usage
