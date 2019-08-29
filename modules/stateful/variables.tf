@@ -2,6 +2,11 @@ variable "ami_id" {
   description = "Id of the AMI to use for instances."
 }
 
+variable "associate_public_ip_address" {
+  description = "Whether or not a public IP address should be associated with this instance."
+  default     = false
+}
+
 variable "availability_zones" {
   type        = "list"
   description = "List of availability zones to create EBS volumes in."
@@ -41,6 +46,11 @@ variable "instance_type" {
 
 variable "ansible_group" {
   description = "Name of the ansible group to tag web instances with."
+}
+
+variable "iam_instance_profile" {
+  description = "The IAM instance profile name to pass to the stateful EC2 instances."
+  default     = ""
 }
 
 variable "tags" {
