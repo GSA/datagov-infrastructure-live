@@ -1,7 +1,7 @@
 output "security_group_id" {
-  value = "${aws_security_group.jumpbox_access.id}"
+  value = "${module.default.security_group_id}"
 }
 
 output "jumpbox_dns" {
-  value = "${aws_route53_record.public.fqdn}"
+  value = "${module.default.jumpbox_dns}"
 }
