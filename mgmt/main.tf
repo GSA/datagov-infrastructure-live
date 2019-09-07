@@ -41,6 +41,46 @@ module "vpc" {
   dns_zone = "${var.dns_zone}"
 }
 
+resource "aws_security_group" "elasticsearch" {
+  name        = "elastic-search-${var.env}"
+  description = "Elasticsearch security group"
+  vpc_id      = "${module.vpc.vpc_id}"
+
+  ingress {
+    from_port       = 9200
+    to_port         = 9200
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.elasticsearch_access.id}"]
+  }
+
+  ingress {
+    from_port       = 9300
+    to_port         = 9300
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.elasticsearch_access.id}"]
+  }
+
+  egress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "elasticsearch_access" {
+  name        = "elasticsearch-access-${var.env}-tf"
+  description = "Provides access to elasticsearch"
+  vpc_id      = "${module.vpc.vpc_id}"
+}
+
 module "jumpbox" {
   source = "github.com/gsa/datagov-infrastructure-modules//modules/jumpbox?ref=module-refactor"
 
@@ -53,21 +93,20 @@ module "jumpbox" {
   vpc_id           = "${module.vpc.vpc_id}"
 }
 
-#module "elasticsearch" {
-#  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/stateful?ref=module-refactor"
-#
-#  ami_id               = "${data.aws_ami.ubuntu.id}"
-#  ansible_group        = "elasticsearch"
-#  availability_zones   = "${module.vpc.azs}"
-#  bastion_host         = "${module.jumpbox.jumpbox_dns}"
-#  dns_zone             = "${module.vpc.dns_zone_private}"
-#  ebs_size             = "20"
-#  env                  = "${var.env}"
-#  instance_count       = "2"
-#  instance_name_format = "elasticsearch%d"
-#  key_name             = "${var.key_name}"
-#  security_groups      = ["${module.jumpbox.security_group_id}"]
-#  subnets              = "${module.vpc.private_subnets}"
-#  vpc_id               = "${module.vpc.vpc_id}"
-#}
+module "elasticsearch" {
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/stateful?ref=module-refactor"
 
+  ami_id               = "${data.aws_ami.ubuntu.id}"
+  ansible_group        = "elasticsearch"
+  availability_zones   = "${module.vpc.azs}"
+  bastion_host         = "${module.jumpbox.jumpbox_dns}"
+  dns_zone             = "${module.vpc.dns_zone_private}"
+  ebs_size             = 10
+  env                  = "${var.env}"
+  instance_count       = 2
+  instance_name_format = "elasticsearch%d"
+  key_name             = "${var.key_name}"
+  security_groups      = ["${aws_security_group.elasticsearch.id}", "${module.jumpbox.security_group_id}"]
+  subnets              = "${module.vpc.private_subnets}"
+  vpc_id               = "${module.vpc.vpc_id}"
+}
