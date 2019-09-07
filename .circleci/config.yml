@@ -1,3 +1,38 @@
+reference:
+  validate-steps: &validate-steps
+    - checkout
+    - run:
+        name: terraform validate
+        command: |
+          cd $terraform_env
+          terraform init -backend=false
+          terraform validate
+
+  plan-steps: &plan-steps
+    - checkout
+    - run:
+        name: terraform plan
+        command: |
+          cd $terraform_env
+          terraform init
+          terraform plan -out=tfplan.plan
+    - persist_to_workspace:
+        root: .
+        paths:
+          - $terraform_env/tfplan.plan
+
+  apply-steps: &apply-steps
+    - checkout
+    - attach_workspace:
+        at: .
+    - run:
+        name: terraform apply
+        command: |
+          cd $terraform_env
+          terraform init
+          terraform apply tfplan.plan
+
+
 version: 2
 jobs:
   validate:
@@ -28,46 +63,49 @@ jobs:
     docker:
       - image: hashicorp/terraform:latest
         entrypoint: ["/bin/sh"]
-    steps:
-      - checkout
-      - run:
-          name: terraform validate
-          command: |
-            cd iam
-            terraform init -backend=false
-            terraform validate
+    environment:
+      terraform_env: iam
+    steps: *validate-steps
 
   iam-plan:
     docker:
       - image: hashicorp/terraform:latest
         entrypoint: ["/bin/sh"]
-    steps:
-      - checkout
-      - run:
-          name: terraform plan
-          command: |
-            cd iam
-            terraform init
-            terraform plan -out=tfplan.plan
-      - persist_to_workspace:
-          root: .
-          paths:
-            - iam/tfplan.plan
+    environment:
+      terraform_env: iam
+    steps: *plan-steps
 
   iam-apply:
     docker:
       - image: hashicorp/terraform:latest
         entrypoint: ["/bin/sh"]
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: terraform apply
-          command: |
-            cd iam
-            terraform init
-            terraform apply tfplan.plan
+    environment:
+      terraform_env: iam
+    steps: *apply-steps
+
+  mgmt-validate:
+    docker:
+      - image: hashicorp/terraform:0.11.14
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_env: mgmt
+    steps: *validate-steps
+
+  mgmt-plan:
+    docker:
+      - image: hashicorp/terraform:0.11.14
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_env: mgmt
+    steps: *plan-steps
+
+  mgmt-apply:
+    docker:
+      - image: hashicorp/terraform:0.11.14
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_env: mgmt
+    steps: *apply-steps
 
 
 workflows:
@@ -92,3 +130,21 @@ workflows:
       - iam-apply:
           requires:
             - iam-approve
+
+      - mgmt-validate
+      - mgmt-plan:
+          requires:
+            - mgmt-validate
+
+      - mgmt-approve:
+          type: approval
+          requires:
+            - mgmt-plan
+          filters:
+            branches:
+              only:
+                - master
+
+      - mgmt-apply:
+          requires:
+            - mgmt-approve
