@@ -16,6 +16,15 @@ module "adam_kariv" {
   ]
 }
 
+module "joel_natividad" {
+  source = "./user"
+  name   = "joel.natividad@datopian.com"
+  groups = [
+    "developers",
+    "datagov-ckan-multi"
+  ]
+}
+
 module "anuar_ustayev" {
   source = "./user"
   name   = "austayev@viderum.com"
