@@ -7,10 +7,12 @@ SUBDIRS := \
   jumpbox \
   modules/ckan-cloud \
   modules/db \
+  modules/jumpbox \
   modules/mysql \
   modules/postgresdb \
   modules/stateful \
   modules/stateless \
+  modules/vpc \
   modules/web \
   solr \
   vpc \
