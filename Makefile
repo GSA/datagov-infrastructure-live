@@ -5,6 +5,7 @@ SUBDIRS := \
   inventory \
   jenkins \
   jumpbox \
+  modules/ckan-cloud \
   modules/db \
   modules/mysql \
   modules/postgresdb \
