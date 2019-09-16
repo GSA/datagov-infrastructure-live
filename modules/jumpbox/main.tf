@@ -145,6 +145,12 @@ resource "aws_instance" "jumpbox" {
     user = "ubuntu"
   }
 
+  lifecycle {
+    ignore_changes = [
+      "ami",
+    ]
+  }
+
   provisioner "remote-exec" {
     script = "${path.module}/bin/provision.sh"
   }
