@@ -1,3 +1,38 @@
+validate-steps: &validate-steps
+  - checkout
+  - run:
+      name: terraform validate
+      command: |
+        cd $terraform_directory
+        terraform init -backend=false
+        terraform validate
+
+
+plan-steps: &plan-steps
+  - checkout
+  - run:
+      name: terraform plan
+      command: |
+        cd $terraform_directory
+        terraform init
+        terraform plan -out=../tfplan.plan
+  - persist_to_workspace:
+      root: .
+      paths:
+        - tfplan.plan
+
+apply-steps: &apply-steps
+  - checkout
+  - attach_workspace:
+      at: .
+  - run:
+      name: terraform apply
+      command: |
+        cd $terraform_directory
+        terraform init
+        terraform apply ../tfplan.plan
+
+
 version: 2
 jobs:
   validate:
@@ -24,50 +59,53 @@ jobs:
           name: validate bionic
           command: cd bionic && terragrunt validate-all
 
+  ckan-cloud-dev-validate:
+    docker:
+      - image: hashicorp/terraform:0.11.14
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_directory: ckan-cloud-dev
+    steps: *validate-steps
+
+  ckan-cloud-dev-plan:
+    docker:
+      - image: hashicorp/terraform:0.11.14
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_directory: ckan-cloud-dev
+    steps: *plan-steps
+
+  ckan-cloud-dev-apply:
+    docker:
+      - image: hashicorp/terraform:0.11.14
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_directory: ckan-cloud-dev
+    steps: *apply-steps
+
   iam-validate:
     docker:
       - image: hashicorp/terraform:latest
         entrypoint: ["/bin/sh"]
-    steps:
-      - checkout
-      - run:
-          name: terraform validate
-          command: |
-            cd iam
-            terraform init -backend=false
-            terraform validate
+    environment:
+      terraform_directory: iam
+    steps: *validate-steps
 
   iam-plan:
     docker:
       - image: hashicorp/terraform:latest
         entrypoint: ["/bin/sh"]
-    steps:
-      - checkout
-      - run:
-          name: terraform plan
-          command: |
-            cd iam
-            terraform init
-            terraform plan -out=tfplan.plan
-      - persist_to_workspace:
-          root: .
-          paths:
-            - iam/tfplan.plan
+    environment:
+      terraform_directory: iam
+    steps: *plan-steps
 
   iam-apply:
     docker:
       - image: hashicorp/terraform:latest
         entrypoint: ["/bin/sh"]
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: terraform apply
-          command: |
-            cd iam
-            terraform init
-            terraform apply tfplan.plan
+    environment:
+      terraform_directory: iam
+    steps: *apply-steps
 
 
 workflows:
@@ -75,11 +113,11 @@ workflows:
   commit:
     jobs:
       - validate
+
       - iam-validate
       - iam-plan:
           requires:
             - iam-validate
-
       - iam-approve:
           type: approval
           requires:
@@ -88,7 +126,24 @@ workflows:
             branches:
               only:
                 - master
-
       - iam-apply:
           requires:
             - iam-approve
+
+      - ckan-cloud-dev-validate
+      - ckan-cloud-dev-plan:
+          requires:
+            - ckan-cloud-dev-validate
+
+      - ckan-cloud-dev-approve:
+          type: approval
+          requires:
+            - ckan-cloud-dev-plan
+          filters:
+            branches:
+              only:
+                - master
+
+      - ckan-cloud-dev-apply:
+          requires:
+            - ckan-cloud-dev-approve
