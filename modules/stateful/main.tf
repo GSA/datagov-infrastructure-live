@@ -14,9 +14,11 @@ resource "aws_ebs_volume" "default" {
 }
 
 resource "aws_volume_attachment" "default" {
+  count = "${var.instance_count}"
+
   device_name = "/dev/xvdh"
-  volume_id   = "${aws_ebs_volume.default.id}"
-  instance_id = "${aws_instance.default.id}"
+  volume_id   = "${element(aws_ebs_volume.default.*.id, count.index)}"
+  instance_id = "${element(aws_instance.default.*.id, count.index)}"
 }
 
 resource "aws_instance" "default" {
@@ -42,23 +44,25 @@ resource "aws_instance" "default" {
 
 # Provision stateful instance only after EBS volumes are attached
 resource "null_resource" "default" {
+  count = "${var.instance_count}"
+
   triggers {
-    attachment_ids = "${aws_volume_attachment.default.id}"
+    attachment_ids = "${element(aws_volume_attachment.default.*.id, count.index)}"
   }
 
   connection {
     type = "ssh"
     user = "ubuntu"
-    host = "${aws_instance.default.private_ip}"
+    host = "${element(aws_instance.default.*.private_ip, count.index)}"
 
-    bastion_host = "${var.bastion_host != "" ? var.bastion_host : aws_instance.default.private_ip}"
+    bastion_host = "${var.bastion_host != "" ? var.bastion_host : element(aws_instance.default.*.private_ip, count.index)}"
   }
 
   provisioner "file" {
     # initialize stateful EBS
     # TODO the path here is very strange, not sure if this is a terragrunt
     # thing, nested module thing, or terraform thing.
-    source = "../modules/stateful/bin/initialize-stateful.sh"
+    source = "${path.module}/bin/initialize-stateful.sh"
 
     destination = "/tmp/initialize-stateful.sh"
   }
