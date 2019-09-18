@@ -14,6 +14,26 @@ resource "aws_iam_user" "management" {
 
 # TODO these are too broad
 
+resource "aws_iam_policy" "eks_rw" {
+  name = "AllowEKSFullAccess-${var.env}"
+  description = "Read/write access to EKS"
+
+  # TODO limit access to what is necessary
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "eks:*",
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
 # TODO is this used?
 resource "aws_iam_user_policy_attachment" "management_asg_rw" {
   user       = "${aws_iam_user.management.name}"
@@ -43,7 +63,7 @@ resource "aws_iam_user_policy_attachment" "management_efs_rw" {
 
 resource "aws_iam_user_policy_attachment" "management_eks_rw" {
   user       = "${aws_iam_user.management.name}"
-  policy_arn = "arn:aws:iam::*:policy/EKSFullAccess"
+  policy_arn = "${aws_iam_policy.eks_rw.arn}"
 }
 
 # TODO is this used?
