@@ -1,8 +1,10 @@
 module "vpc" {
   source = "../vpc"
 
-  vpc_name = "ckan-cloud-${var.env}"
-  env      = "${var.env}"
+  azs                = ["us-east-1c", "us-east-1d"]
+  env                = "${var.env}"
+  single_nat_gateway = true
+  vpc_name           = "ckan-cloud-${var.env}"
 }
 
 resource "aws_iam_user" "management" {
