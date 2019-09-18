@@ -51,6 +51,6 @@ module "web" {
     name              = "dashboard-web-${var.env}"
     backend_protocol  = "HTTPS"
     backend_port      = "443"
-    health_check_path = "/"
+    health_check_path = "/offices/qa"
   }]
 }
