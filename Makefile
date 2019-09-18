@@ -5,6 +5,7 @@ SUBDIRS := \
   inventory \
   jenkins \
   jumpbox \
+  modules/crm \
   modules/db \
   modules/jenkins \
   modules/mysql \
