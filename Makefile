@@ -13,6 +13,7 @@ SUBDIRS := \
   modules/stateful \
   modules/stateless \
   modules/web \
+  modules/wordpress \
   solr \
   vpc \
   wordpress
