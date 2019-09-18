@@ -6,6 +6,7 @@ SUBDIRS := \
   jenkins \
   jumpbox \
   modules/db \
+  modules/jenkins \
   modules/mysql \
   modules/postgresdb \
   modules/solr \
@@ -18,7 +19,7 @@ SUBDIRS := \
 
 test: $(SUBDIRS)
 $(SUBDIRS):
-	@echo Testing $@
+	@echo Testing $@ ...
 	terraform init -backend=false $@
 	terraform validate -check-variables=false $@
 
