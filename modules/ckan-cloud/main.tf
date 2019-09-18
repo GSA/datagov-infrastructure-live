@@ -41,7 +41,7 @@ resource "aws_iam_user_policy_attachment" "management_efs_rw" {
 
 resource "aws_iam_user_policy_attachment" "management_eks_rw" {
   user       = "${aws_iam_user.management.name}"
-  policy_arn = "arn:aws:iam::aws:policy/EKSFullAccess"
+  policy_arn = "arn:aws:iam::*:policy/EKSFullAccess"
 }
 
 # TODO is this used?
