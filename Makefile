@@ -8,6 +8,7 @@ SUBDIRS := \
   modules/db \
   modules/mysql \
   modules/postgresdb \
+  modules/solr \
   modules/stateful \
   modules/stateless \
   modules/web \
@@ -17,6 +18,7 @@ SUBDIRS := \
 
 test: $(SUBDIRS)
 $(SUBDIRS):
+	@echo Testing $@
 	terraform init -backend=false $@
 	terraform validate -check-variables=false $@
 
