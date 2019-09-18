@@ -9,6 +9,7 @@ SUBDIRS := \
   modules/crm \
   modules/dashboard \
   modules/db \
+  modules/inventory \
   modules/jenkins \
   modules/mysql \
   modules/postgresdb \
