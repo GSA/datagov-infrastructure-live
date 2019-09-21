@@ -1,6 +1,6 @@
 variable "ami_filter_name" {
   description = "Filter string to find a matching AMI to use for EC2 instances."
-  default     = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
+  default     = "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*"
 }
 
 variable "bastion_host" {
