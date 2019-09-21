@@ -52,6 +52,6 @@ module "web" {
     name              = "inventory-web-${var.env}"
     backend_protocol  = "HTTP"
     backend_port      = "80"
-    health_check_path = "/api"
+    health_check_path = "/api/action/status_show"
   }]
 }
