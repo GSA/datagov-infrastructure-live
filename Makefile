@@ -22,6 +22,9 @@ SUBDIRS := \
   vpc \
   wordpress
 
+fmt:
+	$(foreach subdir, $(SUBDIRS), terraform fmt $(subdir);)
+
 test: $(SUBDIRS)
 $(SUBDIRS):
 	@echo Testing $@ ...
