@@ -32,20 +32,6 @@ resource "aws_security_group" "lb" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 module "lb" {
@@ -58,7 +44,7 @@ module "lb" {
   http_tcp_listeners_count = "${local.lb_http_listeners_count}"
   http_tcp_listeners       = ["${local.lb_http_listeners}"]
   logging_enabled          = false
-  security_groups          = ["${aws_security_group.lb.id}"]
+  security_groups          = ["${data.aws_security_group.default.id}", "${aws_security_group.lb.id}"]
   subnets                  = ["${var.public_subnets}"]
   target_groups_count      = "${length(var.lb_target_groups)}"
   target_groups            = ["${var.lb_target_groups}"]

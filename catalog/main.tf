@@ -57,6 +57,10 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "aws_security_group" "default" {
+  name = "default-${var.env}"
+}
+
 module "db" {
   source = "../modules/postgresdb"
 
@@ -85,6 +89,7 @@ module "web" {
   public_subnets   = "${data.terraform_remote_state.vpc.public_subnets}"
 
   security_groups = [
+    "${data.aws_security_group.default.id}",
     "${data.terraform_remote_state.jumpbox.security_group_id}",
     "${data.terraform_remote_state.solr.security_group_id}",
     "${module.db.security_group}",
@@ -104,24 +109,6 @@ resource "aws_security_group" "harvester" {
   name        = "${var.env}-catalog-harvester-tf"
   description = "Catalog harvester security group"
   vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
-
-  # TODO all the hosts should be able to talk to ubuntu 80/443 for updates. Not
-  # sure where that security group should live. Maybe in VPC as a default sg?
-  #
-  # Allow outbound access for harvesting. For now on just 80/443
-  egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   tags = {
     env = "${var.env}"
@@ -144,6 +131,7 @@ module "harvester" {
   vpc_id               = "${data.terraform_remote_state.vpc.vpc_id}"
 
   security_groups = [
+    "${data.aws_security_group.default.id}",
     "${aws_security_group.harvester.id}",
     "${data.terraform_remote_state.jumpbox.security_group_id}",
     "${data.terraform_remote_state.solr.security_group_id}",

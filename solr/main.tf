@@ -47,6 +47,10 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "aws_security_group" "default" {
+  name = "default-${var.env}"
+}
+
 resource "aws_security_group" "default" {
   name        = "solr-${var.env}-tf"
   description = "Solr security group"
@@ -68,20 +72,7 @@ resource "aws_security_group" "default" {
     security_groups = ["${aws_security_group.solr_access.id}"]
   }
 
-  egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
+  # Solr replication
   egress {
     from_port       = 8080
     to_port         = 8080
@@ -89,13 +80,13 @@ resource "aws_security_group" "default" {
     security_groups = ["${aws_security_group.solr_access.id}"]
   }
 
+  # Solr replication
   egress {
     from_port       = 8983
     to_port         = 8983
     protocol        = "tcp"
     security_groups = ["${aws_security_group.solr_access.id}"]
   }
-
 }
 
 resource "aws_security_group" "solr_access" {
@@ -131,7 +122,7 @@ module "solr" {
   instance_count       = "${var.instance_count}"
   instance_name_format = "datagovsolr%dtf"
   key_name             = "${var.key_name}"
-  security_groups      = ["${aws_security_group.default.id}", "${data.terraform_remote_state.jumpbox.security_group_id}"]
+  security_groups      = ["${data.aws_security_group.default.id}", "${aws_security_group.default.id}", "${data.terraform_remote_state.jumpbox.security_group_id}"]
   subnets              = "${data.terraform_remote_state.vpc.private_subnets}"
   vpc_id               = "${data.terraform_remote_state.vpc.vpc_id}"
 }
