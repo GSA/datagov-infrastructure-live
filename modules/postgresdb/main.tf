@@ -13,4 +13,5 @@ module "database" {
   db_username            = "${var.db_username}"
   vpc_id                 = "${var.vpc_id}"
   env                    = "${var.env}"
+  database_port          = 5432
 }
