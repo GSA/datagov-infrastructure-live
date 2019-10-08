@@ -36,64 +36,23 @@ data "terraform_remote_state" "solr" {
   }
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
+module "inventory" {
+  source = "../modules/inventory"
 
-  filter {
-    name   = "name"
-    values = ["${var.ami_filter_name}"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
-module "db" {
-  source = "../modules/postgresdb"
-
-  db_name               = "inventory_db"
-  db_password           = "${var.db_password}"
+  bastion_host          = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
-  db_username           = "inventory_master"
+  db_password           = "${var.db_password}"
+  dns_zone_private      = "${data.terraform_remote_state.vpc.dns_zone_private}"
+  dns_zone_public       = "${data.terraform_remote_state.vpc.dns_zone_public}"
   env                   = "${var.env}"
+  key_name              = "${var.key_name}"
+  subnets_private       = "${data.terraform_remote_state.vpc.private_subnets}"
+  subnets_public        = "${data.terraform_remote_state.vpc.public_subnets}"
   vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
-}
-
-module "web" {
-  source = "../modules/web"
-
-  ami_id           = "${data.aws_ami.ubuntu.id}"
-  ansible_group    = "inventory_web"
-  bastion_host     = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
-  dns_zone_public  = "${data.terraform_remote_state.vpc.dns_zone_public}"
-  dns_zone_private = "${data.terraform_remote_state.vpc.dns_zone_private}"
-  env              = "${var.env}"
-  instance_count   = "${var.web_instance_count}"
-  key_name         = "${var.key_name}"
-  name             = "inventory"
-  private_subnets  = "${data.terraform_remote_state.vpc.private_subnets}"
-  public_subnets   = "${data.terraform_remote_state.vpc.public_subnets}"
-  vpc_id           = "${data.terraform_remote_state.vpc.vpc_id}"
+  web_instance_count    = "${var.web_instance_count}"
 
   security_groups = [
     "${data.terraform_remote_state.jumpbox.security_group_id}",
     "${data.terraform_remote_state.solr.security_group_id}",
-    "${module.db.security_group}",
   ]
-
-  lb_target_groups = [{
-    name              = "inventory-web-${var.env}"
-    backend_protocol  = "HTTP"
-    backend_port      = "80"
-    health_check_path = "/api"
-  }]
 }

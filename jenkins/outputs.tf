@@ -1,3 +1,3 @@
 output "public_dns" {
-  value = "${aws_route53_record.public.fqdn}"
+  value = "${module.jenkins.public_dns}"
 }

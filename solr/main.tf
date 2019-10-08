@@ -26,103 +26,17 @@ data "terraform_remote_state" "jumpbox" {
   }
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["${var.ami_filter_name}"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
-data "aws_security_group" "default" {
-  name = "default-${var.env}"
-}
-
-resource "aws_security_group" "default" {
-  name        = "solr-${var.env}-tf"
-  description = "Solr security group"
-  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
-
-  # Tomcat port
-  ingress {
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.solr_access.id}"]
-  }
-
-  # Solr/Jetty port
-  ingress {
-    from_port       = 8983
-    to_port         = 8983
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.solr_access.id}"]
-  }
-
-  # Solr replication
-  egress {
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.solr_access.id}"]
-  }
-
-  # Solr replication
-  egress {
-    from_port       = 8983
-    to_port         = 8983
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.solr_access.id}"]
-  }
-}
-
-resource "aws_security_group" "solr_access" {
-  name        = "solr-access-${var.env}-tf"
-  description = "Provides access to solr"
-  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
-
-  egress {
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
-
-  egress {
-    from_port       = 8983
-    to_port         = 8983
-    protocol        = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
-}
-
 module "solr" {
-  source = "../modules/stateful"
+  source = "../modules/solr"
 
-  ami_id               = "${data.aws_ami.ubuntu.id}"
-  ansible_group        = "solr"
-  availability_zones   = "${data.terraform_remote_state.vpc.azs}"
-  bastion_host         = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
-  dns_zone             = "${data.terraform_remote_state.vpc.dns_zone_private}"
-  ebs_size             = "${var.ebs_size}"
-  env                  = "${var.env}"
-  instance_count       = "${var.instance_count}"
-  instance_name_format = "datagovsolr%dtf"
-  key_name             = "${var.key_name}"
-  security_groups      = ["${data.aws_security_group.default.id}", "${aws_security_group.default.id}", "${data.terraform_remote_state.jumpbox.security_group_id}"]
-  subnets              = "${data.terraform_remote_state.vpc.private_subnets}"
-  vpc_id               = "${data.terraform_remote_state.vpc.vpc_id}"
+  availability_zones = "${data.terraform_remote_state.vpc.azs}"
+  bastion_host       = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
+  dns_zone           = "${data.terraform_remote_state.vpc.dns_zone_private}"
+  ebs_size           = "${var.ebs_size}"
+  env                = "${var.env}"
+  instance_count     = "${var.instance_count}"
+  key_name           = "${var.key_name}"
+  security_groups    = ["${data.terraform_remote_state.jumpbox.security_group_id}"]
+  subnets            = "${data.terraform_remote_state.vpc.private_subnets}"
+  vpc_id             = "${data.terraform_remote_state.vpc.vpc_id}"
 }
