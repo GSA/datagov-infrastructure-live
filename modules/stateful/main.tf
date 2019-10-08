@@ -22,9 +22,10 @@ resource "aws_volume_attachment" "default" {
 
   # There's a circular dependency here on destroy with the instance. In order
   # to dettach, you must first unmount. We assume that the attachment would only
-  # be destroyed when the instance is also being destoryed. In that case, we can
+  # be destroyed when the instance is also being destroyed. In that case, we can
   # skip destroy of the attachment, and just remove it from state. Then the
   # instance will be destroyed, removing the attachment.
+  # https://github.com/terraform-providers/terraform-provider-aws/issues/6024
   skip_destroy = true
 }
 
