@@ -9,7 +9,8 @@ terraform {
 module "default" {
   source = "../modules/vpc"
 
-  dns_zone = "${var.dns_zone}"
-  env      = "${var.env}"
-  vpc_name = "${var.vpc_name}"
+  dns_zone           = "${var.dns_zone}"
+  env                = "${var.env}"
+  vpc_name           = "${var.vpc_name}"
+  single_nat_gateway = true
 }
