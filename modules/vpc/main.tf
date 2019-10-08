@@ -51,6 +51,40 @@ resource "aws_route53_zone" "private" {
   }
 }
 
+resource "aws_security_group" "default" {
+  name = "default-${var.env}"
+  description = "Default security group allowing common egress rules for ${var.env}."
+  vpc_id = "${module.vpc.vpc_id}"
+
+  # Allow outbound HTTP access for Ubuntu apt updates
+  egress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow outbound HTTPS access for Ubuntu apt updates
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow outbound NTP access
+  egress {
+    from_port   = 123
+    to_port     = 123
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    env = "${var.env}"
+  }
+}
+
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "1.67.0"

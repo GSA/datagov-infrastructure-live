@@ -51,6 +51,10 @@ data "aws_route53_zone" "public" {
   name = "${data.terraform_remote_state.vpc.dns_zone_public}"
 }
 
+data "aws_security_group" "default" {
+  name = "default-${var.env}"
+}
+
 resource "aws_security_group" "default" {
   name        = "jenkins-${var.env}-tf"
   description = "Jenkins security group"
@@ -64,20 +68,6 @@ resource "aws_security_group" "default" {
   }
 
   ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -161,7 +151,7 @@ module "jenkins" {
   instance_name_format        = "jenkins%dtf"
   instance_type               = "t2.medium"
   key_name                    = "${var.key_name}"
-  security_groups             = ["${aws_security_group.default.id}", "${data.terraform_remote_state.jumpbox.security_group_id}"]
+  security_groups             = ["${data.aws_security_group.default.id}", "${aws_security_group.default.id}", "${data.terraform_remote_state.jumpbox.security_group_id}"]
   subnets                     = "${data.terraform_remote_state.vpc.public_subnets}"
   vpc_id                      = "${data.terraform_remote_state.vpc.vpc_id}"
 }

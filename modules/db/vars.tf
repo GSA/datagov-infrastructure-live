@@ -31,7 +31,10 @@ variable "db_username" {
 }
 
 variable "db_password" {
-  default = "ckanckan"
+}
+
+variable "database_port" {
+  description = "The port used to connect to the database. This will be used to configure security groups."
 }
 
 variable "database_subnet_group" {

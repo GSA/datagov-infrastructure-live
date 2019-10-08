@@ -1,3 +1,7 @@
+data "aws_security_group" "default" {
+  name = "default-${var.env}"
+}
+
 resource "aws_db_instance" "default" {
   allocated_storage      = "${var.db_allocated_storage}"
   storage_type           = "${var.db_storage_type}"
@@ -8,7 +12,7 @@ resource "aws_db_instance" "default" {
   username               = "${var.db_username}"
   password               = "${var.db_password}"
   db_subnet_group_name   = "${var.database_subnet_group}"
-  vpc_security_group_ids = ["${aws_security_group.default.id}"]
+  vpc_security_group_ids = ["${data.aws_security_group.default.id}", "${aws_security_group.default.id}"]
   parameter_group_name   = "${var.db_parameter_group_name}"
   skip_final_snapshot    = "${var.db_skip_final_snapshot}"
   multi_az               = "${var.db_multi_az}"
