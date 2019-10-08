@@ -19,6 +19,13 @@ resource "aws_volume_attachment" "default" {
   device_name = "/dev/xvdh"
   volume_id   = "${element(aws_ebs_volume.default.*.id, count.index)}"
   instance_id = "${element(aws_instance.default.*.id, count.index)}"
+
+  # There's a circular dependency here on destroy with the instance. In order
+  # to dettach, you must first unmount. We assume that the attachment would only
+  # be destroyed when the instance is also being destoryed. In that case, we can
+  # skip destroy of the attachment, and just remove it from state. Then the
+  # instance will be destroyed, removing the attachment.
+  skip_destroy = true
 }
 
 resource "aws_instance" "default" {

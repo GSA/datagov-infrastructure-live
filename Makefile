@@ -16,6 +16,7 @@ SUBDIRS := \
   modules/solr \
   modules/stateful \
   modules/stateless \
+  modules/vpc \
   modules/web \
   modules/wordpress \
   solr \
