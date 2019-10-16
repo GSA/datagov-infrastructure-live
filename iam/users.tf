@@ -15,7 +15,16 @@ module "adam_kariv" {
     "datagov-ckan-multi"
   ]
 }
-
+  
+module "bret_mogilefsky" {
+  source = "./user"
+  name   = "bret.mogilefsky@gsa.gov"
+  groups = [
+    "developers",
+    "Admin"
+  ]
+}
+  
 module "joel_natividad" {
   source = "./user"
   name   = "joel.natividad@datopian.com"
