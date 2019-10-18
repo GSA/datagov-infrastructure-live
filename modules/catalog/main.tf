@@ -45,7 +45,7 @@ module "web" {
   name             = "catalog"
   private_subnets  = "${var.subnets_private}"
   public_subnets   = "${var.subnets_public}"
-  security_groups  = "${concat(var.security_groups, module.db.security_group)}"
+  security_groups  = "${concat(var.security_groups, list(module.db.security_group))}"
   vpc_id           = "${var.vpc_id}"
 
   lb_target_groups = [{
