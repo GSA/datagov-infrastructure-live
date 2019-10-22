@@ -13,7 +13,7 @@ terraform {
 }
 
 module "ckan_cloud" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/ckan-cloud?ref=feature-ckan-cloud"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/ckan-cloud?ref=v2.0.0"
 
   env = "${var.env}"
 }

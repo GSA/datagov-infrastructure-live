@@ -1,7 +1,7 @@
 # Terragrunt config
 terragrunt = {
   terraform {
-    source = "github.com/GSA/datagov-infrastructure-modules.git//jenkins?ref=v1.3.0"
+    source = "github.com/GSA/datagov-infrastructure-modules.git//jenkins?ref=v2.0.0"
   }
 
   include {
