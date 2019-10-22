@@ -24,3 +24,4 @@ terragrunt = {
 # Module config
 env        = "ci"
 key_name   = "datagov-sandbox"
+ami_filter_name = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
