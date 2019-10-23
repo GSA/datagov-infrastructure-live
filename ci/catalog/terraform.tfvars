@@ -1,7 +1,7 @@
 # Terragrunt config
 terragrunt = {
   terraform {
-    source = "github.com/gsa/datagov-infrastructure-modules.git//catalog?ref=v1.2.3"
+    source = "github.com/gsa/datagov-infrastructure-modules.git//catalog?ref=v2.0.0"
 
     extra_arguments "secrets" {
       commands = ["${get_terraform_commands_that_need_vars()}"]
@@ -24,3 +24,4 @@ terragrunt = {
 # Module config
 env        = "ci"
 key_name   = "datagov-sandbox"
+ami_filter_name = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
