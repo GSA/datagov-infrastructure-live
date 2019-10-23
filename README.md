@@ -67,6 +67,9 @@ The jumpbox dns is an output variable in the jumpbox module.
     $ cd $env/jumpbox
     $ terragrunt output
 
+
+### Bootstraping the jumpbox
+
 When the jumpbox is first created, you'll need to bootstrap it to run ansible.
 You can copy/paste these scripts into your terminal.
 
@@ -100,14 +103,16 @@ git clone https://github.com/GSA/datagov-deploy.git
 cd datagov-deploy
 pip3 install --user pipenv
 pipenv sync
+pipenv run make update-vendor-force
 ```
 
 Symlink the inventory to avoid having to specify it with ansible. _Note: You'll have to
-replace the placeholder `${environment}` with the name of your inventory._
+replace the placeholder `<inventory>` with the name of your inventory._
 
 ```bash
+inventory=<inventory>
 sudo mkdir /etc/ansible
-sudo ln -s /home/ubuntu/datagov-deploy/ansible/inventories/${environment} /etc/ansible/hosts
+sudo ln -s /home/ubuntu/datagov-deploy/ansible/inventories/${inventory} /etc/ansible/hosts
 ```
 
 
