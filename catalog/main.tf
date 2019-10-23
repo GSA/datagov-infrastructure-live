@@ -39,6 +39,7 @@ data "terraform_remote_state" "solr" {
 module "catalog" {
   source = "../modules/catalog"
 
+  ami_filter_name          = "${var.ami_filter_name}"
   bastion_host             = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
   database_subnet_group    = "${data.terraform_remote_state.vpc.database_subnet_group}"
   db_password              = "${var.db_password}"
