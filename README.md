@@ -53,14 +53,14 @@ other instances. Consider adding this to your `~/.ssh/config`.
 
 ```
 Host *.datagov.us
-    User ubuntu
+    User <yourusername>
     ForwardAgent yes
     IdentityFile ~/.ssh/<aws-key-name>
 ```
 
 Connect to the jumpbox.
 
-    $ ssh -A -l ubuntu $jumbox_dns
+    $ ssh -A $jumpbox_dns
 
 The jumpbox dns is an output variable in the jumpbox module.
 
