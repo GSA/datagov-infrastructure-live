@@ -87,3 +87,9 @@ module "anuar_ustayev" {
     "datagov-ckan-multi"
   ]
 }
+  
+module "kishore_vuppala" {
+  source  = "./user"
+  name = "kishore.vuppala@gsa.gov"
+  groups = ["developers"]
+}
