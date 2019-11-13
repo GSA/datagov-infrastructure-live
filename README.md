@@ -11,139 +11,50 @@ _Note: production and staging environments are hosted in BSP and are
 **not** provisioned with terraform._
 
 
-## Requirements
+## Usage
 
-- Configure AWS Access Key ID & AWS Secret Access Key (http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
-- Install terraform: https://www.terraform.io/intro/getting-started/install.html
-- Install terragrunt: https://github.com/gruntwork-io/terragrunt#install-terragrunt
+Each environment is really its own project and contains additional setup and
+usage instructions in their respective README's. This section contains the usage
+instructions common to _all_ environments.
+
+
+### Requirements
+
+- [Configure AWS Access Key](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
+- [jq](https://stedolan.github.io/jq/)
+- [awscli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html)
+
+_Note: Terraform and/or Terragrunt versions are different between environments.
+We are phasing out Terragrunt and moving all environments to Terraform v0.12._
+
+These tools are available through your package manager, or through pip.
+
+
+### Setup AWS credentials
+
+All developers are in the `developers` IAM group which enforces access through
+multi-factor authentication (MFA). You must first get temporary credentials to
+use with Terraform.
+
+First, copy `env.sample` to `.env`, customize it with your AWS access key.
+`AWS_MFA_DEVICE_ARN` should be set with your MFA arn. This can be found on the
+"My Security Credentials" page in the AWS console. Then source these environment
+variables.
+
+    $ source .env
+
+You'll be prompted for your MFA code. Enter it without any spaces when prompted.
+
+These credentials are good for 12 hours.
+
 
 ## Environments
 
-Name | Description | Jumpbox
----- | ----------- | -------
-`bionic`   | Environment to support the Ubuntu Bionic migration. | jump.bionic.datagov.us
-`ci`       | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | jump.ci.datagov.us
+Each directory represents an "environment".
 
-
-## Usage
-
-*NOTE: `app` depends on `db` which depends on `vpc`. You will most likely need
-to provide the name of the vpc through an input variable since it might already
-exist.*
-
-    $ cd {env}\{module}
-    $ terragrunt apply
-
-e.g.
-
-    $ cd dev\vpc
-    $ terragrunt apply
-
-For components with provisioning, like jumpbox, you should add your SSH keypair
-to your ssh-agent so that terraform can connect to the host to run the
-provisioning.
-
-    $ ssh-add ~/.ssh/<aws-key-name>.pem
-
-
-### Connecting to the jumpbox
-
-Forward your ssh agent so that you have access to the SSH key to connect to
-other instances. Consider adding this to your `~/.ssh/config`.
-
-```
-Host *.datagov.us
-    User <yourusername>
-    ForwardAgent yes
-    IdentityFile ~/.ssh/<aws-key-name>
-```
-
-Connect to the jumpbox.
-
-    $ ssh -A $jumpbox_dns
-
-The jumpbox dns is an output variable in the jumpbox module.
-
-    $ cd $env/jumpbox
-    $ terragrunt output
-
-
-### Bootstraping the jumpbox
-
-When the jumpbox is first created, you'll need to bootstrap it to run ansible.
-You can copy/paste these scripts into your terminal.
-
-First, install pyenv.
-
-```bash
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
-source ~/.bashrc
-```
-
-Setup SSH.
-
-```bash
-cat <<EOF > ~/.ssh/config
-StrictHostKeyChecking=no
-
-Host *.datagov.us
-    User ubuntu
-    IdentityFile ~/.ssh/authorized_keys
-EOF
-```
-
-Then setup datagov-deploy.
-
-```bash
-git clone https://github.com/GSA/datagov-deploy.git
-cd datagov-deploy
-pip3 install --user pipenv
-pipenv sync
-pipenv run make update-vendor-force
-```
-
-Symlink the inventory to avoid having to specify it with ansible. _Note: You'll have to
-replace the placeholder `<inventory>` with the name of your inventory._
-
-```bash
-inventory=<inventory>
-sudo mkdir /etc/ansible
-sudo ln -s /home/ubuntu/datagov-deploy/ansible/inventories/${inventory} /etc/ansible/hosts
-```
-
-
-### First-time apply for environment
-
-Terragrunt plan-all can't handle `terraform_remote_state` that hasn't been
-initialized yet. Therefore, to run `terragrunt apply-all` and just assume it's
-going to do the right thing without seeing the plan.
-
-
-If you see this error, that's the issue:
-
-```
-Error: Error running plan: 1 error(s) occurred:
-
-* module.database.aws_security_group.postgres-sg: 1 error(s) occurred:
-
-* module.database.aws_security_group.postgres-sg: Resource 'data.terraform_remote_state.vpc' does not have attribute 'vpc_id' for variable 'data.terraform_remote_state.vpc.vpc_id'
-```
-
-
-## Development
-
-Include the `--terragrunt-source` option or `TERRAGRUNT_SOURCE` environment
-variable to specify a local modules directory.
-
-    $ cd test
-    $ terragrunt plan-all --terragrunt-source ../../../datagov-infrastructure-modules
-    $ terragrunt apply-all --terragrunt-source ../../../datagov-infrastructure-modules
-
-Or for a specific module:
-
-    $ cd test/vpc
-    $ terragrunt apply --terragrunt-source ../../../datagov-infrastructure-modules//vpc
+Name | Description | Terraform | Terragrunt | Jumpbox
+---- | ----------- | --------- | ---------- | -------
+`bionic`   | Environment to support the Ubuntu Bionic migration. | v0.11 | Y | jump.bionic.datagov.us
+`ci`       | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | v0.11 | Y | jump.ci.datagov.us
+`ckan-cloud-dev` | Development environment for the CKAN Cloud project. | v0.12 | N | N/A
+`iam` | Global "environment" that applies IAM settings to to the sandbox account. | v0.12 | N | N/A
