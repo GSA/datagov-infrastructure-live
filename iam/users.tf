@@ -93,3 +93,9 @@ module "kishore_vuppala" {
   name = "kishore.vuppala@gsa.gov"
   groups = ["developers"]
 }
+
+module "yaditi_dave" {
+  source  = "./user"
+  name = "yaditi.dave@gsa.gov"
+  groups = ["developers"]
+}
