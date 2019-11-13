@@ -43,7 +43,7 @@ module "firstname_lastname" {
 }
 ```
 
-Once applied, log into IAM to enable console access and set a temporary password
+Once applied, request that an admin  log into IAM to enable console access and set a temporary password
 for the user.
 
 ![Screenshot showing how to enable IAM console access](./docs/enable_new_user.png)
