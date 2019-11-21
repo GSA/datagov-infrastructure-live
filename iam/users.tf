@@ -3,7 +3,7 @@ module "aaron_borden" {
   name   = "aaron.borden@gsa.gov"
   groups = [
     "developers",
-    "Admin"
+    "Admin",
   ]
 }
 
@@ -12,25 +12,25 @@ module "adam_kariv" {
   name   = "akariv@datopian.com"
   groups = [
     "developers",
-    "datagov-ckan-multi"
+    "datagov-ckan-multi",
   ]
 }
-  
+
 module "bret_mogilefsky" {
   source = "./user"
   name   = "bret.mogilefsky@gsa.gov"
   groups = [
     "developers",
-    "Admin"
+    "Admin",
   ]
 }
-  
+
 module "joel_natividad" {
   source = "./user"
   name   = "joel.natividad@datopian.com"
   groups = [
     "developers",
-    "datagov-ckan-multi"
+    "datagov-ckan-multi",
   ]
 }
 
@@ -39,7 +39,7 @@ module "mikhail_mezyakov" {
   name   = "mikhail.mezyakov@datopian.com"
   groups = [
     "developers",
-    "datagov-ckan-multi"
+    "datagov-ckan-multi",
   ]
 }
 
@@ -48,7 +48,7 @@ module "andres_vasquez" {
   name   = "andres.vasquez@datopian.com"
   groups = [
     "developers",
-    "datagov-ckan-multi"
+    "datagov-ckan-multi",
   ]
 }
 
@@ -57,7 +57,7 @@ module "rufus_pollock" {
   name   = "rufus.pollock@datopian.com"
   groups = [
     "developers",
-    "datagov-ckan-multi"
+    "datagov-ckan-multi",
   ]
 }
 
@@ -66,7 +66,7 @@ module "julie_kramer" {
   name   = "Julie.kramer@civicactions.com"
   groups = [
     "developers",
-    "datagov-ckan-multi"
+    "datagov-ckan-multi",
   ]
 }
 
@@ -75,7 +75,7 @@ module "tom_wood" {
   name   = "tom.wood@civicactions.com"
   groups = [
     "developers",
-    "datagov-ckan-multi"
+    "datagov-ckan-multi",
   ]
 }
 
@@ -84,18 +84,18 @@ module "anuar_ustayev" {
   name   = "austayev@datopian.com"
   groups = [
     "developers",
-    "datagov-ckan-multi"
+    "datagov-ckan-multi",
   ]
 }
-  
+
 module "kishore_vuppala" {
-  source  = "./user"
-  name = "kishore.vuppala@gsa.gov"
+  source = "./user"
+  name   = "kishore.vuppala@gsa.gov"
   groups = ["developers"]
 }
 
 module "yaditi_dave" {
-  source  = "./user"
-  name = "yaditi.dave@gsa.gov"
+  source = "./user"
+  name   = "yaditi.dave@gsa.gov"
   groups = ["developers"]
 }
