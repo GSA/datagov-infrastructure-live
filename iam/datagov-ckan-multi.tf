@@ -47,5 +47,10 @@ resource "aws_iam_group_policy_attachment" "datagov_ckan_multi_s3_full" {
 resource "aws_iam_group_policy_attachment" "datagov_ckan_multi_eks_full" {
   group      = "${aws_iam_group.datagov_ckan_multi.name}"
   # https://docs.aws.amazon.com/eks/latest/userguide/security_iam_id-based-policy-examples.html#policy_example2
+  policy_arn = "${aws_iam_policy.eks_full.arn}"
+}
+
+resource "aws_iam_policy" "eks_full" {
+  name        = "EKSFullAccess"
   policy = "${file("files/aws_eks_creds_self_manage.json")}"
 }
