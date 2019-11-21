@@ -48,7 +48,7 @@ Host *.datagov.us
 
 ### Secrets
 
-Copy the `env.sample` to `.env`. Then you can populated these secrets from the
+Copy the `env.sample` to `.env`. Then you can populate these secrets from the
 Terraform state file. These secrets will also exist in the Ansible vault.
 
     $ terragrunt refresh-all
