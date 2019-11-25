@@ -129,26 +129,3 @@ permissions are needed.
     ]
 }
 ```
-
-
-## Development
-
-
-### MFA credentials
-
-_This is a work in progress._
-
-If you are running as an MFA user, you must first get temporary credentials.
-There are many ways to do this, but here is they way we prefer.
-
-First, copy `env.sample` to `.env`, customize it with your AWS credentials.
-`AWS_MFA_DEVICE_ARN` should be set with your MFA arn. This can be found on the
-"My Security Credentials" page in the AWS console.
-
-You'll need `awscli` and `jq` installed.
-
-    $ source .env
-
-You'll be prompted for your MFA code. Enter it without any spaces when prompted.
-
-These credentials are good for 12 hours.
