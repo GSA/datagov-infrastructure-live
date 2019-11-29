@@ -25,15 +25,6 @@ module "bret_mogilefsky" {
   ]
 }
 
-module "joel_natividad" {
-  source = "./user"
-  name   = "joel.natividad@datopian.com"
-  groups = [
-    "developers",
-    "datagov-ckan-multi",
-  ]
-}
-
 module "mikhail_mezyakov" {
   source = "./user"
   name   = "mikhail.mezyakov@datopian.com"
