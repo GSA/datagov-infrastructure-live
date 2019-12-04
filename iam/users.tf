@@ -105,3 +105,9 @@ module "james_brown" {
   name   = "jbrown@xentity.com"
   groups = ["developers"]
 }
+
+module "fuhu_xia" {
+  source = "./user"
+  name   = "fuhu.xia@gsa.gov"
+  groups = ["developers"]
+}
