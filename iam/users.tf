@@ -99,3 +99,9 @@ module "yaditi_dave" {
   name   = "yaditi.dave@gsa.gov"
   groups = ["developers"]
 }
+  
+module "james_brown" {
+  source = "./user"
+  name   = "jbrown@xentity.com"
+  groups = ["developers"]
+}
