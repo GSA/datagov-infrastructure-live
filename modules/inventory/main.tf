@@ -40,6 +40,7 @@ module "web" {
   dns_zone_private = "${var.dns_zone_private}"
   env              = "${var.env}"
   instance_count   = "${var.web_instance_count}"
+  instance_type    = "${var.web_instance_type}"
   key_name         = "${var.key_name}"
   name             = "inventory"
   private_subnets  = "${var.subnets_private}"

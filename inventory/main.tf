@@ -51,6 +51,7 @@ module "inventory" {
   subnets_public        = "${data.terraform_remote_state.vpc.public_subnets}"
   vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
   web_instance_count    = "${var.web_instance_count}"
+  web_instance_type     = "${var.web_instance_type}"
 
   security_groups = [
     "${data.terraform_remote_state.jumpbox.security_group_id}",
