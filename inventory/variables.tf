@@ -21,3 +21,8 @@ variable "web_instance_count" {
   description = "Number of web instances to create."
   default     = 1
 }
+
+variable "web_instance_type" {
+  description = "Instance type to use for web."
+  default     = "t3.small"
+}
