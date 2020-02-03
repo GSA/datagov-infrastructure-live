@@ -102,3 +102,9 @@ module "fuhu_xia" {
   name   = "fuhu.xia@gsa.gov"
   groups = ["developers"]
 }
+  
+module "preston_sharpe" {
+  source = "./user"
+  name   = "preston.sharpe@gsa.gov"
+  groups = ["developers"]
+}
