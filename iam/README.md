@@ -48,7 +48,7 @@ for the user.
 
 ![Screenshot showing how to enable IAM console access](./docs/enable_new_user.png)
 
-At this point, the user can [login](https://us-east-1.signin.aws.amazon.com) with the temporary password. From the AWS
+At this point, the user can [login](https://datagov.signin.aws.amazon.com/console) with the temporary password. From the AWS
 console, click their username -> My Security Credentials. They will have to
 enable MFA and change their password before they can do anything else.
 
