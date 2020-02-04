@@ -100,7 +100,10 @@ module "james_brown" {
 module "fuhu_xia" {
   source = "./user"
   name   = "fuhu.xia@gsa.gov"
-  groups = ["developers"]
+  groups = [
+    "developers",
+    "Admin",
+  ]
 }
   
 module "preston_sharpe" {
