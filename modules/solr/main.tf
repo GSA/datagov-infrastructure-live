@@ -19,18 +19,14 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "aws_vpc" "default" {
+  id = "${var.vpc_id}"
+}
+
 resource "aws_security_group" "default" {
   name        = "solr-${var.env}-tf"
   description = "Solr security group"
   vpc_id      = "${var.vpc_id}"
-
-  # Tomcat port
-  ingress {
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.solr_access.id}"]
-  }
 
   # Solr/Jetty port
   ingress {
@@ -55,13 +51,6 @@ resource "aws_security_group" "default" {
   }
 
   egress {
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.solr_access.id}"]
-  }
-
-  egress {
     from_port       = 8983
     to_port         = 8983
     protocol        = "tcp"
@@ -73,6 +62,13 @@ resource "aws_security_group" "solr_access" {
   name        = "solr-access-${var.env}-tf"
   description = "Provides access to solr"
   vpc_id      = "${var.vpc_id}"
+
+  egress {
+    from_port       = 8983
+    to_port         = 8983
+    protocol        = "tcp"
+    cidr_blocks     = ["${data.aws_vpc.default.cidr_block}"]
+  }
 }
 
 module "default" {
