@@ -23,6 +23,10 @@ instructions common to _all_ environments.
 - [Configure AWS Access Key](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
 - [jq](https://stedolan.github.io/jq/)
 - [awscli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html)
+- [terraform](https://www.terraform.io/downloads.html) (See
+  [Environments](#environments) for version)
+- [terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) (See
+  [Environments](#environments) for version)
 
 _Note: Terraform and/or Terragrunt versions are different between environments.
 We are phasing out Terragrunt and moving all environments to Terraform v0.12._
