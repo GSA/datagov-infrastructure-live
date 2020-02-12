@@ -19,6 +19,10 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "aws_vpc" "default" {
+  id = "${var.vpc_id}"
+}
+
 resource "aws_security_group" "default" {
   name        = "solr-${var.env}-tf"
   description = "Solr security group"
@@ -73,6 +77,13 @@ resource "aws_security_group" "solr_access" {
   name        = "solr-access-${var.env}-tf"
   description = "Provides access to solr"
   vpc_id      = "${var.vpc_id}"
+
+  egress {
+    from_port       = 8983
+    to_port         = 8983
+    protocol        = "tcp"
+    cidr_blocks     = ["${data.aws_vpc.default.cidr_block}"]
+  }
 }
 
 module "default" {
