@@ -25,20 +25,3 @@ data "terraform_remote_state" "jumpbox" {
     region = "${var.aws_region}"
   }
 }
-
-module "crm" {
-  source = "../modules/crm"
-
-  bastion_host          = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
-  database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
-  db_password           = "${var.db_password}"
-  dns_zone_private      = "${data.terraform_remote_state.vpc.dns_zone_private}"
-  dns_zone_public       = "${data.terraform_remote_state.vpc.dns_zone_public}"
-  env                   = "${var.env}"
-  instance_count        = "${var.web_instance_count}"
-  key_name              = "${var.key_name}"
-  subnets_private       = "${data.terraform_remote_state.vpc.private_subnets}"
-  subnets_public        = "${data.terraform_remote_state.vpc.public_subnets}"
-  security_groups       = ["${data.terraform_remote_state.jumpbox.security_group_id}"]
-  vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
-}
