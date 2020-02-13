@@ -1,12 +1,10 @@
 SUBDIRS := \
   catalog \
-  crm \
   dashboard \
   inventory \
   jenkins \
   jumpbox \
   modules/catalog \
-  modules/crm \
   modules/dashboard \
   modules/db \
   modules/inventory \
