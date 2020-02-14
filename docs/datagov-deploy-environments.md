@@ -18,7 +18,7 @@ Make sure you've already followed the common setup instructions in the top-level
 
 - [Terraform](https://www.terraform.io/intro/getting-started/install.html) v0.11
   (v0.12 for some environments, [see below](#environments))
-- [Terragrunt](https://github.com/gruntwork-io/terragrunt#install-terragrunt) <=v0.18.x
+- [Terragrunt](https://github.com/gruntwork-io/terragrunt/releases?after=v0.19.0) <=v0.18.x
 
 Terragrunt v0.11 is available through Homebrew, although Terragrunt v0.18 is
 not.

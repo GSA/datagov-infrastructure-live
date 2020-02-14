@@ -25,8 +25,8 @@ instructions common to _all_ environments.
 - [awscli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html)
 - [terraform](https://www.terraform.io/downloads.html) (See
   [Environments](#environments) for version)
-- [terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) (See
-  [Environments](#environments) for version)
+- [terragrunt](https://terragrunt.gruntwork.io/)
+  [v0.18](https://github.com/gruntwork-io/terragrunt/releases?after=v0.19.0)
 
 _Note: Terraform and/or Terragrunt versions are different between environments.
 We are phasing out Terragrunt and moving all environments to Terraform v0.12._
@@ -58,7 +58,7 @@ Each directory represents an "environment".
 
 Name | Description | Terraform | Terragrunt | Jumpbox
 ---- | ----------- | --------- | ---------- | -------
-`bionic`   | Environment to support the Ubuntu Bionic migration. | v0.11 | Y | jump.bionic.datagov.us
-`ci`       | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | v0.11 | Y | jump.ci.datagov.us
-`ckan-cloud-dev` | Development environment for the CKAN Cloud project. | v0.12 | N | N/A
-`iam` | Global "environment" that applies IAM settings to to the sandbox account. | v0.12 | N | N/A
+[`bionic`](bionic/README.md)   | Environment to support the Ubuntu Bionic migration. | v0.11 | v0.18 | jump.bionic.datagov.us
+[`ci`](ci/README.md)       | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | v0.11 | v0.18 | jump.ci.datagov.us
+[`ckan-cloud-dev`](ckan-cloud-dev/README.md) | Development environment for the CKAN Cloud project. | v0.12 | N | N/A
+[`iam`](iam/README.md) | Global "environment" that applies IAM settings to to the sandbox account. | v0.12 | N | N/A
