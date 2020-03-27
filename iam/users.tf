@@ -43,6 +43,21 @@ module "bret_mogilefsky" {
   ]
 }
 
+module "fuhu_xia" {
+  source = "./user"
+  name   = "fuhu.xia@gsa.gov"
+  groups = [
+    "developers",
+    "Admin",
+  ]
+}
+
+module "james_brown" {
+  source = "./user"
+  name   = "jbrown@xentity.com"
+  groups = ["developers"]
+}
+
 module "julie_kramer" {
   source = "./user"
   name   = "Julie.kramer@civicactions.com"
@@ -76,6 +91,12 @@ module "paul_walker" {
   ]
 }
 
+module "preston_sharpe" {
+  source = "./user"
+  name   = "preston.sharpe@gsa.gov"
+  groups = ["developers"]
+}
+
 module "rufus_pollock" {
   source = "./user"
   name   = "rufus.pollock@datopian.com"
@@ -97,26 +118,5 @@ module "tom_wood" {
 module "yaditi_dave" {
   source = "./user"
   name   = "yaditi.dave@gsa.gov"
-  groups = ["developers"]
-}
-  
-module "james_brown" {
-  source = "./user"
-  name   = "jbrown@xentity.com"
-  groups = ["developers"]
-}
-
-module "fuhu_xia" {
-  source = "./user"
-  name   = "fuhu.xia@gsa.gov"
-  groups = [
-    "developers",
-    "Admin",
-  ]
-}
-  
-module "preston_sharpe" {
-  source = "./user"
-  name   = "preston.sharpe@gsa.gov"
   groups = ["developers"]
 }
