@@ -55,7 +55,10 @@ module "fuhu_xia" {
 module "james_brown" {
   source = "./user"
   name   = "jbrown@xentity.com"
-  groups = ["developers"]
+  groups = [
+    "developers",
+    "Admin",
+  ]
 }
 
 module "julie_kramer" {
@@ -94,7 +97,10 @@ module "paul_walker" {
 module "preston_sharpe" {
   source = "./user"
   name   = "preston.sharpe@gsa.gov"
-  groups = ["developers"]
+  groups = [
+    "developers",
+    "Admin",
+  ]
 }
 
 module "rufus_pollock" {
