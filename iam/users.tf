@@ -126,3 +126,9 @@ module "yaditi_dave" {
   name   = "yaditi.dave@gsa.gov"
   groups = ["developers"]
 }
+
+module "saiabhisaikgoud_udthawar" {
+  source = "./user"
+  name   = "saiabhisaikgoud.udthawar@gsa.gov"
+  groups = ["developers"]
+}  
