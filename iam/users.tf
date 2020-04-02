@@ -112,6 +112,12 @@ module "rufus_pollock" {
   ]
 }
 
+module "saiabhisaikgoud_udthawar" {
+  source = "./user"
+  name   = "saiabhisaikgoud.udthawar@gsa.gov"
+  groups = ["developers"]
+}
+
 module "tom_wood" {
   source = "./user"
   name   = "tom.wood@civicactions.com"
@@ -120,15 +126,3 @@ module "tom_wood" {
     "datagov-ckan-multi",
   ]
 }
-
-module "yaditi_dave" {
-  source = "./user"
-  name   = "yaditi.dave@gsa.gov"
-  groups = ["developers"]
-}
-
-module "saiabhisaikgoud_udthawar" {
-  source = "./user"
-  name   = "saiabhisaikgoud.udthawar@gsa.gov"
-  groups = ["developers"]
-}  
