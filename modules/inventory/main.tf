@@ -22,7 +22,7 @@ data "aws_ami" "ubuntu" {
 module "db" {
   source = "../postgresdb"
 
-  db_name               = "inventory_db"
+  db_name               = "${var.db_name}"
   db_password           = "${var.db_password}"
   database_subnet_group = "${var.database_subnet_group}"
   db_username           = "inventory_master"
@@ -34,7 +34,7 @@ module "web" {
   source = "../web"
 
   ami_id           = "${data.aws_ami.ubuntu.id}"
-  ansible_group    = "inventory_web"
+  ansible_group    = "${var.ansible_group}"
   bastion_host     = "${var.bastion_host}"
   dns_zone_public  = "${var.dns_zone_public}"
   dns_zone_private = "${var.dns_zone_private}"
@@ -42,7 +42,7 @@ module "web" {
   instance_count   = "${var.web_instance_count}"
   instance_type    = "${var.web_instance_type}"
   key_name         = "${var.key_name}"
-  name             = "inventory"
+  name             = "${var.web_instance_name}"
   private_subnets  = "${var.subnets_private}"
   public_subnets   = "${var.subnets_public}"
   vpc_id           = "${var.vpc_id}"
@@ -50,7 +50,7 @@ module "web" {
   security_groups = "${concat(var.security_groups, list(module.db.security_group))}"
 
   lb_target_groups = [{
-    name              = "inventory-web-${var.env}"
+    name              = "${var.web_instance_name}-${var.env}"
     backend_protocol  = "HTTP"
     backend_port      = "80"
     health_check_path = "/api/action/status_show"

@@ -60,7 +60,7 @@ resource "aws_instance" "web" {
     # install Ansible executor dependencies
     inline = [
       "sudo apt-get update",
-      "sudo apt-get install -y python",
+      "sudo apt-get install -y python3",
     ]
   }
 }
