@@ -79,6 +79,7 @@ permissions are needed.
                 "iam:DeactivateMFADevice",
                 "iam:DeleteAccessKey",
                 "iam:DeleteGroup",
+                "iam:ListVirtualMFADevices",
                 "iam:UpdateGroup",
                 "iam:ListSSHPublicKeys",
                 "iam:DetachGroupPolicy",
