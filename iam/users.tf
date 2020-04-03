@@ -126,9 +126,3 @@ module "tom_wood" {
     "datagov-ckan-multi",
   ]
 }
-
-module "yaditi_dave" {
-  source = "./user"
-  name   = "yaditi.dave@gsa.gov"
-  groups = ["developers"]
-}
