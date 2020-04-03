@@ -62,3 +62,6 @@ Name | Description | Terraform | Terragrunt | Jumpbox
 [`ci`](ci/README.md)       | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | v0.11 | v0.18 | jump.ci.datagov.us
 [`ckan-cloud-dev`](ckan-cloud-dev/README.md) | Development environment for the CKAN Cloud project. | v0.12 | N | N/A
 [`iam`](iam/README.md) | Global "environment" that applies IAM settings to to the sandbox account. | v0.12 | N | N/A
+
+## Live Testing
+When doing live changes to the [modules](https://github.com/GSA/datagov-infrastructure-modules), you may have to change the source directory on terragrunt to be a local path. See [inventory 2.8](/ci/inventory-2-8/tarraform.tfvars#4) for an example.
