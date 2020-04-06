@@ -15,7 +15,7 @@ resource "aws_route53_record" "lb" {
   # If the expression in the following list itself returns a list, remove the
   # brackets to avoid interpretation as a list of lists. If the expression
   # returns a single list item then leave it as-is and remove this TODO comment.
-  records = [module.lb.dns_name]
+  records = [module.lb.this_lb_dns_name]
 }
 
 resource "aws_acm_certificate" "lb" {

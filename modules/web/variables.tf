@@ -49,25 +49,27 @@ variable "dns_zone_private" {
 }
 
 variable "lb_target_groups" {
-  type        = list(string)
+  type        = list
   description = "Target group to attach to the load balancer."
   # example
   # lb_target_groups = [{
   #   name              = "${var.env}-${var.name}"
   #   backend_protocol  = "HTTPS"
   #   backend_port      = "443"
-  #   health_check_path = "/"
+  #   health_check      = {
+  #     path = "/"
+  #   }
   # }]
 }
 
 variable "public_subnets" {
   type        = list(string)
-  description = "List of public subnets to attach load balancers to."
+  description = "List of public subnets Ids to attach load balancers to."
 }
 
 variable "private_subnets" {
   type        = list(string)
-  description = "List of private subnets to attach instances to."
+  description = "List of private subnets Ids to attach instances to."
 }
 
 variable "security_groups" {
