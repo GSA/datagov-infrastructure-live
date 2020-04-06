@@ -13,6 +13,9 @@ SUBDIRS := \
   modules/web \
   modules/wordpress
 
+clean:
+	rm -rf .terraform $(foreach subdir, $(SUBDIRS), $(subdir)/.terraform)
+
 fmt:
 	$(foreach subdir, $(SUBDIRS), terraform fmt $(subdir);)
 
