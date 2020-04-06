@@ -2,7 +2,7 @@
 terragrunt = {
   terraform {
     # Inventory 2.8 not included in below version, must use local path
-    source = "github.com/gsa/datagov-infrastructure-modules.git//inventory?ref=v2.1.1"
+    source = "github.com/gsa/datagov-infrastructure-modules.git//inventory?ref=v2.2.0"
 
 
     extra_arguments "secrets" {
