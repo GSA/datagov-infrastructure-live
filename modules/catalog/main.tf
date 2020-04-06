@@ -53,10 +53,12 @@ module "web" {
 
   lb_target_groups = [
     {
-      name              = "catalog-web-${var.env}"
-      backend_protocol  = "HTTP"
-      backend_port      = "80"
-      health_check_path = "/api/action/status_show"
+      name             = "catalog-web-${var.env}"
+      backend_protocol = "HTTP"
+      backend_port     = "80"
+      health_check = {
+        path = "/api/action/status_show"
+      },
     },
   ]
 }
