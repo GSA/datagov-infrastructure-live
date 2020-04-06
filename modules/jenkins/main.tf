@@ -1,11 +1,12 @@
-provider "aws" {}
+provider "aws" {
+}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["${var.ami_filter_name}"]
+    values = [var.ami_filter_name]
   }
 
   filter {
@@ -22,13 +23,13 @@ data "aws_ami" "ubuntu" {
 }
 
 data "aws_route53_zone" "public" {
-  name = "${var.dns_zone_public}"
+  name = var.dns_zone_public
 }
 
 resource "aws_security_group" "default" {
   name        = "jenkins-${var.env}-tf"
   description = "Jenkins security group"
-  vpc_id      = "${var.vpc_id}"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 80
@@ -70,23 +71,31 @@ resource "aws_security_group" "default" {
 resource "aws_security_group" "jenkins_access" {
   name        = "${var.env}-jenkins-access"
   description = "Allows SSH access from jenkins."
-  vpc_id      = "${var.vpc_id}"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = ["${aws_security_group.default.id}"]
+    security_groups = [aws_security_group.default.id]
   }
 }
 
 resource "aws_route53_record" "public" {
   name    = "ci"
-  zone_id = "${data.aws_route53_zone.public.zone_id}"
+  zone_id = data.aws_route53_zone.public.zone_id
 
-  type    = "A"
-  ttl     = "300"
-  records = ["${module.jenkins.instance_public_ip}"]
+  type = "A"
+  ttl  = "300"
+  # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
+  # force an interpolation expression to be interpreted as a list by wrapping it
+  # in an extra set of list brackets. That form was supported for compatibility in
+  # v0.11, but is no longer supported in Terraform v0.12.
+  #
+  # If the expression in the following list itself returns a list, remove the
+  # brackets to avoid interpretation as a list of lists. If the expression
+  # returns a single list item then leave it as-is and remove this TODO comment.
+  records = [module.jenkins.instance_public_ip]
 }
 
 resource "aws_iam_role" "jenkins" {
@@ -107,13 +116,14 @@ resource "aws_iam_role" "jenkins" {
   ]
 }
 EOF
+
 }
 
 # This allows jenkins to query the AWS API for EC2 and RDS resources for
 # the Ansible dynamic inventory.
 resource "aws_iam_role_policy" "jenkins" {
   name = "jenkins_dynamic_inventory_policy"
-  role = "${aws_iam_role.jenkins.id}"
+  role = aws_iam_role.jenkins.id
 
   policy = <<EOF
 {
@@ -132,30 +142,32 @@ resource "aws_iam_role_policy" "jenkins" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_instance_profile" "jenkins" {
   name = "jenkins_profile-${var.env}"
-  role = "${aws_iam_role.jenkins.name}"
+  role = aws_iam_role.jenkins.name
 }
 
 module "jenkins" {
   source = "../stateful"
 
-  ami_id                      = "${data.aws_ami.ubuntu.id}"
+  ami_id                      = data.aws_ami.ubuntu.id
   ansible_group               = "jenkins"
   associate_public_ip_address = true
-  availability_zones          = "${var.availability_zones}"
-  bastion_host                = "${var.bastion_host}"
-  dns_zone                    = "${var.dns_zone_private}"
-  ebs_size                    = "${var.ebs_size}"
-  env                         = "${var.env}"
-  iam_instance_profile        = "${aws_iam_instance_profile.jenkins.name}"
+  availability_zones          = var.availability_zones
+  bastion_host                = var.bastion_host
+  dns_zone                    = var.dns_zone_private
+  ebs_size                    = var.ebs_size
+  env                         = var.env
+  iam_instance_profile        = aws_iam_instance_profile.jenkins.name
   instance_count              = "1"
   instance_name_format        = "jenkins%dtf"
   instance_type               = "t2.medium"
-  key_name                    = "${var.key_name}"
-  security_groups             = "${concat(var.security_groups, list(aws_security_group.default.id))}"
-  subnets                     = "${var.subnets}"
-  vpc_id                      = "${var.vpc_id}"
+  key_name                    = var.key_name
+  security_groups             = concat(var.security_groups, [aws_security_group.default.id])
+  subnets                     = var.subnets
+  vpc_id                      = var.vpc_id
 }
+

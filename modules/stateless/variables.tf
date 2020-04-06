@@ -15,7 +15,8 @@ variable "dns_zone" {
   description = "Internal DNS zone to create host records for."
 }
 
-variable "env" {}
+variable "env" {
+}
 
 variable "instance_count" {
   description = "Number of stateless instances to create."
@@ -32,21 +33,22 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "key_name" {}
+variable "key_name" {
+}
 
 variable "security_groups" {
-  type        = "list"
+  type        = list(string)
   description = "Security groups to assign to instances."
   default     = []
 }
 
 variable "subnets" {
-  type        = "list"
+  type        = list(string)
   description = "List of subnets to assign instances to."
 }
 
 variable "tags" {
-  type        = "map"
+  type        = map(string)
   description = "Map of key/value pairs describing tags to create for instances"
   default     = {}
 }
@@ -54,3 +56,4 @@ variable "tags" {
 variable "vpc_id" {
   description = "Id of the VPC to create resources in."
 }
+

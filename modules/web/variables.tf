@@ -10,12 +10,12 @@ variable "bastion_host" {
 
 variable "name" {
   description = "Name slug to use as a prefix or name for resources."
-  type        = "string"
+  type        = string
 }
 
 variable "env" {
   description = "Name of the environment for tagging and name prefixes of resources."
-  type        = "string"
+  type        = string
 }
 
 variable "key_name" {
@@ -49,9 +49,8 @@ variable "dns_zone_private" {
 }
 
 variable "lb_target_groups" {
-  type        = "list"
+  type        = list(string)
   description = "Target group to attach to the load balancer."
-
   # example
   # lb_target_groups = [{
   #   name              = "${var.env}-${var.name}"
@@ -62,19 +61,21 @@ variable "lb_target_groups" {
 }
 
 variable "public_subnets" {
-  type        = "list"
+  type        = list(string)
   description = "List of public subnets to attach load balancers to."
 }
 
 variable "private_subnets" {
-  type        = "list"
+  type        = list(string)
   description = "List of private subnets to attach instances to."
 }
 
 variable "security_groups" {
-  type        = "list"
+  type        = list(string)
   description = "Additional security groups to attach to instances."
   default     = []
 }
 
-variable "vpc_id" {}
+variable "vpc_id" {
+}
+

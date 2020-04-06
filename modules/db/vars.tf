@@ -56,3 +56,4 @@ variable "db_multi_az" {
 variable "vpc_id" {
   description = "Id of the VPC to create the database resources in."
 }
+

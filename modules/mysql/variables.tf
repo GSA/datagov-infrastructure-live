@@ -31,3 +31,4 @@ variable "database_subnet_group" {
 variable "vpc_id" {
   description = "Id of the VPC to create the database resources in."
 }
+

@@ -25,10 +25,11 @@ variable "key_name" {
 }
 
 variable "public_subnets" {
-  type        = "list"
+  type        = list(string)
   description = "List of public subnets from the VPC."
 }
 
 variable "vpc_id" {
   description = "VPC Id to create the instance in."
 }
+

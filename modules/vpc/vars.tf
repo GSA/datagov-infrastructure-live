@@ -1,5 +1,5 @@
 variable "azs" {
-  default = ["us-east-1a", "us-east-1b"]
+  default     = ["us-east-1a", "us-east-1b"]
   description = "Availability zones to create subnets into."
 }
 
@@ -26,3 +26,4 @@ variable "single_nat_gateway" {
   default     = true
   description = "Whether to create a single nat gateway or one per subnet. This is passed to the aws/vpc module."
 }
+

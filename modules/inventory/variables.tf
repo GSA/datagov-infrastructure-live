@@ -9,7 +9,7 @@ variable "ansible_group" {
 
 variable "bastion_host" {
   description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
-  default     = ""                                                                     # unset
+  default     = "" # unset
 }
 
 variable "database_subnet_group" {
@@ -37,21 +37,22 @@ variable "env" {
   description = "The name of the environment to tag/name resources."
 }
 
-variable "key_name" {}
+variable "key_name" {
+}
 
 variable "security_groups" {
-  type        = "list"
+  type        = list(string)
   description = "Security groups to assign to instances."
   default     = []
 }
 
 variable "subnets_private" {
-  type        = "list"
+  type        = list(string)
   description = "List of private subnets to assign instances to."
 }
 
 variable "subnets_public" {
-  type        = "list"
+  type        = list(string)
   description = "List of public subnets to assign load balancers to."
 }
 
