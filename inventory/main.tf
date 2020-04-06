@@ -40,8 +40,10 @@ module "inventory" {
   source = "../modules/inventory"
 
   ami_filter_name       = "${var.ami_filter_name}"
+  ansible_group         = "${var.ansible_group}"
   bastion_host          = "${data.terraform_remote_state.jumpbox.jumpbox_dns}"
   database_subnet_group = "${data.terraform_remote_state.vpc.database_subnet_group}"
+  db_name               = "${var.db_name}"
   db_password           = "${var.db_password}"
   dns_zone_private      = "${data.terraform_remote_state.vpc.dns_zone_private}"
   dns_zone_public       = "${data.terraform_remote_state.vpc.dns_zone_public}"
@@ -51,6 +53,7 @@ module "inventory" {
   subnets_public        = "${data.terraform_remote_state.vpc.public_subnets}"
   vpc_id                = "${data.terraform_remote_state.vpc.vpc_id}"
   web_instance_count    = "${var.web_instance_count}"
+  web_instance_name     = "${var.web_instance_name}"
   web_instance_type     = "${var.web_instance_type}"
 
   security_groups = [

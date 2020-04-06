@@ -3,6 +3,10 @@ variable "ami_filter_name" {
   default     = "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*"
 }
 
+variable "ansible_group" {
+  description = "Name of the ansible group to tag web instances with."
+}
+
 variable "bastion_host" {
   description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
   default     = ""                                                                     # unset
@@ -10,6 +14,11 @@ variable "bastion_host" {
 
 variable "database_subnet_group" {
   description = "Subnet to use for database creation."
+}
+
+variable "db_name" {
+  description = "Database name for inventory database server."
+  default = "inventory_db"
 }
 
 variable "db_password" {
@@ -58,4 +67,9 @@ variable "web_instance_count" {
 variable "web_instance_type" {
   description = "Instance type to use for web."
   default     = "t3.small"
+}
+
+variable "web_instance_name" {
+  description = "The name of the web instance. ie inventory_2_8 or inventory"
+  default     = "inventory"
 }
