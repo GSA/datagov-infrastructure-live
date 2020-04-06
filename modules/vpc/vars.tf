@@ -26,4 +26,3 @@ variable "single_nat_gateway" {
   default     = true
   description = "Whether to create a single nat gateway or one per subnet. This is passed to the aws/vpc module."
 }
-

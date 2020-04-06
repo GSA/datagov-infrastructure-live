@@ -1,5 +1,4 @@
-provider "aws" {
-}
+provider "aws" {}
 
 data "aws_route53_zone" "parent" {
   name = var.dns_zone
@@ -90,15 +89,15 @@ resource "aws_security_group" "default" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "1.67.0"
+  version = "~> 2.33"
 
   name = var.vpc_name
 
+  azs              = var.azs
   cidr             = "10.0.0.0/16"
+  database_subnets = ["10.0.201.0/24", "10.0.202.0/24"]
   private_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
   public_subnets   = ["10.0.101.0/24", "10.0.102.0/24"]
-  database_subnets = ["10.0.201.0/24", "10.0.202.0/24"]
-  azs              = var.azs
 
   enable_dns_hostnames         = "true"
   enable_dns_support           = "true"
