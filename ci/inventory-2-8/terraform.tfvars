@@ -26,7 +26,7 @@ terragrunt = {
 # Module config
 env        = "ci"
 key_name   = "datagov-sandbox"
-ansible_group = "inventory_web,inventory_web_2_8"
+ansible_group = "inventory_web,inventory_web_2_8,v2"
 db_name = "inventory_db_2_8"
 web_instance_name = "inventory-2-8"
 ami_filter_name = "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*"
