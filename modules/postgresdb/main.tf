@@ -1,3 +1,5 @@
+provider "aws" {}
+
 module "database" {
   source = "../db"
 

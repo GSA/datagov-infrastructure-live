@@ -1,3 +1,5 @@
+provider "aws" {}
+
 data "aws_route53_zone" "default" {
   name         = "${var.dns_zone}"
   private_zone = true

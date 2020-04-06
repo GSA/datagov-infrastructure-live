@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: hashicorp/terraform:0.11.14
+      - image: hashicorp/terraform
         entrypoint: ["/bin/sh"]
     steps:
       - checkout

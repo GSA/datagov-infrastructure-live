@@ -1,3 +1,5 @@
+provider "aws" {}
+
 data "aws_route53_zone" "parent" {
   name = "${var.dns_zone}"
 }

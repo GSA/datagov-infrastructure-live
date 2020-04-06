@@ -1,3 +1,5 @@
+provider "aws" {}
+
 data "aws_route53_zone" "private" {
   name         = "${var.dns_zone_private}"
   private_zone = true
