@@ -15,7 +15,7 @@ resource "aws_security_group" "web" {
   description = "Web security group"
   vpc_id      = var.vpc_id
 
-  # TODO this should be configurable to match the lb liseners
+  # TODO this should be configurable to match the lb listeners
   ingress {
     from_port       = 80
     to_port         = 80
@@ -23,7 +23,7 @@ resource "aws_security_group" "web" {
     security_groups = [aws_security_group.lb.id]
   }
 
-  # TODO this should be configurable to match the lb liseners
+  # TODO this should be configurable to match the lb listeners
   ingress {
     from_port       = 443
     to_port         = 443
@@ -36,21 +36,13 @@ resource "aws_instance" "web" {
   count         = var.instance_count
   ami           = var.ami_id
   instance_type = var.instance_type
-  # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
-  # force an interpolation expression to be interpreted as a list by wrapping it
-  # in an extra set of list brackets. That form was supported for compatibility in
-  # v0.11, but is no longer supported in Terraform v0.12.
-  #
-  # If the expression in the following list itself returns a list, remove the
-  # brackets to avoid interpretation as a list of lists. If the expression
-  # returns a single list item then leave it as-is and remove this TODO comment.
-  vpc_security_group_ids = [concat(
+  vpc_security_group_ids = concat(
     [
       aws_security_group.web.id,
       data.aws_security_group.default.id,
     ],
     var.security_groups,
-  )]
+  )
 
   associate_public_ip_address = false
   subnet_id                   = element(var.private_subnets, count.index)
