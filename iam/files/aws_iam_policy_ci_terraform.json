@@ -94,6 +94,10 @@
             "Sid": "AppProvisioning0",
             "Effect": "Allow",
             "Action": [
+		"acm:DescribeCertificate",
+		"acm:DeleteCertificate",
+		"acm:RequestCertificate",
+		"acm:UpdateCertificateOptions",
                 "ec2:*",
                 "elasticloadbalancing:*",
                 "rds:*",
