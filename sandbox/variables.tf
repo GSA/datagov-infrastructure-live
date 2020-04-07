@@ -12,6 +12,10 @@ variable "catalog_db_password" {
   description = "Master password for the catalog database server."
 }
 
+variable "dashboard_db_password" {
+  description = "Master password for the dashboard database server."
+}
+
 variable "env" {
   description = "The name of the environment to tag/name resources."
   default     = "sandbox"
