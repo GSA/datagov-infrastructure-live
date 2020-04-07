@@ -59,11 +59,18 @@
             "Resource": "*"
         },
         {
-            "Sid": "VisualEditor0",
+            "Sid": "TerraformUser0",
             "Effect": "Allow",
             "Action": [
                 "dynamodb:ListTables",
-                "dynamodb:ListTagsOfResource",
+                "dynamodb:ListTagsOfResource"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AppProvisioning0",
+            "Effect": "Allow",
+            "Action": [
                 "ec2:*",
                 "elasticloadbalancing:*",
                 "rds:*",
@@ -75,7 +82,7 @@
                 "route53:ListResourceRecordSets",
                 "route53:ListTagsForResource",
                 "route53:ListTagsForResources",
-                "route53:TestDNSAnswer",
+                "route53:TestDNSAnswer"
             ],
             "Resource": "*"
         },
