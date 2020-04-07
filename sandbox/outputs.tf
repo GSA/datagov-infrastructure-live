@@ -12,3 +12,8 @@ output "inventory_db_password" {
   sensitive = true
   value     = module.inventory.db_password
 }
+
+output "wordpress_db_password" {
+  sensitive = true
+  value     = module.wordpress.db_password
+}

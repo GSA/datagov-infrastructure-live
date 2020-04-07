@@ -29,3 +29,7 @@ variable "key_name" {
   description = "SSH key pair name to configure this instance for access."
   default     = "datagov-sandbox"
 }
+
+variable "wordpress_db_password" {
+  description = "Master password for the wordpress database server."
+}
