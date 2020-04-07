@@ -25,6 +25,10 @@ variable "inventory_db_password" {
   description = "Master password for the inventory database server."
 }
 
+variable "inventory_2_8_db_password" {
+  description = "Master password for the inventory database server."
+}
+
 variable "key_name" {
   description = "SSH key pair name to configure this instance for access."
   default     = "datagov-sandbox"
