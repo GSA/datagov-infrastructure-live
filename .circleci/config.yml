@@ -122,6 +122,7 @@ jobs:
         entrypoint: ["/bin/sh"]
     environment:
       terraform_directory: sandbox
+      AWS_DEFAULT_REGION: us-east-1
     steps: *plan-steps
 
   sandbox-apply:
@@ -130,6 +131,7 @@ jobs:
         entrypoint: ["/bin/sh"]
     environment:
       terraform_directory: sandbox
+      AWS_DEFAULT_REGION: us-east-1
     steps: *apply-steps
 
 
