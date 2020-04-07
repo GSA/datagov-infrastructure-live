@@ -142,11 +142,16 @@ pipenv sync
 pipenv run make update-vendor-force
 ```
 
+Set the inventory shell variable.
+
+```
+inventory=<inventory>
+```
+
 Symlink the inventory to avoid having to specify it with ansible. _Note: You'll have to
 replace the placeholder `<inventory>` with the name of your inventory._
 
 ```bash
-inventory=<inventory>
 sudo mkdir /etc/ansible
 sudo ln -s /home/ubuntu/datagov-deploy/ansible/inventories/${inventory} /etc/ansible/hosts
 ```
