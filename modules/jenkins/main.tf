@@ -87,7 +87,7 @@ resource "aws_route53_record" "public" {
 
   type = "A"
   ttl  = "300"
-  records = [module.jenkins.instance_public_ip]
+  records = module.jenkins.instance_public_ip
 }
 
 resource "aws_iam_role" "jenkins" {
