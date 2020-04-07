@@ -107,6 +107,30 @@ jobs:
       terraform_directory: iam
     steps: *apply-steps
 
+  sandbox-validate:
+    docker:
+      - image: hashicorp/terraform:latest
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_directory: sandbox
+    steps: *validate-steps
+
+  sandbox-plan:
+    docker:
+      - image: hashicorp/terraform:latest
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_directory: sandbox
+    steps: *plan-steps
+
+  sandbox-apply:
+    docker:
+      - image: hashicorp/terraform:latest
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_directory: sandbox
+    steps: *apply-steps
+
 
 workflows:
   version: 2
@@ -147,3 +171,19 @@ workflows:
       - ckan-cloud-dev-apply:
           requires:
             - ckan-cloud-dev-approve
+
+      - sandbox-validate
+      - sandbox-plan:
+          requires:
+            - sandbox-validate
+      - sandbox-approve:
+          type: approval
+          requires:
+            - sandbox-plan
+          filters:
+            branches:
+              only:
+                - master
+      - sandbox-apply:
+          requires:
+            - sandbox-approve
