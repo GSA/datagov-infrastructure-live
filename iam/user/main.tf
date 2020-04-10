@@ -1,5 +1,5 @@
 resource "aws_iam_user" "default" {
-  name          = "${var.name}"
+  name          = var.name
 
   # Ensure we can delete the user if non-terraform MFA or login profiles are
   # created.
@@ -7,6 +7,6 @@ resource "aws_iam_user" "default" {
 }
 
 resource "aws_iam_user_group_membership" "default" {
-  user = "${aws_iam_user.default.name}"
-  groups = "${var.groups}"
+  user = aws_iam_user.default.name
+  groups = var.groups
 }
