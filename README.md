@@ -88,4 +88,4 @@ These credentials are good for 12 hours.
 When making changes to the
 [datagov-infrastructure-modules](https://github.com/GSA/datagov-infrastructure-modules),
 you may have to change the source directory on terragrunt to be a local path.
-See [inventory 2.8](/ci/inventory-2-8/tarraform.tfvars#4) for an example.
+See [inventory 2.8](./ci/inventory-2-8/tarraform.tfvars#4) for an example.
