@@ -112,12 +112,6 @@ module "rufus_pollock" {
   ]
 }
 
-module "saiabhisaikgoud_udthawar" {
-  source = "./user"
-  name   = "saiabhisaikgoud.udthawar@gsa.gov"
-  groups = ["developers"]
-}
-
 module "tom_wood" {
   source = "./user"
   name   = "tom.wood@civicactions.com"
