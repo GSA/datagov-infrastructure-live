@@ -18,12 +18,21 @@ usage instructions in their respective README's. This section contains the usage
 instructions common to _all_ environments.
 
 
-### Setting up the CI deployer account
+### First-time setup
 
-Manually create the IAM CI deploy user (`datagov-ci`). The first execution of
-`iam` should be done manually with admin permissions. Once provisioned, the
-appropriate permissions will be attached to the `datagov-ci` user and execution
-of the other projects can be done via CI/CD.
+Create the s3 bucket (`datagov-terraform-state`) to hold the terraform state defined
+in [iam/main.tf](./iam/main.tf).
+
+Manually create the IAM CI deploy user (`datagov-ci`) for use with CI. An
+appropriate terraform-managed policy will be attached to this user.
+
+The first execution of `iam` should be done manually with admin permissions.
+
+    $ terraform init
+    $ terraform apply
+
+Once provisioned, the appropriate permissions will be attached to the
+`datagov-ci` user and execution of the other projects can be done via CI/CD.
 
 
 ### Environments
