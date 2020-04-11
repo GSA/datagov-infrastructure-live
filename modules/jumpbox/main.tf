@@ -31,10 +31,6 @@ data "aws_route53_zone" "private" {
   private_zone = true
 }
 
-data "aws_security_group" "default" {
-  name = "default-${var.env}"
-}
-
 resource "aws_security_group" "default" {
   name        = "${var.env}-jumpbox-sg-tf"
   description = "Jumpbox security group"
@@ -123,7 +119,7 @@ resource "aws_iam_instance_profile" "jumpbox" {
 resource "aws_instance" "jumpbox" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
-  vpc_security_group_ids      = [data.aws_security_group.default.id, aws_security_group.default.id]
+  vpc_security_group_ids      = concat(var.security_groups, [aws_security_group.default.id])
   subnet_id                   = var.public_subnets[0]
   key_name                    = var.key_name
   iam_instance_profile        = aws_iam_instance_profile.jumpbox.name

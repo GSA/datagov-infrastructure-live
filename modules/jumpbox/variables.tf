@@ -29,7 +29,12 @@ variable "public_subnets" {
   description = "List of public subnets from the VPC."
 }
 
+variable "security_groups" {
+  type        = list(string)
+  description = "Additional security groups to attach to jumpbox instances."
+  default     = []
+}
+
 variable "vpc_id" {
   description = "VPC Id to create the instance in."
 }
-
