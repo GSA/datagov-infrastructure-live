@@ -49,6 +49,10 @@ resource "aws_instance" "default" {
   subnet_id                   = element(var.subnets, count.index)
   key_name                    = var.key_name
 
+  lifecycle {
+    ignore_changes = [ami]
+  }
+
   tags = merge(
     {
       "Name"  = format(var.instance_name_format, count.index + 1)

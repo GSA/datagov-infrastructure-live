@@ -27,6 +27,7 @@ resource "aws_instance" "default" {
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes = [ami]
   }
 
   provisioner "remote-exec" {
