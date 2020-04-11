@@ -85,8 +85,8 @@ resource "aws_route53_record" "public" {
   name    = "ci"
   zone_id = data.aws_route53_zone.public.zone_id
 
-  type = "A"
-  ttl  = "300"
+  type    = "A"
+  ttl     = "300"
   records = module.jenkins.instance_public_ip
 }
 
