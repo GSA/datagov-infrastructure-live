@@ -25,11 +25,12 @@ data "aws_ami" "ubuntu" {
 module "db" {
   source = "../postgresdb"
 
+  database_subnet_group = var.database_subnet_group
   db_name               = "catalog_db"
   db_password           = var.db_password
-  database_subnet_group = var.database_subnet_group
   db_username           = "catalog_master"
   env                   = var.env
+  security_group_ids    = var.database_security_group_ids
   vpc_id                = var.vpc_id
 }
 

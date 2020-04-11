@@ -12,6 +12,12 @@ variable "database_subnet_group" {
   description = "Subnet to use for database creation."
 }
 
+variable "database_security_group_ids" {
+  type        = list(string)
+  description = "Security groups to assign to inventory database."
+  default     = []
+}
+
 variable "db_password" {
   description = "Master password for the wordpress database server."
 }

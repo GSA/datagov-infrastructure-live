@@ -16,9 +16,15 @@ variable "database_subnet_group" {
   description = "Subnet to use for database creation."
 }
 
+variable "database_security_group_ids" {
+  type        = list(string)
+  description = "Security groups to assign to inventory database."
+  default     = []
+}
+
 variable "db_name" {
   description = "Database name for inventory database server."
-  default = "inventory_db"
+  default     = "inventory_db"
 }
 
 variable "db_password" {

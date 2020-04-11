@@ -1,5 +1,4 @@
-provider "aws" {
-}
+provider "aws" {}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -25,11 +24,12 @@ data "aws_ami" "ubuntu" {
 module "db" {
   source = "../mysql"
 
+  database_subnet_group = var.database_subnet_group
   db_name               = "dashboard_db"
   db_password           = var.db_password
-  database_subnet_group = var.database_subnet_group
   db_username           = "dashboard_master"
   env                   = var.env
+  security_group_ids    = var.database_security_group_ids
   vpc_id                = var.vpc_id
 }
 

@@ -30,6 +30,7 @@ module "db" {
   database_subnet_group = var.database_subnet_group
   db_username           = "wordpress_master"
   env                   = var.env
+  security_group_ids    = var.database_security_group_ids
   vpc_id                = var.vpc_id
 }
 
