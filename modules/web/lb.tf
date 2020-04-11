@@ -24,7 +24,7 @@ module "lb" {
 
   load_balancer_type = "application"
   name               = "${var.name}-${var.env}-tf"
-  security_groups    = [data.aws_security_group.default.id, aws_security_group.lb.id]
+  security_groups    = concat(var.loadbalancer_security_groups, [aws_security_group.lb.id])
   subnets            = var.public_subnets
   target_groups      = var.lb_target_groups
   vpc_id             = var.vpc_id

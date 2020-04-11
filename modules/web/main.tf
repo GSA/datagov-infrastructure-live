@@ -6,10 +6,6 @@ data "aws_route53_zone" "private" {
   private_zone = true
 }
 
-data "aws_security_group" "default" {
-  name = "default-${var.env}"
-}
-
 resource "aws_security_group" "web" {
   name        = "${var.name}-${var.env}-web-sg-tf"
   description = "Web security group"
@@ -37,10 +33,7 @@ resource "aws_instance" "web" {
   ami           = var.ami_id
   instance_type = var.instance_type
   vpc_security_group_ids = concat(
-    [
-      aws_security_group.web.id,
-      data.aws_security_group.default.id,
-    ],
+    [aws_security_group.web.id],
     var.security_groups,
   )
 

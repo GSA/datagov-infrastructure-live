@@ -26,6 +26,12 @@ variable "ami_id" {
   description = "AMI Id to use for EC2 web instances."
 }
 
+variable "loadbalancer_security_groups" {
+  type        = list(string)
+  description = "Additional security groups to attach to the loadbalancer."
+  default     = []
+}
+
 variable "instance_count" {
   description = "Number of EC2 web instances to create."
   default     = 1
