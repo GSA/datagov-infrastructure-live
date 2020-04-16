@@ -10,6 +10,10 @@ module "wordpress" {
   key_name              = var.key_name
   subnets_private       = module.vpc.private_subnets
   subnets_public        = module.vpc.public_subnets
-  security_groups       = [module.jumpbox.security_group_id]
   vpc_id                = module.vpc.vpc_id
+
+  security_groups       = [
+    module.vpc.security_group_id,
+    module.jumpbox.security_group_id,
+  ]
 }

@@ -16,8 +16,8 @@ module "catalog" {
   vpc_id                  = module.vpc.vpc_id
   web_instance_type       = "t3.medium"
 
-  # TODO this should be part of the module
   security_groups = [
+    module.vpc.security_group_id,
     module.jumpbox.security_group_id,
     module.solr.security_group_id,
   ]

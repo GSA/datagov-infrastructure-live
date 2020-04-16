@@ -7,7 +7,11 @@ module "solr" {
   ebs_size           = 20
   env                = var.env
   key_name           = var.key_name
-  security_groups    = [module.jumpbox.security_group_id]
   subnets            = module.vpc.private_subnets
   vpc_id             = module.vpc.vpc_id
+
+  security_groups    = [
+    module.vpc.security_group_id,
+    module.jumpbox.security_group_id
+  ]
 }
