@@ -45,6 +45,7 @@ Name | Description | Terraform | Terragrunt | Jumpbox
 [`ci`](ci/README.md)       | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | v0.11 | v0.18 | jump.ci.datagov.us
 [`ckan-cloud-dev`](ckan-cloud-dev/README.md) | Development environment for the CKAN Cloud project. | v0.12 | N | N/A
 [`iam`](iam/README.md) | Global "environment" that applies IAM settings to to the sandbox account. | v0.12 | N | N/A
+[`sandbox`](sandbox/README.md) | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | v0.12 | N | jump.sandbox.datagov.us
 
 
 ## Development
