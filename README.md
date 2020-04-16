@@ -89,3 +89,32 @@ When making changes to the
 [datagov-infrastructure-modules](https://github.com/GSA/datagov-infrastructure-modules),
 you may have to change the source directory on terragrunt to be a local path.
 See [inventory 2.8](./ci/inventory-2-8/tarraform.tfvars#4) for an example.
+
+
+## Continuous delivery
+
+We use CircleCI for continuous integration and delivery.
+
+You must configure CircleCI with secrets in order to apply the terraform files.
+
+- AWS IAM credentials of the deploy user
+- Application secrets to set (e.g. database passwords)
+- Root ssh keys in order to provision through the jumpbox
+
+First, set these [environment variables in
+CircleCI](https://app.circleci.com/settings/project/github/GSA/datagov-infrastructure-live/environment-variables)
+using the credentials from the deploy user (`datagov-ci`):
+
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+
+Next, set any `TF_VAR_*` [environment variables in
+CircleCI](https://app.circleci.com/settings/project/github/GSA/datagov-infrastructure-live/environment-variables)
+from your `.env`. Reach out to a team member if you are missing any or pull them
+from the terraform state (`terraform output`).
+
+Finally, add the [root ssh
+key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr)
+(datagov-sandbox) in
+[CircleCI](https://app.circleci.com/settings/project/github/GSA/datagov-infrastructure-live/ssh)
+under "additional keys".

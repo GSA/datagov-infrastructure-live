@@ -28,9 +28,10 @@ not.
 
 ### Root ssh key
 
-The initial provisioning requires SSH access to the jumpbox. Since the jumpbox playbooks have
-not been run, you must use the environment's root SSH key. Please see a team
-member for access.
+The initial provisioning requires SSH access to the jumpbox. Since the jumpbox
+playbooks have not been run, you must use the environment's [root SSH
+key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr).
+Please see a team member for access.
 
 Add the SSH key to your SSH agent.
 
