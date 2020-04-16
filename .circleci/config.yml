@@ -15,7 +15,7 @@ plan-steps: &plan-steps
       command: |
         cd $terraform_directory
         terraform init
-        terraform plan -out=../tfplan.plan
+        terraform plan -input=false -out=../tfplan.plan
   - persist_to_workspace:
       root: .
       paths:
@@ -30,7 +30,7 @@ apply-steps: &apply-steps
       command: |
         cd $terraform_directory
         terraform init
-        terraform apply ../tfplan.plan
+        terraform apply -input=false ../tfplan.plan
 
 
 version: 2
@@ -107,6 +107,33 @@ jobs:
       terraform_directory: iam
     steps: *apply-steps
 
+  sandbox-validate:
+    docker:
+      - image: hashicorp/terraform:latest
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_directory: sandbox
+      AWS_DEFAULT_REGION: us-east-1
+    steps: *validate-steps
+
+  sandbox-plan:
+    docker:
+      - image: hashicorp/terraform:latest
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_directory: sandbox
+      AWS_DEFAULT_REGION: us-east-1
+    steps: *plan-steps
+
+  sandbox-apply:
+    docker:
+      - image: hashicorp/terraform:latest
+        entrypoint: ["/bin/sh"]
+    environment:
+      terraform_directory: sandbox
+      AWS_DEFAULT_REGION: us-east-1
+    steps: *apply-steps
+
 
 workflows:
   version: 2
@@ -147,3 +174,19 @@ workflows:
       - ckan-cloud-dev-apply:
           requires:
             - ckan-cloud-dev-approve
+
+      - sandbox-validate
+      - sandbox-plan:
+          requires:
+            - sandbox-validate
+      - sandbox-approve:
+          type: approval
+          requires:
+            - sandbox-plan
+          filters:
+            branches:
+              only:
+                - master
+      - sandbox-apply:
+          requires:
+            - sandbox-approve
