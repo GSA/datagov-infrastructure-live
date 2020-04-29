@@ -39,7 +39,7 @@ output "inventory_2_8_db_host" {
 }
 
 output "jumpbox_dns" {
-  value     = module.jumpbox.jumpbox_dns
+  value = module.jumpbox.jumpbox_dns
 }
 
 output "wordpress_db_password" {
