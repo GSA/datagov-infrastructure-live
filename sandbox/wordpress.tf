@@ -1,6 +1,7 @@
 module "wordpress" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/wordpress?ref=feature-terraform-12"
 
+  ansible_group         = "wordpress,v2"
   database_subnet_group = module.vpc.database_subnet_group
   db_password           = var.wordpress_db_password
   bastion_host          = module.jumpbox.jumpbox_dns

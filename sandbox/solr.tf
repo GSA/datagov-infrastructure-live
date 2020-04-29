@@ -1,6 +1,7 @@
 module "solr" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/solr?ref=feature-terraform-12"
 
+  ansible_group      = "solr,v2"
   availability_zones = module.vpc.azs
   bastion_host       = module.jumpbox.jumpbox_dns
   dns_zone           = module.vpc.dns_zone_private

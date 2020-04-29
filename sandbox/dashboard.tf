@@ -1,6 +1,7 @@
 module "dashboard" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/dashboard?ref=feature-terraform-12"
 
+  ansible_group         = "dashboard-web,v2"
   bastion_host          = module.jumpbox.jumpbox_dns
   database_subnet_group = module.vpc.database_subnet_group
   db_password           = var.dashboard_db_password

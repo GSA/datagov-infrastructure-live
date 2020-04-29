@@ -2,6 +2,7 @@ module "jumpbox" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jumpbox?ref=feature-terraform-12"
 
   ami_filter_name  = var.ami_filter_name
+  ansible_group    = "jumpbox,v2"
   dns_zone_public  = module.vpc.dns_zone_public
   dns_zone_private = module.vpc.dns_zone_private
   env              = var.env
