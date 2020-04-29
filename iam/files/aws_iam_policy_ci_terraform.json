@@ -94,10 +94,11 @@
             "Sid": "AppProvisioning0",
             "Effect": "Allow",
             "Action": [
+                "acm:AddTagsToCertificate",
                 "acm:DescribeCertificate",
                 "acm:DeleteCertificate",
                 "acm:ListTagsForCertificate",
-		"acm:RequestCertificate",
+                "acm:RequestCertificate",
                 "acm:UpdateCertificateOptions",
                 "ec2:*",
                 "elasticloadbalancing:*",
