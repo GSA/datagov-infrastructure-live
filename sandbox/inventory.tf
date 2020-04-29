@@ -16,6 +16,7 @@ module "inventory" {
   vpc_id                = module.vpc.vpc_id
 
   security_groups = [
+    module.vpc.security_group_id,
     module.jumpbox.security_group_id,
     module.solr.security_group_id,
   ]

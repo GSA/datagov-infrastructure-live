@@ -8,4 +8,8 @@ module "jumpbox" {
   key_name         = var.key_name
   public_subnets   = module.vpc.public_subnets
   vpc_id           = module.vpc.vpc_id
+
+  security_groups = [
+    module.vpc.security_group_id,
+  ]
 }
