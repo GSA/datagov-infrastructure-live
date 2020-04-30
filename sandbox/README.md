@@ -110,7 +110,7 @@ git clone https://github.com/GSA/datagov-deploy.git
 cd datagov-deploy
 pip3 install --user pipenv
 pipenv sync
-pipenv run make update-vendor-force
+pipenv run make vendor
 ```
 
 Symlink the inventory to avoid having to specify it with ansible.
