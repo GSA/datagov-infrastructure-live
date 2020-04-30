@@ -53,6 +53,12 @@ variable "db_multi_az" {
   default = "false"
 }
 
+variable "security_group_ids" {
+  description = "List of Security Group Ids to apply to the database."
+  default     = []
+  type        = list(string)
+}
+
 variable "vpc_id" {
   description = "Id of the VPC to create the database resources in."
 }

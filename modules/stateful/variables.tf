@@ -8,13 +8,13 @@ variable "associate_public_ip_address" {
 }
 
 variable "availability_zones" {
-  type        = "list"
+  type        = list(string)
   description = "List of availability zones to create EBS volumes in."
 }
 
 variable "bastion_host" {
   description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
-  default     = ""                                                                     # unset
+  default     = "" # unset
 }
 
 variable "dns_zone" {
@@ -54,26 +54,29 @@ variable "iam_instance_profile" {
 }
 
 variable "tags" {
-  type        = "map"
+  type        = map(string)
   description = "Map of key/value pairs describing tags to create for instances"
   default     = {}
 }
 
-variable "key_name" {}
+variable "key_name" {
+}
 
-variable "env" {}
+variable "env" {
+}
 
 variable "security_groups" {
-  type        = "list"
+  type        = list(string)
   description = "Security groups to assign to instances."
   default     = []
 }
 
 variable "subnets" {
-  type        = "list"
+  type        = list(string)
   description = "List of subnets to assign instances to."
 }
 
 variable "vpc_id" {
   description = "Id of the VPC to create resources in."
 }
+

@@ -4,13 +4,13 @@ variable "ami_filter_name" {
 }
 
 variable "availability_zones" {
-  type        = "list"
+  type        = list(string)
   description = "List of availability zones to create EBS volumes in."
 }
 
 variable "bastion_host" {
   description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
-  default     = ""                                                                     # unset
+  default     = "" # unset
 }
 
 variable "dns_zone_private" {
@@ -30,19 +30,21 @@ variable "ebs_size" {
   default     = 20
 }
 
-variable "key_name" {}
+variable "key_name" {
+}
 
 variable "security_groups" {
-  type        = "list"
+  type        = list(string)
   description = "Security groups to assign to instances."
   default     = []
 }
 
 variable "subnets" {
-  type        = "list"
+  type        = list(string)
   description = "List of public subnets to assign instances to."
 }
 
 variable "vpc_id" {
   description = "Id of the VPC to create resources in."
 }
+

@@ -5,11 +5,17 @@ variable "ami_filter_name" {
 
 variable "bastion_host" {
   description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
-  default     = ""                                                                     # unset
+  default     = "" # unset
 }
 
 variable "database_subnet_group" {
   description = "Subnet to use for database creation."
+}
+
+variable "database_security_group_ids" {
+  type        = list(string)
+  description = "Security groups to assign to inventory database."
+  default     = []
 }
 
 variable "db_password" {
@@ -33,24 +39,26 @@ variable "instance_count" {
   default     = 1
 }
 
-variable "key_name" {}
+variable "key_name" {
+}
 
 variable "security_groups" {
-  type        = "list"
+  type        = list(string)
   description = "Security groups to assign to instances."
   default     = []
 }
 
 variable "subnets_private" {
-  type        = "list"
+  type        = list(string)
   description = "List of private subnets to assign instances to."
 }
 
 variable "subnets_public" {
-  type        = "list"
+  type        = list(string)
   description = "List of public subnets to assign load balancers to."
 }
 
 variable "vpc_id" {
   description = "Id of the VPC to create resources in."
 }
+

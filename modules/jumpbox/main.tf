@@ -1,9 +1,12 @@
+provider "aws" {
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["${var.ami_filter_name}"]
+    values = [var.ami_filter_name]
   }
 
   filter {
@@ -20,22 +23,18 @@ data "aws_ami" "ubuntu" {
 }
 
 data "aws_route53_zone" "public" {
-  name = "${var.dns_zone_public}"
+  name = var.dns_zone_public
 }
 
 data "aws_route53_zone" "private" {
-  name         = "${var.dns_zone_private}"
+  name         = var.dns_zone_private
   private_zone = true
-}
-
-data "aws_security_group" "default" {
-  name = "default-${var.env}"
 }
 
 resource "aws_security_group" "default" {
   name        = "${var.env}-jumpbox-sg-tf"
   description = "Jumpbox security group"
-  vpc_id      = "${var.vpc_id}"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 22
@@ -55,13 +54,13 @@ resource "aws_security_group" "default" {
 resource "aws_security_group" "jumpbox_access" {
   name        = "${var.env}-jumpbox-access-sg-tf"
   description = "Allows SSH access from jumpbox."
-  vpc_id      = "${var.vpc_id}"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = ["${aws_security_group.default.id}"]
+    security_groups = [aws_security_group.default.id]
   }
 }
 
@@ -83,13 +82,14 @@ resource "aws_iam_role" "jumpbox" {
   ]
 }
 EOF
+
 }
 
 # This allows the jumpbox to query the AWS API for EC2 and RDS resources for
 # the Ansible dynamic inventory.
 resource "aws_iam_role_policy" "jumpbox" {
   name = "jumpbox_dynamic_inventory_policy"
-  role = "${aws_iam_role.jumpbox.id}"
+  role = aws_iam_role.jumpbox.id
 
   policy = <<EOF
 {
@@ -108,37 +108,37 @@ resource "aws_iam_role_policy" "jumpbox" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_instance_profile" "jumpbox" {
   name = "jumpbox_profile-${var.env}"
-  role = "${aws_iam_role.jumpbox.name}"
+  role = aws_iam_role.jumpbox.name
 }
 
 resource "aws_instance" "jumpbox" {
-  ami                         = "${data.aws_ami.ubuntu.id}"
-  instance_type               = "${var.instance_type}"
-  vpc_security_group_ids      = ["${data.aws_security_group.default.id}", "${aws_security_group.default.id}"]
-  subnet_id                   = "${var.public_subnets[0]}"
-  key_name                    = "${var.key_name}"
-  iam_instance_profile        = "${aws_iam_instance_profile.jumpbox.name}"
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = var.instance_type
+  vpc_security_group_ids      = concat(var.security_groups, [aws_security_group.default.id])
+  subnet_id                   = var.public_subnets[0]
+  key_name                    = var.key_name
+  iam_instance_profile        = aws_iam_instance_profile.jumpbox.name
   associate_public_ip_address = true
 
-  tags {
+  tags = {
     Name  = "datagov-jump1tf"
-    env   = "${var.env}"
+    env   = var.env
     group = "jumpbox"
   }
 
   connection {
+    host = coalesce(self.public_ip, self.private_ip)
     type = "ssh"
     user = "ubuntu"
   }
 
   lifecycle {
-    ignore_changes = [
-      "ami",
-    ]
+    ignore_changes = [ami]
   }
 
   provisioner "remote-exec" {
@@ -148,18 +148,19 @@ resource "aws_instance" "jumpbox" {
 
 resource "aws_route53_record" "public" {
   name    = "jump"
-  zone_id = "${data.aws_route53_zone.public.zone_id}"
+  zone_id = data.aws_route53_zone.public.zone_id
 
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.jumpbox.public_ip}"]
+  records = [aws_instance.jumpbox.public_ip]
 }
 
 resource "aws_route53_record" "private" {
   name    = "datagov-jump1tf"
-  zone_id = "${data.aws_route53_zone.private.zone_id}"
+  zone_id = data.aws_route53_zone.private.zone_id
 
   type    = "CNAME"
   ttl     = "300"
-  records = ["${aws_instance.jumpbox.private_dns}"]
+  records = [aws_instance.jumpbox.private_dns]
 }
+

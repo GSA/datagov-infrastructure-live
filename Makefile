@@ -1,9 +1,4 @@
 SUBDIRS := \
-  catalog \
-  dashboard \
-  inventory \
-  jenkins \
-  jumpbox \
   modules/catalog \
   modules/dashboard \
   modules/db \
@@ -16,10 +11,10 @@ SUBDIRS := \
   modules/stateless \
   modules/vpc \
   modules/web \
-  modules/wordpress \
-  solr \
-  vpc \
-  wordpress
+  modules/wordpress
+
+clean:
+	rm -rf .terraform $(foreach subdir, $(SUBDIRS), $(subdir)/.terraform)
 
 fmt:
 	$(foreach subdir, $(SUBDIRS), terraform fmt $(subdir);)
@@ -28,6 +23,6 @@ test: $(SUBDIRS)
 $(SUBDIRS):
 	@echo Testing $@ ...
 	terraform init -backend=false $@
-	terraform validate -check-variables=false $@
+	AWS_DEFAULT_REGION=us-east-1 terraform validate $@
 
 .PHONY: test $(SUBDIRS)

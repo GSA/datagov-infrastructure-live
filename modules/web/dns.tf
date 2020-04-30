@@ -1,13 +1,13 @@
 data "aws_route53_zone" "public" {
-  name = "${var.dns_zone_public}"
+  name = var.dns_zone_public
 }
 
 resource "aws_route53_record" "lb" {
-  zone_id = "${data.aws_route53_zone.public.zone_id}"
-  name    = "${var.name}"
+  zone_id = data.aws_route53_zone.public.zone_id
+  name    = var.name
   type    = "CNAME"
   ttl     = 300
-  records = ["${module.lb.dns_name}"]
+  records = [module.lb.this_lb_dns_name]
 }
 
 resource "aws_acm_certificate" "lb" {
@@ -15,7 +15,7 @@ resource "aws_acm_certificate" "lb" {
   validation_method = "DNS"
 
   tags = {
-    env = "${var.env}"
+    env = var.env
   }
 
   lifecycle {
@@ -25,14 +25,15 @@ resource "aws_acm_certificate" "lb" {
 
 # DNS record for LB certificate validation
 resource "aws_route53_record" "lb_cert_validation" {
-  name    = "${aws_acm_certificate.lb.domain_validation_options.0.resource_record_name}"
-  type    = "${aws_acm_certificate.lb.domain_validation_options.0.resource_record_type}"
-  zone_id = "${data.aws_route53_zone.public.zone_id}"
-  records = ["${aws_acm_certificate.lb.domain_validation_options.0.resource_record_value}"]
+  name    = aws_acm_certificate.lb.domain_validation_options[0].resource_record_name
+  type    = aws_acm_certificate.lb.domain_validation_options[0].resource_record_type
+  zone_id = data.aws_route53_zone.public.zone_id
+  records = [aws_acm_certificate.lb.domain_validation_options[0].resource_record_value]
   ttl     = 60
 }
 
 resource "aws_acm_certificate_validation" "lb" {
-  certificate_arn         = "${aws_acm_certificate.lb.arn}"
-  validation_record_fqdns = ["${aws_route53_record.lb_cert_validation.fqdn}"]
+  certificate_arn         = aws_acm_certificate.lb.arn
+  validation_record_fqdns = [aws_route53_record.lb_cert_validation.fqdn]
 }
+

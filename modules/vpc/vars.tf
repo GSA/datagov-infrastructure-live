@@ -1,5 +1,5 @@
 variable "azs" {
-  default = ["us-east-1a", "us-east-1b"]
+  default     = ["us-east-1a", "us-east-1b"]
   description = "Availability zones to create subnets into."
 }
 

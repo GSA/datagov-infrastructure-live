@@ -25,8 +25,14 @@ variable "key_name" {
 }
 
 variable "public_subnets" {
-  type        = "list"
+  type        = list(string)
   description = "List of public subnets from the VPC."
+}
+
+variable "security_groups" {
+  type        = list(string)
+  description = "Additional security groups to attach to jumpbox instances."
+  default     = []
 }
 
 variable "vpc_id" {
