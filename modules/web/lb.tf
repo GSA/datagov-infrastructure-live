@@ -1,3 +1,9 @@
+data "aws_subnet" "public_subnets" {
+  count = length(var.public_subnets)
+
+  id = element(var.public_subnets, count.index)
+}
+
 resource "aws_security_group" "lb" {
   name        = "${var.name}-${var.env}-lb-sg-tf"
   description = "Load balancer security group for ${var.name}-${var.env}"
@@ -15,6 +21,20 @@ resource "aws_security_group" "lb" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = data.aws_subnet.public_subnets.*.cidr_block
+  }
+
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = data.aws_subnet.public_subnets.*.cidr_block
   }
 }
 
