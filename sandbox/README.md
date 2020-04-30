@@ -1,7 +1,8 @@
 # sandbox
 
-This environment keeps parity with the BSP environments. The purpose is to act
-as a continuous integration environment to test playbook live in a multi-host
+This environment attempts to keep parity with the BSP environments. The purpose
+is to act as a continuous integration environment to test [Ansible
+playbooks](https://github.com/GSA/datagov-deploy) live in a multi-host
 environment.
 
 
@@ -58,7 +59,7 @@ Forward your ssh agent so that you have access to the SSH key to connect to
 other instances. Consider adding this to your `~/.ssh/config`.
 
 ```
-Host jump.ci.datagov.us jump.bionic.datagov.us
+Host jump.sandbox.datagov.us
     User <yourusername>
     ForwardAgent yes
     IdentityFile ~/.ssh/<your-datagov-deploy-key>
