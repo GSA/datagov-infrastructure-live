@@ -3,6 +3,11 @@ variable "ami_filter_name" {
   default     = "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*"
 }
 
+variable "ansible_group" {
+  description = "Name of the ansible group to tag web instances with."
+  default     = "jumpbox,v2"
+}
+
 variable "dns_zone_public" {
   description = "The name of the public DNS zone to use for creating a public DNS record."
 }

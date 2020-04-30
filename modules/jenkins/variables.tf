@@ -3,6 +3,11 @@ variable "ami_filter_name" {
   default     = "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*"
 }
 
+variable "ansible_group" {
+  description = "Name of the ansible group to tag web instances with."
+  default     = "jenkins,v2"
+}
+
 variable "availability_zones" {
   type        = list(string)
   description = "List of availability zones to create EBS volumes in."

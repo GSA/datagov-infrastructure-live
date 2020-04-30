@@ -38,7 +38,7 @@ module "web" {
   source = "../web"
 
   ami_id           = data.aws_ami.ubuntu.id
-  ansible_group    = "wordpress_web"
+  ansible_group    = var.ansible_group
   bastion_host     = var.bastion_host
   dns_zone_public  = var.dns_zone_public
   dns_zone_private = var.dns_zone_private
