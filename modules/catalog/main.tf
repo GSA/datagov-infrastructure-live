@@ -26,6 +26,7 @@ module "db" {
   source = "../postgresdb"
 
   database_subnet_group = var.database_subnet_group
+  db_allocated_storage  = var.db_allocated_storage
   db_name               = "catalog_db"
   db_password           = var.db_password
   db_username           = "catalog_master"

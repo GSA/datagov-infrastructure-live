@@ -25,6 +25,7 @@ module "db" {
   source = "../mysql"
 
   database_subnet_group = var.database_subnet_group
+  db_allocated_storage  = var.db_allocated_storage
   db_name               = "dashboard_db"
   db_password           = var.db_password
   db_username           = "dashboard_master"

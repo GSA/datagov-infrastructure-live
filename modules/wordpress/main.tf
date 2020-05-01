@@ -29,6 +29,7 @@ module "db" {
   db_password           = var.db_password
   database_subnet_group = var.database_subnet_group
   db_username           = "wordpress_master"
+  db_allocated_storage  = var.db_allocated_storage
   env                   = var.env
   security_group_ids    = var.database_security_group_ids
   vpc_id                = var.vpc_id
