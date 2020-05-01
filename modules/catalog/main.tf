@@ -114,3 +114,14 @@ module "harvester" {
   )
 }
 
+resource "aws_elasticache_cluster" "redis" {
+  count = var.enable_redis ? 1 : 0
+
+  cluster_id           = "catalog-${var.env}"
+  engine               = "redis"
+  node_type            = var.redis_node_type
+  num_cache_nodes      = 1
+  parameter_group_name = "default.redis5.0"
+  engine_version       = "5.0.6"
+  port                 = 6379
+}
