@@ -1,5 +1,5 @@
 module "jumpbox" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jumpbox?ref=feature-terraform-12"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jumpbox?ref=v3.0.0"
 
   ami_filter_name  = var.ami_filter_name
   dns_zone_public  = module.vpc.dns_zone_public

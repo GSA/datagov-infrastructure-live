@@ -13,7 +13,7 @@ terraform {
 }
 
 module "vpc" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/vpc?ref=feature-terraform-12"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/vpc?ref=v3.0.0"
 
   env      = var.env
   vpc_name = "datagov-sandbox"
