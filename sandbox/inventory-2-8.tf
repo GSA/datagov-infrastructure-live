@@ -8,6 +8,7 @@ module "inventory_2_8" {
   db_password           = var.inventory_2_8_db_password
   dns_zone_private      = module.vpc.dns_zone_private
   dns_zone_public       = module.vpc.dns_zone_public
+  enable_redis          = true
   env                   = var.env
   key_name              = var.key_name
   subnets_private       = module.vpc.private_subnets
