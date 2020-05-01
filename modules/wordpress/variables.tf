@@ -3,6 +3,11 @@ variable "ami_filter_name" {
   default     = "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*"
 }
 
+variable "ansible_group" {
+  description = "Name of the ansible group to tag web instances with."
+  default     = "wordpress_web,v2"
+}
+
 variable "bastion_host" {
   description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
   default     = "" # unset

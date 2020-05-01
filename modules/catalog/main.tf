@@ -38,7 +38,7 @@ module "web" {
   source = "../web"
 
   ami_id           = data.aws_ami.ubuntu.id
-  ansible_group    = "catalog_web"
+  ansible_group    = var.web_ansible_group
   bastion_host     = var.bastion_host
   dns_zone_public  = var.dns_zone_public
   dns_zone_private = var.dns_zone_private
@@ -96,7 +96,7 @@ module "harvester" {
   source = "../stateless"
 
   ami_id               = data.aws_ami.ubuntu.id
-  ansible_group        = "catalog_harvester"
+  ansible_group        = var.harvester_ansible_group
   bastion_host         = var.bastion_host
   dns_zone             = var.dns_zone_private
   env                  = var.env

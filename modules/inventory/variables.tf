@@ -5,7 +5,7 @@ variable "ami_filter_name" {
 
 variable "ansible_group" {
   description = "Name of the ansible group to tag web instances with."
-  default     = "inventory_web"
+  default     = "inventory_web,v1"
 }
 
 variable "bastion_host" {

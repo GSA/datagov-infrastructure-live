@@ -146,7 +146,7 @@ module "jenkins" {
   source = "../stateful"
 
   ami_id                      = data.aws_ami.ubuntu.id
-  ansible_group               = "jenkins"
+  ansible_group               = var.ansible_group
   associate_public_ip_address = true
   availability_zones          = var.availability_zones
   bastion_host                = var.bastion_host

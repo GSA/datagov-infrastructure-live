@@ -78,7 +78,7 @@ module "default" {
   source = "../stateful"
 
   ami_id               = data.aws_ami.ubuntu.id
-  ansible_group        = "solr"
+  ansible_group        = var.ansible_group
   availability_zones   = var.availability_zones
   bastion_host         = var.bastion_host
   dns_zone             = var.dns_zone

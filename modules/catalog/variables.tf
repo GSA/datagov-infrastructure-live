@@ -34,6 +34,11 @@ variable "env" {
   description = "The name of the environment to tag/name resources."
 }
 
+variable "harvester_ansible_group" {
+  description = "Name of the ansible group to tag harvester instances with."
+  default     = "catalog_harvester,v1"
+}
+
 variable "harvester_instance_count" {
   description = "Number of harvester instances to create."
   default     = 1
@@ -65,6 +70,11 @@ variable "subnets_public" {
 
 variable "vpc_id" {
   description = "Id of the VPC to create resources in."
+}
+
+variable "web_ansible_group" {
+  description = "Name of the ansible group to tag web instances with."
+  default     = "catalog_web,v1"
 }
 
 variable "web_instance_count" {

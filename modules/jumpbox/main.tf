@@ -128,7 +128,7 @@ resource "aws_instance" "jumpbox" {
   tags = {
     Name  = "datagov-jump1tf"
     env   = var.env
-    group = "jumpbox"
+    group = var.ansible_group
   }
 
   connection {
