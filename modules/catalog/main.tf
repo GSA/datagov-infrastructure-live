@@ -27,7 +27,7 @@ module "db" {
 
   database_subnet_group = var.database_subnet_group
   db_allocated_storage  = var.db_allocated_storage
-  db_name               = "catalog_db"
+  db_name               = var.db_name
   db_password           = var.db_password
   db_username           = "catalog_master"
   env                   = var.env
@@ -47,7 +47,7 @@ module "web" {
   instance_count   = var.web_instance_count
   instance_type    = var.web_instance_type
   key_name         = var.key_name
-  name             = "catalog"
+  name             = var.web_instance_name
   private_subnets  = var.subnets_private
   public_subnets   = var.subnets_public
   security_groups  = concat(var.security_groups, [module.db.security_group])
@@ -55,7 +55,7 @@ module "web" {
 
   lb_target_groups = [
     {
-      name             = "catalog-web-${var.env}"
+      name             = "${var.web_instance_name}-web-${var.env}"
       backend_protocol = "HTTP"
       backend_port     = "80"
       health_check = {
@@ -117,7 +117,7 @@ module "harvester" {
 resource "aws_elasticache_cluster" "redis" {
   count = var.enable_redis ? 1 : 0
 
-  cluster_id           = "catalog-${var.env}"
+  cluster_id           = "${var.web_instance_name}-${var.env}"
   engine               = "redis"
   node_type            = var.redis_node_type
   num_cache_nodes      = 1
