@@ -3,7 +3,7 @@ variable "env" {
 }
 
 variable "db_allocated_storage" {
-  default = "10"
+  default = "20"
 }
 
 variable "db_storage_type" {

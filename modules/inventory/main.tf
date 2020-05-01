@@ -22,6 +22,7 @@ data "aws_ami" "ubuntu" {
 module "db" {
   source = "../postgresdb"
 
+  db_allocated_storage  = var.db_allocated_storage
   db_name               = var.db_name
   db_password           = var.db_password
   database_subnet_group = var.database_subnet_group

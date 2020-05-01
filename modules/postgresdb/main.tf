@@ -9,6 +9,7 @@ module "database" {
 
   database_port          = 5432
   database_subnet_group  = var.database_subnet_group
+  db_allocated_storage   = var.db_allocated_storage
   db_instance_class      = var.db_instance_class
   db_name                = var.db_name
   db_password            = var.db_password

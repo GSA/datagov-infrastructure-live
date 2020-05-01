@@ -23,6 +23,11 @@ variable "database_security_group_ids" {
   default     = []
 }
 
+variable "db_allocated_storage" {
+  description = "Size in GB to allocate for database storage."
+  default     = "20"
+}
+
 variable "db_name" {
   description = "Database name for inventory database server."
   default     = "inventory_db"

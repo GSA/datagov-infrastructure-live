@@ -2,6 +2,11 @@ variable "env" {
   description = "Name of the environment."
 }
 
+variable "db_allocated_storage" {
+  description = "Size in GB to allocate for database storage."
+  default     = "20"
+}
+
 variable "db_instance_class" {
   default = "db.t2.micro"
 }
