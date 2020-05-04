@@ -23,6 +23,11 @@ variable "db_allocated_storage" {
   default     = "20"
 }
 
+variable "db_name" {
+  description = "Database name for catalog database server."
+  default     = "catalog_db"
+}
+
 variable "db_password" {
   description = "Master password for the catalog database server."
 }
@@ -98,8 +103,12 @@ variable "web_instance_count" {
   default     = 1
 }
 
+variable "web_instance_name" {
+  description = "The name of the web instance."
+  default     = "catalog"
+}
+
 variable "web_instance_type" {
   description = "Instance type to use for web."
   default     = "t3.small"
 }
-
