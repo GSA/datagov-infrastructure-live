@@ -45,11 +45,22 @@ variable "dns_zone_public" {
   description = "The public DNS zone to create the public CNAME record in."
 }
 
+variable "enable_redis" {
+  type        = bool
+  description = "When enabled, provision a Redis ElastiCache instance."
+  default     = false
+}
+
 variable "env" {
   description = "The name of the environment to tag/name resources."
 }
 
 variable "key_name" {
+}
+
+variable "redis_node_type" {
+  description = "ElastiCache node type to provision."
+  default     = "cache.t3.small"
 }
 
 variable "security_groups" {
