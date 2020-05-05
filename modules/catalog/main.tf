@@ -50,7 +50,7 @@ module "web" {
   name             = var.web_instance_name
   private_subnets  = var.subnets_private
   public_subnets   = var.subnets_public
-  security_groups  = concat(var.security_groups, [module.db.security_group])
+  security_groups  = concat(var.security_groups, [module.db.security_group, module.redis.security_group])
   vpc_id           = var.vpc_id
 
   lb_target_groups = [
@@ -110,18 +110,19 @@ module "harvester" {
 
   security_groups = concat(
     var.security_groups,
-    [module.db.security_group, aws_security_group.harvester.id],
+    [
+      module.db.security_group,
+      module.redis.security_group,
+      aws_security_group.harvester.id,
+    ],
   )
 }
 
-resource "aws_elasticache_cluster" "redis" {
-  count = var.enable_redis ? 1 : 0
+module "redis" {
+  source = "../redis"
 
-  cluster_id           = "${var.web_instance_name}-${var.env}"
-  engine               = "redis"
-  node_type            = var.redis_node_type
-  num_cache_nodes      = 1
-  parameter_group_name = "default.redis5.0"
-  engine_version       = "5.0.6"
-  port                 = 6379
+  env = var.env
+  name = var.web_instance_name
+  node_type = var.redis_node_type
+  vpc_id = var.vpc_id
 }
