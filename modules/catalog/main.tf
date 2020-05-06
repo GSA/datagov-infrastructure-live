@@ -66,7 +66,7 @@ module "web" {
 }
 
 resource "aws_security_group" "harvester" {
-  name        = "${var.env}-catalog-harvester-tf"
+  name        = "${var.env}-${var.harvester_instance_name}-tf"
   description = "Catalog harvester security group"
   vpc_id      = var.vpc_id
 
@@ -102,7 +102,7 @@ module "harvester" {
   dns_zone             = var.dns_zone_private
   env                  = var.env
   instance_count       = var.harvester_instance_count
-  instance_name_format = "catalog-harvester%dtf"
+  instance_name_format = "${var.harvester_instance_name}%dtf"
   instance_type        = var.harvester_instance_type
   key_name             = var.key_name
   subnets              = var.subnets_private

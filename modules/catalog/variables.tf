@@ -60,6 +60,11 @@ variable "harvester_instance_count" {
   default     = 1
 }
 
+variable "harvester_instance_name" {
+  description = "The name of the harvester instance."
+  default     = "catalog-harvester"
+}
+
 variable "harvester_instance_type" {
   description = "Instance type to use for harvesters."
   default     = "t3.small"
