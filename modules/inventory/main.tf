@@ -32,6 +32,14 @@ module "db" {
   vpc_id                = var.vpc_id
 }
 
+module "s3" {
+  source = "../s3"
+
+  bucket_name = var.s3_bucket_name
+  bucket_acl  = var.s3_bucket_acl
+}
+
+
 module "web" {
   source = "../web"
 
@@ -71,4 +79,58 @@ resource "aws_elasticache_cluster" "redis" {
   parameter_group_name = "default.redis5.0"
   engine_version       = "5.0.6"
   port                 = 6379
+}
+
+resource "aws_iam_role" "inventory" {
+  name = "inventory_s3_role-${var.env}"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid":  "InventoryS3AssumeRole"
+    }
+  ]
+}
+EOF
+
+}
+
+# This gives inventory access the S3 bucket.
+resource "aws_iam_role_policy" "inventory" {
+  name = "inventory_s3_policy"
+  role = aws_iam_role.inventory.id
+
+  policy = <<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "s3:*"
+        ],
+        "Effect": "Allow",
+        "Resource": [
+          "arn:aws:s3:::${var.s3_bucket_name}",
+          "arn:aws:s3:::${var.s3_bucket_name}/*"
+        ]
+      },
+      {
+        "Action": "S3:ListAllMyBuckets",
+        "Resource": "arn:aws:s3:::*"
+      }
+    ]
+  }
+  EOF
+}
+
+resource "aws_iam_instance_profile" "inventory" {
+  name = "inventory_profile-${var.env}"
+  role = aws_iam_role.inventory.name
 }

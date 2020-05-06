@@ -85,3 +85,8 @@ variable "security_groups" {
 }
 
 variable "vpc_id" {}
+
+variable "iam_instance_profile" {
+  description = "The IAM instance profile name to pass to the EC2 instances."
+  default     = ""
+}

@@ -97,3 +97,13 @@ variable "web_instance_name" {
   description = "The name of the web instance. ie inventory_2_8 or inventory"
   default     = "inventory"
 }
+
+variable "s3_bucket_name" {
+  description = "The name of the S3 bucket"
+  default     = "datagov-appdata-inventory-$${var.env}"
+}
+
+variable "s3_bucket_acl" {
+  description = "Access of the S3 bucket"
+  default     = "private"
+}
