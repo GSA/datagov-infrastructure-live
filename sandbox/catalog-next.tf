@@ -1,5 +1,5 @@
 module "catalog_next" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v3.2.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v3.2.1"
 
   bastion_host            = module.jumpbox.jumpbox_dns
   database_subnet_group   = module.vpc.database_subnet_group
@@ -10,6 +10,7 @@ module "catalog_next" {
   enable_redis            = true
   env                     = var.env
   harvester_ansible_group = "catalog_harvester,catalog_harvester_next,v2"
+  harvester_instance_name = "catalog-harvester-next"
   key_name                = var.key_name
   subnets_private         = module.vpc.private_subnets
   subnets_public          = module.vpc.public_subnets
