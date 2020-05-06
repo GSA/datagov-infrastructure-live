@@ -36,6 +36,11 @@ resource "aws_security_group" "redis" {
   }
 }
 
+resource "aws_elasticache_subnet_group" "redis" {
+  name       = "${var.name}-${var.env}"
+  subnet_ids = var.subnets
+}
+
 resource "aws_elasticache_cluster" "redis" {
   cluster_id           = "${var.name}-${var.env}"
   engine               = "redis"
@@ -45,6 +50,7 @@ resource "aws_elasticache_cluster" "redis" {
   parameter_group_name = "default.redis5.0"
   port                 = var.port
   security_group_ids   = [aws_security_group.redis.id]
+  subnet_group_name    = aws_elasticache_subnet_group.redis.name
 
   tags = {
     env  = var.env

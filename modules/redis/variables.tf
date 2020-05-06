@@ -18,6 +18,11 @@ variable "port" {
   default     = 6379
 }
 
+variable "subnets" {
+  description = "List of subnets to associate with the elasticache cluster."
+  type        = list(string)
+}
+
 variable "vpc_id" {
   description = "Id of the VPC where Redis should be provisioned."
 }

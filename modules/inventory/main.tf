@@ -64,8 +64,9 @@ module "web" {
 module "redis" {
   source = "../redis"
 
-  env = var.env
-  name = var.web_instance_name
+  env       = var.env
+  name      = var.web_instance_name
   node_type = var.redis_node_type
-  vpc_id = var.vpc_id
+  subnets   = var.subnets_private
+  vpc_id    = var.vpc_id
 }
