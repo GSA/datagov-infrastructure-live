@@ -75,7 +75,7 @@ module "web" {
 module "redis" {
   source = "../redis"
 
-  allow_security_groups = aws_security_group.inventory.id
+  allow_security_groups = [aws_security_group.inventory.id]
   env                   = var.env
   name                  = var.web_instance_name
   node_type             = var.redis_node_type
