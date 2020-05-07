@@ -6,6 +6,7 @@ SUBDIRS := \
   modules/jenkins \
   modules/mysql \
   modules/postgresdb \
+  modules/redis \
   modules/solr \
   modules/stateful \
   modules/stateless \
