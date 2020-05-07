@@ -1,11 +1,25 @@
+output "catalog_db_host" {
+  sensitive = true
+  value     = module.catalog.db_server
+}
+
 output "catalog_db_password" {
   sensitive = true
   value     = module.catalog.db_password
 }
 
-output "catalog_db_host" {
+output "catalog_next_db_host" {
   sensitive = true
-  value     = module.catalog.db_server
+  value     = module.catalog_next.db_server
+}
+
+output "catalog_next_db_password" {
+  sensitive = true
+  value     = module.catalog_next.db_password
+}
+
+output "catalog_next_redis_cache_nodes" {
+  value = module.catalog_next.redis_cache_nodes
 }
 
 output "dashboard_db_password" {
@@ -38,8 +52,12 @@ output "inventory_2_8_db_host" {
   value     = module.inventory_2_8.db_server
 }
 
+output "inventory_redis_cache_nodes" {
+  value = module.inventory_2_8.redis_cache_nodes
+}
+
 output "jumpbox_dns" {
-  value     = module.jumpbox.jumpbox_dns
+  value = module.jumpbox.jumpbox_dns
 }
 
 output "wordpress_db_password" {
