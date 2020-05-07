@@ -1,3 +1,8 @@
+variable "allow_security_groups" {
+  type        = list(string)
+  description = "List of security group Ids allowed to access redis"
+}
+
 variable "env" {
   type        = string
   description = "Name of the environment for generating Ids and unique names for Redis and associated resources."
