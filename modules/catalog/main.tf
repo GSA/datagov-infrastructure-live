@@ -22,6 +22,17 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+resource "aws_security_group" "web" {
+  name        = "${var.web_instance_name}-${var.env}"
+  description = "Security group for ${var.web_instance_name} web instance in ${var.env}"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    env  = var.env
+    name = var.web_instance_name
+  }
+}
+
 module "db" {
   source = "../postgresdb"
 
@@ -50,7 +61,7 @@ module "web" {
   name             = var.web_instance_name
   private_subnets  = var.subnets_private
   public_subnets   = var.subnets_public
-  security_groups  = concat(var.security_groups, [module.db.security_group, module.redis.security_group])
+  security_groups  = concat(var.security_groups, [module.db.security_group])
   vpc_id           = var.vpc_id
 
   lb_target_groups = [
@@ -112,7 +123,6 @@ module "harvester" {
     var.security_groups,
     [
       module.db.security_group,
-      module.redis.security_group,
       aws_security_group.harvester.id,
     ],
   )
@@ -121,8 +131,10 @@ module "harvester" {
 module "redis" {
   source = "../redis"
 
-  env = var.env
-  name = var.web_instance_name
-  node_type = var.redis_node_type
-  vpc_id = var.vpc_id
+  allow_security_groups = [aws_security_group.web.id, aws_security_group.harvester.id]
+  env                   = var.env
+  name                  = var.web_instance_name
+  node_type             = var.redis_node_type
+  subnets               = var.subnets_private
+  vpc_id                = var.vpc_id
 }

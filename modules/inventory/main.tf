@@ -19,6 +19,17 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+resource "aws_security_group" "inventory" {
+  name        = "${var.web_instance_name}-${var.env}"
+  description = "Security group for ${var.web_instance_name} web instance in ${var.env}"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    env  = var.env
+    name = var.web_instance_name
+  }
+}
+
 module "db" {
   source = "../postgresdb"
 
@@ -49,7 +60,7 @@ module "web" {
   public_subnets   = var.subnets_public
   vpc_id           = var.vpc_id
 
-  security_groups = concat(var.security_groups, [module.db.security_group, module.redis.security_group])
+  security_groups = concat(var.security_groups, [module.db.security_group])
 
   lb_target_groups = [
     {
@@ -64,8 +75,10 @@ module "web" {
 module "redis" {
   source = "../redis"
 
-  env = var.env
-  name = var.web_instance_name
-  node_type = var.redis_node_type
-  vpc_id = var.vpc_id
+  allow_security_groups = aws_security_group.inventory.id
+  env                   = var.env
+  name                  = var.web_instance_name
+  node_type             = var.redis_node_type
+  subnets               = var.subnets_private
+  vpc_id                = var.vpc_id
 }

@@ -1,3 +1,8 @@
+variable "allow_security_groups" {
+  type        = list(string)
+  description = "List of security group Ids allowed to access redis"
+}
+
 variable "env" {
   type        = string
   description = "Name of the environment for generating Ids and unique names for Redis and associated resources."
@@ -16,6 +21,11 @@ variable "node_type" {
 variable "port" {
   description = "Port Redis should listen on."
   default     = 6379
+}
+
+variable "subnets" {
+  description = "List of subnets to associate with the elasticache cluster."
+  type        = list(string)
 }
 
 variable "vpc_id" {

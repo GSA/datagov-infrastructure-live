@@ -1,3 +1,3 @@
-output "security_group" {
-  value = aws_security_group.redis_access.id
+output "cache_nodes" {
+  value = aws_elasticache_cluster.redis.cache_nodes
 }
