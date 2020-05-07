@@ -100,7 +100,6 @@ variable "web_instance_name" {
 
 variable "s3_bucket_name" {
   description = "The name of the S3 bucket"
-  default     = "datagov-appdata-inventory-sandbox"
 }
 
 variable "s3_bucket_acl" {
