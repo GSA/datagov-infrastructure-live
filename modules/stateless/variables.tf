@@ -57,3 +57,7 @@ variable "vpc_id" {
   description = "Id of the VPC to create resources in."
 }
 
+variable "iam_instance_profile" {
+  description = "The IAM instance profile name to pass to the EC2 instances."
+  default     = ""
+}

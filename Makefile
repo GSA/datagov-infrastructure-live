@@ -7,6 +7,7 @@ SUBDIRS := \
   modules/mysql \
   modules/postgresdb \
   modules/redis \
+  modules/s3 \
   modules/solr \
   modules/stateful \
   modules/stateless \
