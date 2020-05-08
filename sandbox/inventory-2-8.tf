@@ -1,5 +1,5 @@
 module "inventory_2_8" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v3.2.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v3.4.0"
 
   ansible_group         = "inventory_web,inventory_web_2_8,v2"
   bastion_host          = module.jumpbox.jumpbox_dns
@@ -15,6 +15,8 @@ module "inventory_2_8" {
   subnets_public        = module.vpc.public_subnets
   web_instance_name     = "inventory-2-8"
   vpc_id                = module.vpc.vpc_id
+  s3_bucket_name        = "datagov-appdata-inventory-2-8-${var.env}"
+
 
   security_groups = [
     module.vpc.security_group_id,

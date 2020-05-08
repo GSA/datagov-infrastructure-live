@@ -1,5 +1,5 @@
 module "inventory" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v3.0.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v3.4.0"
 
   # Inventory still uses Trusty (v1)
   ami_filter_name       = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
@@ -14,6 +14,7 @@ module "inventory" {
   subnets_private       = module.vpc.private_subnets
   subnets_public        = module.vpc.public_subnets
   vpc_id                = module.vpc.vpc_id
+  s3_bucket_name        = "datagov-appdata-inventory-${var.env}"
 
   security_groups = [
     module.vpc.security_group_id,
