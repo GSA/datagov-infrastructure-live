@@ -29,10 +29,10 @@ resource "aws_security_group" "web" {
 }
 
 resource "aws_instance" "web" {
-  count         = var.instance_count
-  ami           = var.ami_id
-  iam_instance_profile   = var.iam_instance_profile
-  instance_type = var.instance_type
+  count                = var.instance_count
+  ami                  = var.ami_id
+  iam_instance_profile = var.iam_instance_profile
+  instance_type        = var.instance_type
   vpc_security_group_ids = concat(
     [aws_security_group.web.id],
     var.security_groups,

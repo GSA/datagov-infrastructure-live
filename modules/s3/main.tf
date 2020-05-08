@@ -1,7 +1,7 @@
 provider "aws" {
 }
 
-resource "aws_s3_bucket" "default"{
+resource "aws_s3_bucket" "default" {
   bucket = var.bucket_name
   acl    = var.bucket_acl
 }

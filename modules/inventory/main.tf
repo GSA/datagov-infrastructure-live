@@ -82,7 +82,7 @@ resource "aws_elasticache_cluster" "redis" {
 }
 
 resource "aws_iam_role" "inventory" {
-  name = "inventory_s3_role-${var.env}"
+  name = "${var.web_instance_name}-${var.env}-s3-role"
 
   assume_role_policy = <<EOF
 {
