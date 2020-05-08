@@ -133,6 +133,7 @@ resource "aws_iam_role_policy" "inventory" {
       },
       {
         "Action": "S3:ListAllMyBuckets",
+        "Effect": "Allow",
         "Resource": "arn:aws:s3:::*"
       }
     ]
@@ -141,6 +142,6 @@ resource "aws_iam_role_policy" "inventory" {
 }
 
 resource "aws_iam_instance_profile" "inventory" {
-  name = "inventory_profile-${var.env}"
+  name = "${var.web_instance_name}-${var.env}-inventory-profile"
   role = aws_iam_role.inventory.name
 }
