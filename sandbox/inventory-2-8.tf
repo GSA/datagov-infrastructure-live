@@ -17,7 +17,6 @@ module "inventory_2_8" {
   web_instance_name     = "inventory-2-8"
   vpc_id                = module.vpc.vpc_id
 
-
   security_groups = [
     module.vpc.security_group_id,
     module.jumpbox.security_group_id,
