@@ -19,6 +19,17 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+resource "aws_security_group" "inventory" {
+  name        = "${var.web_instance_name}-${var.env}"
+  description = "Security group for ${var.web_instance_name} web instance in ${var.env}"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    env  = var.env
+    name = var.web_instance_name
+  }
+}
+
 module "db" {
   source = "../postgresdb"
 
@@ -69,16 +80,15 @@ module "web" {
   ]
 }
 
-resource "aws_elasticache_cluster" "redis" {
-  count = var.enable_redis ? 1 : 0
+module "redis" {
+  source = "../redis"
 
-  cluster_id           = "${var.web_instance_name}-${var.env}"
-  engine               = "redis"
-  node_type            = var.redis_node_type
-  num_cache_nodes      = 1
-  parameter_group_name = "default.redis5.0"
-  engine_version       = "5.0.6"
-  port                 = 6379
+  allow_security_groups = aws_security_group.inventory.id
+  env                   = var.env
+  name                  = var.web_instance_name
+  node_type             = var.redis_node_type
+  subnets               = var.subnets_private
+  vpc_id                = var.vpc_id
 }
 
 resource "aws_iam_role" "inventory" {

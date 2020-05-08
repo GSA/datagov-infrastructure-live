@@ -43,6 +43,7 @@ resource "aws_instance" "default" {
     # install Ansible executor dependencies
     inline = [
       "sudo apt-get update",
+      "sudo apt-get update", # https://github.com/GSA/datagov-infrastructure-modules/issues/32#issuecomment-624920249
       "sudo apt-get install -y python",
     ]
   }

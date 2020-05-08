@@ -19,3 +19,6 @@ output "dns" {
   value = module.web.web_lb_dns
 }
 
+output "redis_cache_nodes" {
+  value = module.redis.cache_nodes
+}
