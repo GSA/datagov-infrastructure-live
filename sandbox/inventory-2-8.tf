@@ -11,6 +11,7 @@ module "inventory_2_8" {
   enable_redis          = true
   env                   = var.env
   key_name              = var.key_name
+  s3_bucket_name        = "datagov-appdata-inventory-2-8-${var.env}"
   subnets_private       = module.vpc.private_subnets
   subnets_public        = module.vpc.public_subnets
   web_instance_name     = "inventory-2-8"
