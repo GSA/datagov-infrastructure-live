@@ -19,7 +19,6 @@ module "inventory_2_8" {
 
   security_groups = [
     module.vpc.security_group_id,
-    module.jumpbox.security_group_id,
     module.solr.security_group_id,
   ]
 }
