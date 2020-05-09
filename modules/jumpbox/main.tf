@@ -49,19 +49,22 @@ resource "aws_security_group" "default" {
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
+
+  tags = {
+    env            = var.env
+  }
 }
 
-resource "aws_security_group" "jumpbox_access" {
-  name        = "${var.env}-jumpbox-access-sg-tf"
-  description = "Allows SSH access from jumpbox."
-  vpc_id      = var.vpc_id
+# Allow Ansible (SSH) access in the "default" vpc-wide security group
+resource "aws_security_group_rule" "ansible" {
+  description = "Allow Ansible access from the Jumpbox to VPC resources."
 
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.default.id]
-  }
+  type = "ingress"
+  from_port = 22
+  to_port = 22
+  protocol = "tcp"
+  security_group_id = var.default_security_group_id
+  source_security_group_id = aws_security_group.default.id
 }
 
 resource "aws_iam_role" "jumpbox" {

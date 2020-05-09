@@ -53,32 +53,21 @@ resource "aws_security_group" "default" {
     cidr_blocks = ["10.0.0.0/8"]
   }
 
-  egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  tags = {
+    env            = var.env
   }
 }
 
-resource "aws_security_group" "jenkins_access" {
-  name        = "${var.env}-jenkins-access"
-  description = "Allows SSH access from jenkins."
-  vpc_id      = var.vpc_id
+# Allow Ansible (SSH) access in the "default" vpc-wide security group
+resource "aws_security_group_rule" "ansible" {
+  description = "Allow Ansible access from Jenkins to VPC resources."
 
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.default.id]
-  }
+  type = "ingress"
+  from_port = 22
+  to_port = 22
+  protocol = "tcp"
+  security_group_id = var.default_security_group_id
+  source_security_group_id = aws_security_group.default.id
 }
 
 resource "aws_route53_record" "public" {
