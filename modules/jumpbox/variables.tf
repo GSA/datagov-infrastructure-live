@@ -8,6 +8,11 @@ variable "ansible_group" {
   default     = "jumpbox,v2"
 }
 
+variable "default_security_group_id" {
+  type = string
+  description = "The \"default\" or vpc-wide security group to modify for Ansible access."
+}
+
 variable "dns_zone_public" {
   description = "The name of the public DNS zone to use for creating a public DNS record."
 }

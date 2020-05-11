@@ -18,6 +18,11 @@ variable "bastion_host" {
   default     = "" # unset
 }
 
+variable "default_security_group_id" {
+  type = string
+  description = "The \"default\" or vpc-wide security group to modify for Ansible access."
+}
+
 variable "dns_zone_private" {
   description = "The private DNS zone to create the host record in."
 }
