@@ -137,7 +137,11 @@
                 "route53:ListResourceRecordSets",
                 "route53:ListTagsForResource",
                 "route53:ListTagsForResources",
-                "route53:TestDNSAnswer"
+                "route53:TestDNSAnswer",
+                "s3:CreateBucket",
+                "s3:DeleteBucket",
+                "s3:GetBucketLocation",
+                "s3:ListBucket"
             ],
             "Resource": "*"
         },
@@ -221,7 +225,7 @@
                 "s3:GetObjectVersionTorrent",
                 "s3:GetReplicationConfiguration",
                 "s3:ListBucket",
-		"s3:ListBucketByTags",
+                "s3:ListBucketByTags",
                 "s3:ListBucketMultipartUploads",
                 "s3:ListBucketVersions",
                 "s3:ListMultipartUploadParts",
