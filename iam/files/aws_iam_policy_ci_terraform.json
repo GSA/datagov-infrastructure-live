@@ -128,6 +128,7 @@
                 "elasticache:ModifyCacheSubnetGroup",
                 "elasticache:RevokeCacheSecurityGroupIngress",
                 "elasticloadbalancing:*",
+                "iam:DeleteRolePolicy",
                 "rds:*",
                 "route53:ChangeResourceRecordSets",
                 "route53:ChangeTagsForResource",
@@ -140,7 +141,9 @@
                 "route53:TestDNSAnswer",
                 "s3:CreateBucket",
                 "s3:DeleteBucket",
+                "s3:DeleteObject",
                 "s3:GetBucketLocation",
+                "s3:GetObject",
                 "s3:ListBucket"
             ],
             "Resource": "*"
