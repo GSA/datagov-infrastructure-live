@@ -1,5 +1,5 @@
 module "jumpbox" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jumpbox?ref=v3.0.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jumpbox?ref=v3.5.0"
 
   ami_filter_name           = var.ami_filter_name
   default_security_group_id = module.vpc.security_group_id
