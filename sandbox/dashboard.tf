@@ -12,8 +12,7 @@ module "dashboard" {
   subnets_public        = module.vpc.public_subnets
   vpc_id                = module.vpc.vpc_id
 
-  security_groups       = [
+  security_groups = [
     module.vpc.security_group_id,
-    module.jumpbox.security_group_id,
   ]
 }
