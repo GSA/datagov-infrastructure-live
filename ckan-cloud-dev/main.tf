@@ -11,9 +11,3 @@ terraform {
     dynamodb_table = "datagov-lock-table"
   }
 }
-
-module "ckan_cloud" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/ckan-cloud?ref=v2.0.0"
-
-  env = "${var.env}"
-}
