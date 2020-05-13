@@ -1,5 +1,5 @@
 module "inventory" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v3.5.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v3.5.2"
 
   # Inventory still uses Trusty (v1)
   ami_filter_name       = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
