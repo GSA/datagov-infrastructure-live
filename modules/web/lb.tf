@@ -1,7 +1,7 @@
-data "aws_subnet" "public_subnets" {
-  count = length(var.public_subnets)
+data "aws_subnet" "private_subnets" {
+  count = length(var.private_subnets)
 
-  id = element(var.public_subnets, count.index)
+  id = element(var.private_subnets, count.index)
 }
 
 resource "aws_security_group" "lb" {
@@ -27,14 +27,14 @@ resource "aws_security_group" "lb" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = data.aws_subnet.public_subnets.*.cidr_block
+    cidr_blocks = data.aws_subnet.private_subnets.*.cidr_block
   }
 
   egress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = data.aws_subnet.public_subnets.*.cidr_block
+    cidr_blocks = data.aws_subnet.private_subnets.*.cidr_block
   }
 }
 
