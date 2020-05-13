@@ -1,5 +1,5 @@
 module "wordpress" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/wordpress?ref=v3.0.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/wordpress?ref=v3.5.1"
 
   database_subnet_group = module.vpc.database_subnet_group
   db_password           = var.wordpress_db_password
