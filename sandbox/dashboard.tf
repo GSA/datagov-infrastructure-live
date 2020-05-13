@@ -1,5 +1,5 @@
 module "dashboard" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/dashboard?ref=v3.0.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/dashboard?ref=v3.5.2"
 
   bastion_host          = module.jumpbox.jumpbox_dns
   database_subnet_group = module.vpc.database_subnet_group
