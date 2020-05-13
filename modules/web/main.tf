@@ -39,7 +39,7 @@ resource "aws_instance" "web" {
   )
 
   associate_public_ip_address = false
-  subnet_id                   = element(var.private_subnets, count.index)
+  subnet_id                   = element(var.public_subnets, count.index)
   key_name                    = var.key_name
 
   tags = {
