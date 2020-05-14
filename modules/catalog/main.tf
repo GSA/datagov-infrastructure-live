@@ -132,6 +132,7 @@ module "redis" {
   source = "../redis"
 
   allow_security_groups = [aws_security_group.web.id, aws_security_group.harvester.id]
+  enable                = var.enable_redis
   env                   = var.env
   name                  = var.web_instance_name
   node_type             = var.redis_node_type

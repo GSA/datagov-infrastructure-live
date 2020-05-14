@@ -3,6 +3,12 @@ variable "allow_security_groups" {
   description = "List of security group Ids allowed to access redis"
 }
 
+variable "enable" {
+  type        = bool
+  description = "When enabled, provision a Redis ElastiCache instance."
+  default     = false
+}
+
 variable "env" {
   type        = string
   description = "Name of the environment for generating Ids and unique names for Redis and associated resources."
