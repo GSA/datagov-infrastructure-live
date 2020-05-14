@@ -27,18 +27,22 @@ resource "aws_elasticache_subnet_group" "redis" {
   subnet_ids = var.subnets
 }
 
-resource "aws_elasticache_cluster" "redis" {
+resource "aws_elasticache_replication_group" "redis" {
   count = var.enable ? 1 : 0
 
-  cluster_id           = "${var.name}-${var.env}"
-  engine               = "redis"
-  engine_version       = "5.0.6"
-  node_type            = var.node_type
-  num_cache_nodes      = 1
-  parameter_group_name = "default.redis5.0"
-  port                 = var.port
-  security_group_ids   = [aws_security_group.redis.*.id]
-  subnet_group_name    = aws_elasticache_subnet_group.redis[count.index].name
+  auth_token                    = var.auth_token
+  automatic_failover_enabled    = false
+  engine                        = "redis"
+  engine_version                = "5.0.6"
+  node_type                     = var.node_type
+  number_cache_clusters         = 1
+  parameter_group_name          = "default.redis5.0"
+  port                          = var.port
+  replication_group_description = "Redis replication group for ${var.env}-${var.name}"
+  replication_group_id          = "rep-${var.env}-${var.name}"
+  security_group_ids            = [aws_security_group.redis[count.index].id]
+  subnet_group_name             = aws_elasticache_subnet_group.redis[count.index].name
+  transit_encryption_enabled    = true
 
   tags = {
     env  = var.env

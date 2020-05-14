@@ -3,6 +3,11 @@ variable "allow_security_groups" {
   description = "List of security group Ids allowed to access redis"
 }
 
+variable "auth_token" {
+  type        = string
+  description = "The auth token (password) to configure for Redis."
+}
+
 variable "enable" {
   type        = bool
   description = "When enabled, provision a Redis ElastiCache instance."

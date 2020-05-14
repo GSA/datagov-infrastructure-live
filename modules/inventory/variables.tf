@@ -8,6 +8,17 @@ variable "ansible_group" {
   default     = "inventory_web,v1"
 }
 
+variable "redis_auth_token" {
+  type        = string
+  description = "The auth token (password) to configure for Redis."
+
+  # TODO enforce auth_token only when enable_redis is true.
+  # Since redis is optional, we have to set a default for auth_token. I think
+  # AWS will reject an empty auth_token, so we're safe from accidentally setting
+  # an empty password.
+  default     = ""
+}
+
 variable "bastion_host" {
   description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
   default     = "" # unset
