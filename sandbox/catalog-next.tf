@@ -9,13 +9,13 @@ module "catalog_next" {
   dns_zone_public         = module.vpc.dns_zone_public
   enable_redis            = true
   env                     = var.env
-  harvester_ansible_group = "catalog_harvester,catalog_harvester_next,v2"
+  harvester_ansible_group = "catalog_harvester_next"
   harvester_instance_name = "catalog-harvester-next"
   key_name                = var.key_name
   redis_auth_token        = var.catalog_next_redis_password
   subnets_private         = module.vpc.private_subnets
   subnets_public          = module.vpc.public_subnets
-  web_ansible_group       = "catalog_web,catalog_web_next,v2"
+  web_ansible_group       = "catalog_web_next"
   web_instance_name       = "catalog-next"
   vpc_id                  = module.vpc.vpc_id
 

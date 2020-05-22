@@ -9,13 +9,13 @@ module "catalog" {
   dns_zone_private        = module.vpc.dns_zone_private
   dns_zone_public         = module.vpc.dns_zone_public
   env                     = var.env
-  harvester_ansible_group = "catalog_harvester,catalog_harvester_v1,pycsw_worker,v1"
+  harvester_ansible_group = "catalog_harvester_v1"
   harvester_instance_type = "t3.medium"
   key_name                = var.key_name
   subnets_private         = module.vpc.private_subnets
   subnets_public          = module.vpc.public_subnets
   vpc_id                  = module.vpc.vpc_id
-  web_ansible_group       = "catalog_web,catalog_web_v1,pycsw_web,v1"
+  web_ansible_group       = "catalog_web_v1"
   web_instance_type       = "t3.medium"
 
   security_groups = [

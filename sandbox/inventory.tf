@@ -3,7 +3,7 @@ module "inventory" {
 
   # Inventory still uses Trusty (v1)
   ami_filter_name       = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
-  ansible_group         = "inventory_web,v1"
+  ansible_group         = "inventory_web_v1"
   bastion_host          = module.jumpbox.jumpbox_dns
   database_subnet_group = module.vpc.database_subnet_group
   db_password           = var.inventory_db_password

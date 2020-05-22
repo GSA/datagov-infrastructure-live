@@ -1,7 +1,7 @@
 module "inventory_2_8" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v3.6.0"
 
-  ansible_group         = "inventory_web,inventory_web_2_8,v2"
+  ansible_group         = "inventory_web_next"
   bastion_host          = module.jumpbox.jumpbox_dns
   database_subnet_group = module.vpc.database_subnet_group
   db_name               = "inventory_db_2_8"
