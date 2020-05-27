@@ -63,7 +63,7 @@ variable "env" {
 
 variable "harvester_ansible_group" {
   description = "Name of the ansible group to tag harvester instances with."
-  default     = "catalog_harvester,v1"
+  default     = "catalog_harvester"
 }
 
 variable "harvester_instance_count" {
@@ -111,7 +111,7 @@ variable "vpc_id" {
 
 variable "web_ansible_group" {
   description = "Name of the ansible group to tag web instances with."
-  default     = "catalog_web,v1"
+  default     = "catalog_web"
 }
 
 variable "web_instance_count" {

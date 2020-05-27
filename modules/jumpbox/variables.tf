@@ -5,7 +5,7 @@ variable "ami_filter_name" {
 
 variable "ansible_group" {
   description = "Name of the ansible group to tag web instances with."
-  default     = "jumpbox,v2"
+  default     = "jumpbox"
 }
 
 variable "default_security_group_id" {

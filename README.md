@@ -33,6 +33,10 @@ tag_group_solr
 tag_group_harvester
 ```
 
+_Note: even though you may specify the ansible_group as a comma-separated list,
+the best practice is to use a single, unique tag that can then be mapped to
+multiple Ansible groups in the inventory file._
+
 
 ## Tests
 
