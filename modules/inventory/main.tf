@@ -54,19 +54,20 @@ module "s3" {
 module "web" {
   source = "../web"
 
-  ami_id           = data.aws_ami.ubuntu.id
-  ansible_group    = var.ansible_group
-  bastion_host     = var.bastion_host
-  dns_zone_public  = var.dns_zone_public
-  dns_zone_private = var.dns_zone_private
-  env              = var.env
-  instance_count   = var.web_instance_count
-  instance_type    = var.web_instance_type
-  key_name         = var.key_name
-  name             = var.web_instance_name
-  private_subnets  = var.subnets_private
-  public_subnets   = var.subnets_public
-  vpc_id           = var.vpc_id
+  ami_id               = data.aws_ami.ubuntu.id
+  ansible_group        = var.ansible_group
+  bastion_host         = var.bastion_host
+  dns_zone_public      = var.dns_zone_public
+  dns_zone_private     = var.dns_zone_private
+  env                  = var.env
+  iam_instance_profile = aws_iam_instance_profile.inventory.id
+  instance_count       = var.web_instance_count
+  instance_type        = var.web_instance_type
+  key_name             = var.key_name
+  name                 = var.web_instance_name
+  private_subnets      = var.subnets_private
+  public_subnets       = var.subnets_public
+  vpc_id               = var.vpc_id
 
   security_groups = concat(var.security_groups, [module.db.security_group])
 
