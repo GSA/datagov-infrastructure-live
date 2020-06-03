@@ -3,17 +3,6 @@ variable "ami_filter_name" {
   default     = "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*"
 }
 
-variable "redis_auth_token" {
-  type        = string
-  description = "The auth token (password) to configure for Redis."
-
-  # TODO enforce auth_token only when enable_redis is true.
-  # Since redis is optional, we have to set a default for auth_token. I think
-  # AWS will reject an empty auth_token, so we're safe from accidentally setting
-  # an empty password.
-  default = ""
-}
-
 variable "bastion_host" {
   description = "Host/ip for the jumpbox/bastion host to connect to for provisioning."
   default     = "" # unset
@@ -84,9 +73,25 @@ variable "harvester_instance_type" {
 variable "key_name" {
 }
 
+variable "redis_auth_token" {
+  type        = string
+  description = "The auth token (password) to configure for Redis."
+
+  # TODO enforce auth_token only when enable_redis is true.
+  # Since redis is optional, we have to set a default for auth_token. I think
+  # AWS will reject an empty auth_token, so we're safe from accidentally setting
+  # an empty password.
+  default = ""
+}
+
 variable "redis_node_type" {
   description = "ElastiCache node type to provision."
   default     = "cache.t3.small"
+}
+
+variable "redis_transit_encryption_enabled" {
+  description = "Enable encryption in transit for Redis cluster"
+  default     = true
 }
 
 variable "security_groups" {
