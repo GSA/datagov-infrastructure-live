@@ -27,6 +27,16 @@ resource "aws_security_group" "web" {
   description = "Security group for ${var.web_instance_name} web instance in ${var.env}"
   vpc_id      = var.vpc_id
 
+  # TODO it would be nice if this wasn't necessary, it requires knowledge about
+  # the backend service.
+  # Egress to Redis
+  egress {
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+
   tags = {
     env  = var.env
     name = var.web_instance_name
@@ -97,6 +107,16 @@ resource "aws_security_group" "harvester" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # TODO it would be nice if this wasn't necessary, it requires knowledge about
+  # the backend service.
+  # Egress to Redis
+  egress {
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/8"]
   }
 
   tags = {
