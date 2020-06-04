@@ -39,6 +39,12 @@ variable "subnets" {
   type        = list(string)
 }
 
+variable "transit_encryption_enabled" {
+  description = "Enable encryption in transit for the elasticache cluster."
+  type        = bool
+  default     = true
+}
+
 variable "vpc_id" {
   description = "Id of the VPC where Redis should be provisioned."
 }

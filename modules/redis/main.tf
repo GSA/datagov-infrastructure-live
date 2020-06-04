@@ -42,7 +42,7 @@ resource "aws_elasticache_replication_group" "redis" {
   replication_group_id          = "rep-${var.env}-${var.name}"
   security_group_ids            = [aws_security_group.redis[count.index].id]
   subnet_group_name             = aws_elasticache_subnet_group.redis[count.index].name
-  transit_encryption_enabled    = true
+  transit_encryption_enabled    = var.transit_encryption_enabled
 
   tags = {
     env  = var.env
