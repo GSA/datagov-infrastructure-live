@@ -11,7 +11,7 @@ variable "redis_auth_token" {
   # Since redis is optional, we have to set a default for auth_token. I think
   # AWS will reject an empty auth_token, so we're safe from accidentally setting
   # an empty password.
-  default     = ""
+  default = ""
 }
 
 variable "bastion_host" {
