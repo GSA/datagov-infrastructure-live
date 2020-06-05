@@ -22,6 +22,11 @@ output "catalog_next_redis_cache_nodes" {
   value = module.catalog_next.redis_cache_nodes
 }
 
+output "catalog_next_redis_password" {
+  sensitive = true
+  value     = module.catalog_next.redis_auth_token
+}
+
 output "dashboard_db_password" {
   sensitive = true
   value     = module.dashboard.db_password
@@ -52,8 +57,13 @@ output "inventory_2_8_db_host" {
   value     = module.inventory_2_8.db_server
 }
 
-output "inventory_redis_cache_nodes" {
+output "inventory_2_8_redis_cache_nodes" {
   value = module.inventory_2_8.redis_cache_nodes
+}
+
+output "inventory_2_8_redis_password" {
+  sensitive = true
+  value     = module.inventory_2_8.redis_auth_token
 }
 
 output "jumpbox_dns" {
