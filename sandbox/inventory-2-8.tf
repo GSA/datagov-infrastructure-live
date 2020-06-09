@@ -1,5 +1,5 @@
 module "inventory_2_8" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v3.5.2"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v3.7.0"
 
   ansible_group         = "inventory_web,inventory_web_2_8,v2"
   bastion_host          = module.jumpbox.jumpbox_dns
@@ -11,6 +11,7 @@ module "inventory_2_8" {
   enable_redis          = true
   env                   = var.env
   key_name              = var.key_name
+  redis_auth_token      = var.inventory_2_8_redis_password
   s3_bucket_name        = "datagov-appdata-inventory-2-8-${var.env}"
   subnets_private       = module.vpc.private_subnets
   subnets_public        = module.vpc.public_subnets
