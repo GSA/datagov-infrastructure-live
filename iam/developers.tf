@@ -35,6 +35,11 @@ resource "aws_iam_group_policy_attachment" "developers_elasticache_full" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonElastiCacheFullAccess"
 }
 
+resource "aws_iam_group_policy_attachment" "developers_iam_ro" {
+  group      = aws_iam_group.developers.name
+  policy_arn = "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
+}
+
 resource "aws_iam_group_policy_attachment" "developers_rds_full" {
   group      = aws_iam_group.developers.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
