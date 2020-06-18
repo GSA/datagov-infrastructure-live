@@ -54,3 +54,13 @@ resource "aws_iam_group_policy_attachment" "developers_s3_full" {
   group      = aws_iam_group.developers.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
+
+resource "aws_iam_group_policy_attachment" "developers_dynamodb_full" {
+  group      = aws_iam_group.developers.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+}
+
+resource "aws_iam_group_policy_attachment" "developers_acm_full" {
+  group      = aws_iam_group.developers.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSCertificateManagerFullAccess"
+}
