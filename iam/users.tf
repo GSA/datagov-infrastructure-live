@@ -48,7 +48,6 @@ module "fuhu_xia" {
   name   = "fuhu.xia@gsa.gov"
   groups = [
     "developers",
-    "Admin",
   ]
 }
 
@@ -57,7 +56,6 @@ module "james_brown" {
   name   = "jbrown@xentity.com"
   groups = [
     "developers",
-    "Admin",
   ]
 }
 
@@ -99,7 +97,6 @@ module "preston_sharpe" {
   name   = "preston.sharpe@gsa.gov"
   groups = [
     "developers",
-    "Admin",
   ]
 }
 
