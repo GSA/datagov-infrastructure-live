@@ -1,5 +1,5 @@
 module "jenkins" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=v3.5.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=add-lb-to-ci"
 
   availability_zones        = module.vpc.azs
   bastion_host              = module.jumpbox.jumpbox_dns
@@ -9,7 +9,8 @@ module "jenkins" {
   ebs_size                  = 60
   env                       = var.env
   key_name                  = var.key_name
-  subnets                   = module.vpc.public_subnets
+  subnets_private           = module.vpc.private_subnets
+  subnets_public            = module.vpc.public_subnets
   vpc_id                    = module.vpc.vpc_id
 
   security_groups = [
