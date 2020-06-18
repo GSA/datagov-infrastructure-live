@@ -22,10 +22,6 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-data "aws_route53_zone" "public" {
-  name = var.dns_zone_public
-}
-
 resource "aws_security_group" "default" {
   name        = "jenkins-${var.env}-tf"
   description = "Jenkins security group"
@@ -35,14 +31,14 @@ resource "aws_security_group" "default" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.lb.id]
   }
 
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.lb.id]
   }
 
   # Allow outbound SSH access for Ansible
@@ -68,15 +64,6 @@ resource "aws_security_group_rule" "ansible" {
   protocol = "tcp"
   security_group_id = var.default_security_group_id
   source_security_group_id = aws_security_group.default.id
-}
-
-resource "aws_route53_record" "public" {
-  name    = "ci"
-  zone_id = data.aws_route53_zone.public.zone_id
-
-  type    = "A"
-  ttl     = "300"
-  records = module.jenkins.instance_public_ip
 }
 
 resource "aws_iam_role" "jenkins" {
@@ -136,7 +123,7 @@ module "jenkins" {
 
   ami_id                      = data.aws_ami.ubuntu.id
   ansible_group               = var.ansible_group
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   availability_zones          = var.availability_zones
   bastion_host                = var.bastion_host
   dns_zone                    = var.dns_zone_private
@@ -148,7 +135,7 @@ module "jenkins" {
   instance_type               = "t2.medium"
   key_name                    = var.key_name
   security_groups             = concat(var.security_groups, [aws_security_group.default.id])
-  subnets                     = var.subnets
+  subnets                     = var.subnets_private
   vpc_id                      = var.vpc_id
 }
 
