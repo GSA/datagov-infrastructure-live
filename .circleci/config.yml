@@ -35,30 +35,6 @@ apply-steps: &apply-steps
 
 version: 2
 jobs:
-  ckan-cloud-dev-validate:
-    docker:
-      - image: hashicorp/terraform:0.11.14
-        entrypoint: ["/bin/sh"]
-    environment:
-      terraform_directory: ckan-cloud-dev
-    steps: *validate-steps
-
-  ckan-cloud-dev-plan:
-    docker:
-      - image: hashicorp/terraform:0.11.14
-        entrypoint: ["/bin/sh"]
-    environment:
-      terraform_directory: ckan-cloud-dev
-    steps: *plan-steps
-
-  ckan-cloud-dev-apply:
-    docker:
-      - image: hashicorp/terraform:0.11.14
-        entrypoint: ["/bin/sh"]
-    environment:
-      terraform_directory: ckan-cloud-dev
-    steps: *apply-steps
-
   iam-validate:
     docker:
       - image: hashicorp/terraform:latest
@@ -130,24 +106,6 @@ workflows:
       - iam-apply:
           requires:
             - iam-approve
-
-      - ckan-cloud-dev-validate
-      - ckan-cloud-dev-plan:
-          requires:
-            - ckan-cloud-dev-validate
-
-      - ckan-cloud-dev-approve:
-          type: approval
-          requires:
-            - ckan-cloud-dev-plan
-          filters:
-            branches:
-              only:
-                - master
-
-      - ckan-cloud-dev-apply:
-          requires:
-            - ckan-cloud-dev-approve
 
       - sandbox-validate
       - sandbox-plan:

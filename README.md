@@ -41,7 +41,6 @@ Each directory represents an "environment".
 
 Name | Description | Jumpbox
 ---- | ----------- | -------
-[`ckan-cloud-dev`](ckan-cloud-dev/README.md) | Development environment for the CKAN Cloud project. | N/A
 [`iam`](iam/README.md) | Global "environment" that applies IAM settings to to the sandbox account. | N/A
 [`sandbox`](sandbox/README.md) | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | jump.sandbox.datagov.us
 
