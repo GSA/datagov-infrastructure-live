@@ -49,12 +49,22 @@ variable "security_groups" {
   default     = []
 }
 
-variable "subnets" {
+variable "subnets_private" {
   type        = list(string)
-  description = "List of public subnets to assign instances to."
+  description = "List of private subnets to assign instances to."
+}
+
+variable "subnets_public" {
+  type        = list(string)
+  description = "List of public subnets to assign load balancers to."
 }
 
 variable "vpc_id" {
   description = "Id of the VPC to create resources in."
 }
 
+variable "loadbalancer_security_groups" {
+  type        = list(string)
+  description = "Additional security groups to attach to the loadbalancer."
+  default     = []
+}
