@@ -1,5 +1,5 @@
 module "jenkins" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=add-lb-to-ci"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=v3.8.0"
 
   availability_zones        = module.vpc.azs
   bastion_host              = module.jumpbox.jumpbox_dns
