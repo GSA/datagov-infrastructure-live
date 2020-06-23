@@ -139,3 +139,8 @@ module "jenkins" {
   vpc_id                      = var.vpc_id
 }
 
+resource "aws_lb_target_group_attachment" "lb" {
+  # we know we have 1 and only 1 jenkins.
+  target_group_arn = module.lb.target_group_arns[0]
+  target_id = module.jenkins.instance_id[0]
+}

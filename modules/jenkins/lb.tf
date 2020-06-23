@@ -51,8 +51,8 @@ module "lb" {
   target_groups = [
     {
       name              = "ci-${var.env}"
-      backend_protocol  = "HTTP"
-      backend_port      = "80"
+      backend_protocol  = "HTTPS"
+      backend_port      = "443"
       health_check_path = "/login"
     },
   ]
@@ -68,6 +68,12 @@ module "lb" {
     {
       port     = 80
       protocol = "HTTP"
+      action_type = "redirect"
+      redirect = {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_301"
+      }
     },
   ]
 
