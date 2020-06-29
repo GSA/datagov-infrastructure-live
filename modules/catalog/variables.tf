@@ -50,6 +50,21 @@ variable "env" {
   description = "The name of the environment to tag/name resources."
 }
 
+variable "fgdc2iso_ansible_group" {
+  description = "Name of the ansible group to tag fgdc2iso instances with."
+  default     = "catalog_fgdc2iso"
+}
+
+variable "fgdc2iso_instance_name" {
+  description = "The name of the fgdc2iso instance."
+  default     = "catalog-fgdc2iso"
+}
+
+variable "fgdc2iso_instance_type" {
+  description = "Instance type to use for fgdc2iso."
+  default     = "t2.micro"
+}
+
 variable "harvester_ansible_group" {
   description = "Name of the ansible group to tag harvester instances with."
   default     = "catalog_harvester"
