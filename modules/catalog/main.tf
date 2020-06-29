@@ -22,6 +22,27 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "aws_ami" "fgdc2iso_ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
 resource "aws_security_group" "web" {
   name        = "${var.web_instance_name}-${var.env}"
   description = "Security group for ${var.web_instance_name} web instance in ${var.env}"
@@ -132,6 +153,32 @@ resource "aws_security_group" "harvester" {
   }
 }
 
+resource "aws_security_group" "fgdc2iso" {
+  name        = "${var.fgdc2iso_instance_name}-${var.env}"
+  description = "Security group for ${var.fgdc2iso_instance_name} instance in ${var.env}"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.harvester.id]
+  }
+
+  ingress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.harvester.id]
+  }
+
+  tags = {
+    env  = var.env
+  }
+}
+
+
+
 module "harvester" {
   source = "../stateless"
 
@@ -152,6 +199,30 @@ module "harvester" {
     [
       module.db.security_group,
       aws_security_group.harvester.id,
+    ],
+  )
+}
+
+module "fgdc2iso" {
+  source = "../stateless"
+
+  ami_id               = data.aws_ami.fgdc2iso_ubuntu.id
+  ansible_group        = var.fgdc2iso_ansible_group
+  bastion_host         = var.bastion_host
+  dns_zone             = var.dns_zone_private
+  env                  = var.env
+  instance_count       = 1
+  instance_name_format = "${var.fgdc2iso_instance_name}%dtf"
+  instance_type        = var.fgdc2iso_instance_type
+  key_name             = var.key_name
+  subnets              = var.subnets_private
+  vpc_id               = var.vpc_id
+
+  security_groups = concat(
+    var.security_groups,
+    [
+      module.db.security_group,
+      aws_security_group.fgdc2iso.id,
     ],
   )
 }
