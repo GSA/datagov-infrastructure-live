@@ -1,5 +1,5 @@
 module "catalog" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v3.6.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v4.1.0"
 
   # Catalog still uses Trusty (v1)
   ami_filter_name         = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
