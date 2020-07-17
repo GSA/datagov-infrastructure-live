@@ -42,6 +42,14 @@ module "bret_mogilefsky" {
     "Admin",
   ]
 }
+  
+module "chris_macdermaid" {
+  source = "./user"
+  name   = "christopher.macdermaid@gsa.gov"
+  groups = [
+    "developers",
+  ]
+}
 
 module "fuhu_xia" {
   source = "./user"
