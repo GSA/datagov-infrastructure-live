@@ -47,23 +47,23 @@ output "inventory_db_host" {
   value     = module.inventory.db_server
 }
 
-output "inventory_2_8_db_password" {
+output "inventory_next_db_password" {
   sensitive = true
-  value     = module.inventory_2_8.db_password
+  value     = module.inventory_next.db_password
 }
 
-output "inventory_2_8_db_host" {
+output "inventory_next_db_host" {
   sensitive = true
-  value     = module.inventory_2_8.db_server
+  value     = module.inventory_next.db_server
 }
 
-output "inventory_2_8_redis_cache_nodes" {
-  value = module.inventory_2_8.redis_cache_nodes
+output "inventory_next_redis_cache_nodes" {
+  value = module.inventory_next.redis_cache_nodes
 }
 
-output "inventory_2_8_redis_password" {
+output "inventory_next_redis_password" {
   sensitive = true
-  value     = module.inventory_2_8.redis_auth_token
+  value     = module.inventory_next.redis_auth_token
 }
 
 output "jumpbox_dns" {
