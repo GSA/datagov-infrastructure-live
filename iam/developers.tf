@@ -65,8 +65,8 @@ resource "aws_iam_group_policy_attachment" "developers_acm_full" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCertificateManagerFullAccess"
 }
 
-resource "aws_iam_group_policy_attachment" "developers_delete_full" {
-  name       = "developers_infrastructure_removal_policy"
+resource "aws_iam_group_policy" "developers_policy" {
+  name       = "developers_policy"
   group      = aws_iam_group.developers.name
   policy     = <<EOF
   {
