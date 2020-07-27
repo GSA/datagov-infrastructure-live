@@ -66,6 +66,20 @@ resource "aws_iam_group_policy_attachment" "developers_acm_full" {
 }
 
 resource "aws_iam_group_policy_attachment" "developers_delete_full" {
+  name       = "developers_infrastructure_removal_policy"
   group      = aws_iam_group.developers.name
-  policy_arn = "arn:aws:iam::aws:policy/DeleteRolePolicy"
+  policy     = <<EOF
+  {
+    "Version": "2020-07-27",
+    "Statement": [
+      {
+        "Action": [
+          "iam:DeleteRolePolicy"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  }
+  EOF
 }
