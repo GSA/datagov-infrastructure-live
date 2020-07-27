@@ -64,3 +64,23 @@ resource "aws_iam_group_policy_attachment" "developers_acm_full" {
   group      = aws_iam_group.developers.name
   policy_arn = "arn:aws:iam::aws:policy/AWSCertificateManagerFullAccess"
 }
+
+resource "aws_iam_group_policy" "developers_policy" {
+  name       = "developers_policy"
+  group      = aws_iam_group.developers.name
+  policy     = <<EOF
+{
+  "Version": "2020-07-27",
+  "Statement": [
+    {
+      "Action": [
+        "iam:DeleteRolePolicy",
+        "iam:RemoveRoleFromInstanceProfile"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
