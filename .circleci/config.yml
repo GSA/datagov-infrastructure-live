@@ -37,7 +37,7 @@ version: 2
 jobs:
   iam-validate:
     docker:
-      - image: hashicorp/terraform:latest
+      - image: hashicorp/terraform:0.12.29
         entrypoint: ["/bin/sh"]
     environment:
       terraform_directory: iam
@@ -45,7 +45,7 @@ jobs:
 
   iam-plan:
     docker:
-      - image: hashicorp/terraform:latest
+      - image: hashicorp/terraform:0.12.29
         entrypoint: ["/bin/sh"]
     environment:
       terraform_directory: iam
@@ -53,7 +53,7 @@ jobs:
 
   iam-apply:
     docker:
-      - image: hashicorp/terraform:latest
+      - image: hashicorp/terraform:0.12.29
         entrypoint: ["/bin/sh"]
     environment:
       terraform_directory: iam
@@ -61,7 +61,7 @@ jobs:
 
   sandbox-validate:
     docker:
-      - image: hashicorp/terraform:latest
+      - image: hashicorp/terraform:0.12.29
         entrypoint: ["/bin/sh"]
     environment:
       terraform_directory: sandbox
@@ -70,7 +70,7 @@ jobs:
 
   sandbox-plan:
     docker:
-      - image: hashicorp/terraform:latest
+      - image: hashicorp/terraform:0.12.29
         entrypoint: ["/bin/sh"]
     environment:
       terraform_directory: sandbox
@@ -79,7 +79,7 @@ jobs:
 
   sandbox-apply:
     docker:
-      - image: hashicorp/terraform:latest
+      - image: hashicorp/terraform:0.12.29
         entrypoint: ["/bin/sh"]
     environment:
       terraform_directory: sandbox
