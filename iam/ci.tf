@@ -30,6 +30,6 @@ resource "aws_iam_user_policy" "ci_policy" {
       "Resource": "*"
     }
   ]
-} add to ci user
+}
 EOF
 }
