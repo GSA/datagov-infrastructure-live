@@ -5,6 +5,7 @@ module "catalog" {
   ami_filter_name         = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
   bastion_host            = module.jumpbox.jumpbox_dns
   database_subnet_group   = module.vpc.database_subnet_group
+  db_allocated_storage    = "30"
   db_password             = var.catalog_db_password
   dns_zone_private        = module.vpc.dns_zone_private
   dns_zone_public         = module.vpc.dns_zone_public
