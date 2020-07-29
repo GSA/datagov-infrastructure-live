@@ -35,7 +35,7 @@ variable "database_subnet_group" {
 
 variable "database_security_group_ids" {
   type        = list(string)
-  description = "Security groups to assign to database."
+  description = "Security groups to assign to inventory database."
   default     = []
 }
 
