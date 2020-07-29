@@ -74,6 +74,8 @@ resource "aws_iam_group_policy" "developers_policy" {
   "Statement": [
     {
       "Action": [
+        "iam:DeleteRole",
+        "iam:DeleteInstanceProfile",
         "iam:DeleteRolePolicy",
         "iam:RemoveRoleFromInstanceProfile",
         "iam:DeleteInstanceProfile"
