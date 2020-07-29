@@ -35,7 +35,8 @@ variable "database_subnet_group" {
 
 variable "database_security_group_ids" {
   type        = list(string)
-  description = "Security groups to assign to inventory database."
+  description = "Security groups to assign to 
+database."
   default     = []
 }
 
@@ -110,7 +111,7 @@ variable "web_instance_type" {
 }
 
 variable "web_instance_name" {
-  description = "The name of the web instance. ie inventory_2_8 or inventory"
+  description = "The name of the web instance. ie inventory-next or inventory"
   default     = "inventory"
 }
 
