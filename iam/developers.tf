@@ -70,12 +70,13 @@ resource "aws_iam_group_policy" "developers_policy" {
   group      = aws_iam_group.developers.name
   policy     = <<EOF
 {
-  "Version": "2020-07-27",
+  "Version": "2012-10-17",
   "Statement": [
     {
       "Action": [
         "iam:DeleteRolePolicy",
-        "iam:RemoveRoleFromInstanceProfile"
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:DeleteInstanceProfile"
       ],
       "Effect": "Allow",
       "Resource": "*"
