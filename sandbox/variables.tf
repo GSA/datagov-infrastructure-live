@@ -34,11 +34,19 @@ variable "inventory_db_password" {
 }
 
 variable "inventory_2_8_db_password" {
-  description = "Master password for the inventory database server."
+  description = "Master password for the inventory 2.8 database server."
+}
+
+variable "inventory_next_db_password" {
+  description = "Master password for the inventory-next database server."
 }
 
 variable "inventory_2_8_redis_password" {
   description = "Redis password for the inventory-2-8 server."
+}
+
+variable "inventory_next_redis_password" {
+  description = "Redis password for the inventory-next server."
 }
 
 variable "key_name" {
