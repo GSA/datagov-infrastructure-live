@@ -110,7 +110,7 @@ variable "web_instance_type" {
 }
 
 variable "web_instance_name" {
-  description = "The name of the web instance. ie inventory-next or inventory"
+  description = "The name of the web instance. ie inventory_2_8 or inventory"
   default     = "inventory"
 }
 

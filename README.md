@@ -47,4 +47,3 @@ Tests include light terraform syntax validation. Don't forget to run the tests.
 You might also want to standardize the syntax in your files.
 
     $ terraform fmt
-
