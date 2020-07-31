@@ -20,7 +20,7 @@ variable "database_security_group_ids" {
 
 variable "db_allocated_storage" {
   description = "Size in GB to allocate for database storage."
-  default     = "30"
+  default     = "20"
 }
 
 variable "db_name" {
