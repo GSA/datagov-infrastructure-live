@@ -1,5 +1,5 @@
 module "catalog_next" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v3.7.1"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v4.1.1"
 
   bastion_host            = module.jumpbox.jumpbox_dns
   database_subnet_group   = module.vpc.database_subnet_group
@@ -9,6 +9,7 @@ module "catalog_next" {
   dns_zone_public         = module.vpc.dns_zone_public
   enable_redis            = true
   env                     = var.env
+  fgdc2iso_instance_name  = "catalog-next-fgdc2iso"
   harvester_ansible_group = "catalog_harvester,catalog_harvester_next,v2"
   harvester_instance_name = "catalog-harvester-next"
   key_name                = var.key_name

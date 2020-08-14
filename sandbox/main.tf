@@ -1,5 +1,7 @@
 provider "aws" {
   region = "us-east-1"
+  # TODO https://github.com/GSA/datagov-deploy/issues/2032
+  version = "2.70.0"
 }
 
 terraform {
