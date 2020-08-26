@@ -60,6 +60,12 @@ module "lb" {
     {
       port     = 80
       protocol = "HTTP"
+      action_type = "redirect"
+      redirect = {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_302"
+      }
     },
   ]
 
