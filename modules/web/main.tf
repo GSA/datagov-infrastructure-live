@@ -1,5 +1,10 @@
-provider "aws" {
+terraform {
+  required_providers {
+    # TODO https://github.com/GSA/datagov-deploy/issues/2032
+    aws = "~>2.54"
+  }
 }
+
 
 data "aws_route53_zone" "private" {
   name         = var.dns_zone_private
