@@ -68,17 +68,32 @@ resource "aws_iam_group_policy_attachment" "developers_acm_full" {
 resource "aws_iam_group_policy" "developers_policy" {
   name       = "developers_policy"
   group      = aws_iam_group.developers.name
+  # Policy copied from CI user
   policy     = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
     {
       "Action": [
-        "iam:DeleteRole",
+        "iam:AddRoleToInstanceProfile",
+        "iam:AttachRolePolicy",
+        "iam:CreateInstanceProfile",
+        "iam:CreateRole",
         "iam:DeleteInstanceProfile",
+        "iam:DeleteRole",
         "iam:DeleteRolePolicy",
+        "iam:GetInstanceProfile",
+        "iam:GetRole",
+        "iam:GetRolePolicy",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListInstanceProfiles",
+        "iam:ListInstanceProfilesForRole",
+        "iam:ListRolePolicies",
+        "iam:PassRole",
+        "iam:PutRolePolicy",
         "iam:RemoveRoleFromInstanceProfile",
-        "iam:DeleteInstanceProfile"
+        "iam:UpdateRole",
+        "sts:*"
       ],
       "Effect": "Allow",
       "Resource": "*"
