@@ -91,7 +91,7 @@ module "web" {
     var.security_groups, 
     [
       module.db.security_group, 
-      aws_security_group.inventory.id
+      aws_security_group.inventory.id,
     ]
   )
 
