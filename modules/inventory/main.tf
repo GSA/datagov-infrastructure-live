@@ -87,7 +87,13 @@ module "web" {
   public_subnets       = var.subnets_public
   vpc_id               = var.vpc_id
 
-  security_groups = concat(var.security_groups, [module.db.security_group])
+  security_groups = concat(
+    var.security_groups, 
+    [
+      module.db.security_group, 
+      aws_security_group.inventory.id
+    ]
+  )
 
   lb_target_groups = [
     {
