@@ -125,3 +125,11 @@ module "tom_wood" {
     "datagov-ckan-multi",
   ]
 }
+
+  module "srinivasu_seeram" {
+  source = "./user"
+  name   = "srinivasu.seeram@reisystems.com"
+  groups = [
+    "developers",
+  ]
+}
