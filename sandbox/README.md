@@ -109,7 +109,8 @@ Then setup datagov-deploy.
 git clone https://github.com/GSA/datagov-deploy.git
 cd datagov-deploy
 pip3 install --user pipenv
-pipenv sync
+pyenv install 3.6.8
+pipenv sync --python=3.6.8
 pipenv run make vendor
 ```
 
