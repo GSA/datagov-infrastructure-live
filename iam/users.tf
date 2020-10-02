@@ -133,3 +133,12 @@ module "tom_wood" {
     "developers",
   ]
 }
+
+module "dan_mayol" {
+  source = "./user"
+  name   = "dan.mayol@civicactions.com"
+  groups = [
+    "developers",
+    "datagov-ckan-multi",
+  ]
+}
