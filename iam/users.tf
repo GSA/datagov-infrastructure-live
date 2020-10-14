@@ -91,15 +91,6 @@ module "mikhail_mezyakov" {
   ]
 }
 
-module "paul_walker" {
-  source = "./user"
-  name   = "paul.walker@datopian.com"
-  groups = [
-    "developers",
-    "datagov-ckan-multi",
-  ]
-}
-
 module "preston_sharpe" {
   source = "./user"
   name   = "preston.sharpe@gsa.gov"
