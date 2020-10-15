@@ -1,3 +1,5 @@
+# Please keep the list in alphabetical order
+
 module "aaron_borden" {
   source = "./user"
   name   = "aaron.borden@gsa.gov"
@@ -42,12 +44,21 @@ module "bret_mogilefsky" {
     "Admin",
   ]
 }
-  
+
 module "chris_macdermaid" {
   source = "./user"
   name   = "christopher.macdermaid@gsa.gov"
   groups = [
     "developers",
+  ]
+}
+
+module "dan_mayol" {
+  source = "./user"
+  name   = "dan.mayol@civicactions.com"
+  groups = [
+    "developers",
+    "datagov-ckan-multi",
   ]
 }
 
@@ -91,15 +102,6 @@ module "mikhail_mezyakov" {
   ]
 }
 
-module "paul_walker" {
-  source = "./user"
-  name   = "paul.walker@datopian.com"
-  groups = [
-    "developers",
-    "datagov-ckan-multi",
-  ]
-}
-
 module "preston_sharpe" {
   source = "./user"
   name   = "preston.sharpe@gsa.gov"
@@ -117,16 +119,7 @@ module "rufus_pollock" {
   ]
 }
 
-module "tom_wood" {
-  source = "./user"
-  name   = "tom.wood@civicactions.com"
-  groups = [
-    "developers",
-    "datagov-ckan-multi",
-  ]
-}
-
-  module "srinivasu_seeram" {
+module "srinivasu_seeram" {
   source = "./user"
   name   = "srinivasu.seeram@reisystems.com"
   groups = [
@@ -134,9 +127,9 @@ module "tom_wood" {
   ]
 }
 
-module "dan_mayol" {
+module "tom_wood" {
   source = "./user"
-  name   = "dan.mayol@civicactions.com"
+  name   = "tom.wood@civicactions.com"
   groups = [
     "developers",
     "datagov-ckan-multi",
