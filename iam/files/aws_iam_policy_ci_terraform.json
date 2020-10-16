@@ -42,6 +42,7 @@
                 "iam:ListMFADevices",
                 "iam:ListPolicies",
                 "iam:ListPolicyVersions",
+                "iam:ListSigningCertificates",
                 "iam:ListSSHPublicKeys",
                 "iam:ListUserPolicies",
                 "iam:ListUsers",
