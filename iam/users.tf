@@ -29,7 +29,7 @@ module "andres_vasquez" {
 
 module "anuar_ustayev" {
   source = "./user"
-  name   = "austayev@datopian.com"
+  name   = "anuar.ustayev@datopian.com"
   groups = [
     "developers",
     "datagov-ckan-multi",
