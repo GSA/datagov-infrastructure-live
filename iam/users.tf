@@ -36,6 +36,15 @@ module "anuar_ustayev" {
   ]
 }
 
+module "karlen_manaseryan" {
+  source  = "./user"
+  name = "karlen.manaseryan@datopian.com"
+  groups = [
+    "developers",
+    "datagov-ckan-multi"
+  ]
+}
+
 module "bret_mogilefsky" {
   source = "./user"
   name   = "bret.mogilefsky@gsa.gov"
