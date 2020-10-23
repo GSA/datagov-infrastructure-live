@@ -41,7 +41,7 @@ module "karlen_manaseryan" {
   name = "karlen.manaseryan@datopian.com"
   groups = [
     "developers",
-    "developers"
+    "datagov-ckan-multi"
   ]
 }
 
