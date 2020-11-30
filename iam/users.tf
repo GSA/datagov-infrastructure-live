@@ -62,15 +62,6 @@ module "chris_macdermaid" {
   ]
 }
 
-module "dan_mayol" {
-  source = "./user"
-  name   = "dan.mayol@civicactions.com"
-  groups = [
-    "developers",
-    "datagov-ckan-multi",
-  ]
-}
-
 module "fuhu_xia" {
   source = "./user"
   name   = "fuhu.xia@gsa.gov"
