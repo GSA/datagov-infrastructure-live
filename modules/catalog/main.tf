@@ -110,8 +110,8 @@ module "web" {
   lb_target_groups = [
     {
       name             = "${var.web_instance_name}-web-${var.env}"
-      backend_protocol = "HTTPS"
-      backend_port     = "443"
+      backend_protocol = "HTTP"
+      backend_port     = "80"
       health_check = {
         path = "/api/action/status_show"
       },
