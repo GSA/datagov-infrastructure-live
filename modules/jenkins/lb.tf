@@ -5,8 +5,8 @@ data "aws_subnet" "private_subnets" {
 }
 
 resource "aws_security_group" "lb" {
-  name        = "ci-${var.env}-lb-sg-tf"
-  description = "Load balancer security group for ci-${var.env}"
+  name        = "${var.name}-${var.env}-lb-sg-tf"
+  description = "Load balancer security group for ${var.name}-${var.env}"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -43,14 +43,14 @@ module "lb" {
   version = "~> 5.3"
 
   load_balancer_type = "application"
-  name               = "ci-${var.env}-tf"
+  name               = "${var.name}-${var.env}-tf"
   security_groups    = concat(var.loadbalancer_security_groups, [aws_security_group.lb.id])
   subnets            = var.subnets_public
   vpc_id             = var.vpc_id
 
   target_groups = [
     {
-      name              = "ci-${var.env}"
+      name              = "${var.name}-${var.env}"
       backend_protocol  = "HTTPS"
       backend_port      = "443"
       health_check_path = "/login"
@@ -66,8 +66,8 @@ module "lb" {
 
   http_tcp_listeners = [
     {
-      port     = 80
-      protocol = "HTTP"
+      port        = 80
+      protocol    = "HTTP"
       action_type = "redirect"
       redirect = {
         port        = "443"

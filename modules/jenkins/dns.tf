@@ -4,14 +4,14 @@ data "aws_route53_zone" "public" {
 
 resource "aws_route53_record" "lb" {
   zone_id = data.aws_route53_zone.public.zone_id
-  name    = "ci"
+  name    = var.name
   type    = "CNAME"
   ttl     = 300
   records = [module.lb.this_lb_dns_name]
 }
 
 resource "aws_acm_certificate" "lb" {
-  domain_name       = "ci.${var.dns_zone_public}"
+  domain_name       = "${var.name}.${var.dns_zone_public}"
   validation_method = "DNS"
 
   tags = {
@@ -36,4 +36,3 @@ resource "aws_acm_certificate_validation" "lb" {
   certificate_arn         = aws_acm_certificate.lb.arn
   validation_record_fqdns = [aws_route53_record.lb_cert_validation.fqdn]
 }
-

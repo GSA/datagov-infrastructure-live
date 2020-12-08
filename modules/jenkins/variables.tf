@@ -19,7 +19,7 @@ variable "bastion_host" {
 }
 
 variable "default_security_group_id" {
-  type = string
+  type        = string
   description = "The \"default\" or vpc-wide security group to modify for Ansible access."
 }
 
@@ -40,7 +40,17 @@ variable "ebs_size" {
   default     = 20
 }
 
+variable "instance_name_format" {
+  description = "Format string for the EC2 instance name."
+  default     = "jenkins%dtf"
+}
+
 variable "key_name" {
+}
+
+variable "name" {
+  description = "A name to uniquely identify this jenkins resource."
+  default     = "ci"
 }
 
 variable "security_groups" {
