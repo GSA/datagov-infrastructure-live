@@ -103,9 +103,9 @@ module "web" {
       module.db.security_group,
       aws_security_group.web.id,
     ]
-  )   
+  )
 
-  vpc_id           = var.vpc_id
+  vpc_id = var.vpc_id
 
   lb_target_groups = [
     {
@@ -177,7 +177,7 @@ resource "aws_security_group" "fgdc2iso" {
   }
 
   tags = {
-    env  = var.env
+    env = var.env
   }
 }
 

@@ -97,7 +97,7 @@ resource "null_resource" "default" {
     # install Ansible executor dependencies and initialize EBS
     inline = [
       "sudo apt-get update",
-      "sudo apt-get update",  # https://github.com/GSA/datagov-infrastructure-modules/issues/32#issuecomment-624920249
+      "sudo apt-get update", # https://github.com/GSA/datagov-infrastructure-modules/issues/32#issuecomment-624920249
       "sudo apt-get install -y python",
       "chmod +x /tmp/initialize-stateful.sh",
       "sudo /tmp/initialize-stateful.sh",

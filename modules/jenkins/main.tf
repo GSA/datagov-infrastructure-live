@@ -28,21 +28,21 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_security_group" "default" {
-  name        = "jenkins-${var.env}-tf"
+  name        = "jenkins-${var.name}-${var.env}-tf"
   description = "Jenkins security group"
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
     security_groups = [aws_security_group.lb.id]
   }
 
   ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
     security_groups = [aws_security_group.lb.id]
   }
 
@@ -55,7 +55,7 @@ resource "aws_security_group" "default" {
   }
 
   tags = {
-    env            = var.env
+    env = var.env
   }
 }
 
@@ -63,16 +63,16 @@ resource "aws_security_group" "default" {
 resource "aws_security_group_rule" "ansible" {
   description = "Allow Ansible access from Jenkins to VPC resources."
 
-  type = "ingress"
-  from_port = 22
-  to_port = 22
-  protocol = "tcp"
-  security_group_id = var.default_security_group_id
+  type                     = "ingress"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  security_group_id        = var.default_security_group_id
   source_security_group_id = aws_security_group.default.id
 }
 
 resource "aws_iam_role" "jenkins" {
-  name = "jenkins_dynamic_inventory_role-${var.env}"
+  name = "jenkins_dynamic_inventory_role-${var.name}-${var.env}"
 
   assume_role_policy = <<EOF
 {
@@ -95,7 +95,7 @@ EOF
 # This allows jenkins to query the AWS API for EC2 and RDS resources for
 # the Ansible dynamic inventory.
 resource "aws_iam_role_policy" "jenkins" {
-  name = "jenkins_dynamic_inventory_policy"
+  name = "jenkins_dynamic_inventory_policy-${var.name}-${var.env}"
   role = aws_iam_role.jenkins.id
 
   policy = <<EOF
@@ -119,7 +119,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "jenkins" {
-  name = "jenkins_profile-${var.env}"
+  name = "jenkins_profile-${var.name}-${var.env}"
   role = aws_iam_role.jenkins.name
 }
 
@@ -136,7 +136,7 @@ module "jenkins" {
   env                         = var.env
   iam_instance_profile        = aws_iam_instance_profile.jenkins.name
   instance_count              = "1"
-  instance_name_format        = "jenkins%dtf"
+  instance_name_format        = var.instance_name_format
   instance_type               = "t2.medium"
   key_name                    = var.key_name
   security_groups             = concat(var.security_groups, [aws_security_group.default.id])
@@ -147,5 +147,5 @@ module "jenkins" {
 resource "aws_lb_target_group_attachment" "lb" {
   # we know we have 1 and only 1 jenkins.
   target_group_arn = module.lb.target_group_arns[0]
-  target_id = module.jenkins.instance_id[0]
+  target_id        = module.jenkins.instance_id[0]
 }
