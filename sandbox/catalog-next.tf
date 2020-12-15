@@ -3,6 +3,7 @@ module "catalog_next" {
 
   bastion_host            = module.jumpbox.jumpbox_dns
   database_subnet_group   = module.vpc.database_subnet_group
+  db_allocated_storage    = "30"
   db_name                 = "catalog_db_next"
   db_password             = var.catalog_next_db_password
   dns_zone_private        = module.vpc.dns_zone_private
