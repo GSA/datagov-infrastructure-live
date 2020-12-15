@@ -1,5 +1,5 @@
 module "catalog_next" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v4.1.1"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v4.2.0"
 
   bastion_host            = module.jumpbox.jumpbox_dns
   database_subnet_group   = module.vpc.database_subnet_group
