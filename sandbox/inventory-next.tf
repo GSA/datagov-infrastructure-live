@@ -1,5 +1,5 @@
 module "inventory_next" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v4.2.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v4.2.1"
 
   ansible_group         = "inventory_web,inventory_web_next,v2"
   bastion_host          = module.jumpbox.jumpbox_dns
