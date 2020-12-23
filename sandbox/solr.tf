@@ -4,7 +4,7 @@ module "solr" {
   availability_zones = module.vpc.azs
   bastion_host       = module.jumpbox.jumpbox_dns
   dns_zone           = module.vpc.dns_zone_private
-  ebs_size           = 20
+  ebs_size           = 50
   env                = var.env
   key_name           = var.key_name
   subnets            = module.vpc.private_subnets
