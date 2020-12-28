@@ -1,5 +1,5 @@
 module "jenkins" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=v4.2.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=v4.2.2"
 
   providers = {
     aws = aws
@@ -23,7 +23,7 @@ module "jenkins" {
 }
 
 module "jenkins_saml" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=v4.2.0"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=v4.2.2"
 
   availability_zones        = module.vpc.azs
   bastion_host              = module.jumpbox.jumpbox_dns
