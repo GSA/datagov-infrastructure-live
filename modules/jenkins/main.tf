@@ -27,7 +27,7 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-resource "aws_security_group" "default" {
+resource "aws_security_group" "default1" {
   name        = "jenkins-${var.name}-${var.env}-tf"
   description = "Jenkins security group"
   vpc_id      = var.vpc_id
@@ -68,7 +68,7 @@ resource "aws_security_group_rule" "ansible" {
   to_port                  = 22
   protocol                 = "tcp"
   security_group_id        = var.default_security_group_id
-  source_security_group_id = aws_security_group.default.id
+  source_security_group_id = aws_security_group.default1.id
 }
 
 resource "aws_iam_role" "jenkins" {
@@ -139,7 +139,7 @@ module "jenkins" {
   instance_name_format        = var.instance_name_format
   instance_type               = "t2.medium"
   key_name                    = var.key_name
-  security_groups             = concat(var.security_groups, [aws_security_group.default.id])
+  security_groups             = concat(var.security_groups, [aws_security_group.default1.id])
   subnets                     = var.subnets_private
   vpc_id                      = var.vpc_id
 }
