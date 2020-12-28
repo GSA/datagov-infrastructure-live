@@ -1,6 +1,10 @@
 module "catalog" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v4.2.1"
 
+  providers = {
+    aws = aws
+  }
+
   # Catalog still uses Trusty (v1)
   ami_filter_name         = "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*"
   bastion_host            = module.jumpbox.jumpbox_dns

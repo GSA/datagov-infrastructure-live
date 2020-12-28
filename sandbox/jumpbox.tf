@@ -1,6 +1,10 @@
 module "jumpbox" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jumpbox?ref=v3.5.0"
 
+  providers = {
+    aws = aws
+  }
+
   ami_filter_name           = var.ami_filter_name
   default_security_group_id = module.vpc.security_group_id
   dns_zone_public           = module.vpc.dns_zone_public
