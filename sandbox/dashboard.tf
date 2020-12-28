@@ -1,6 +1,10 @@
 module "dashboard" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/dashboard?ref=v3.5.2"
 
+  providers = {
+    aws = aws
+  }
+
   bastion_host          = module.jumpbox.jumpbox_dns
   database_subnet_group = module.vpc.database_subnet_group
   db_password           = var.dashboard_db_password

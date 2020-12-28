@@ -1,6 +1,10 @@
 module "inventory_next" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v4.2.1"
 
+  providers = {
+    aws = aws
+  }
+
   ansible_group         = "inventory_web,inventory_web_next,v2"
   bastion_host          = module.jumpbox.jumpbox_dns
   database_subnet_group = module.vpc.database_subnet_group

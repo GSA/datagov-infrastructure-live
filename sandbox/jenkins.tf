@@ -1,6 +1,10 @@
 module "jenkins" {
   source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=v4.2.0"
 
+  providers = {
+    aws = aws
+  }
+
   availability_zones        = module.vpc.azs
   bastion_host              = module.jumpbox.jumpbox_dns
   default_security_group_id = module.vpc.security_group_id
