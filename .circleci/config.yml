@@ -3,7 +3,6 @@ validate-steps: &validate-steps
   - run:
       name: terraform validate
       command: |
-        cd $terraform_directory
         terraform init -backend=false
         terraform validate
 
@@ -13,9 +12,8 @@ plan-steps: &plan-steps
   - run:
       name: terraform plan
       command: |
-        cd $terraform_directory
         terraform init
-        terraform plan -input=false -out=../tfplan.plan
+        terraform plan -input=false -out=tfplan.plan
   - persist_to_workspace:
       root: .
       paths:
@@ -28,43 +26,17 @@ apply-steps: &apply-steps
   - run:
       name: terraform apply
       command: |
-        cd $terraform_directory
         terraform init
-        terraform apply -input=false ../tfplan.plan
+        terraform apply -input=false tfplan.plan
 
 
 version: 2
 jobs:
-  iam-validate:
-    docker:
-      - image: hashicorp/terraform:0.12.29
-        entrypoint: ["/bin/sh"]
-    environment:
-      terraform_directory: iam
-    steps: *validate-steps
-
-  iam-plan:
-    docker:
-      - image: hashicorp/terraform:0.12.29
-        entrypoint: ["/bin/sh"]
-    environment:
-      terraform_directory: iam
-    steps: *plan-steps
-
-  iam-apply:
-    docker:
-      - image: hashicorp/terraform:0.12.29
-        entrypoint: ["/bin/sh"]
-    environment:
-      terraform_directory: iam
-    steps: *apply-steps
-
   sandbox-validate:
     docker:
       - image: hashicorp/terraform:0.12.29
         entrypoint: ["/bin/sh"]
     environment:
-      terraform_directory: sandbox
       AWS_DEFAULT_REGION: us-east-1
     steps: *validate-steps
 
@@ -73,7 +45,6 @@ jobs:
       - image: hashicorp/terraform:0.12.29
         entrypoint: ["/bin/sh"]
     environment:
-      terraform_directory: sandbox
       AWS_DEFAULT_REGION: us-east-1
     steps: *plan-steps
 
@@ -82,7 +53,6 @@ jobs:
       - image: hashicorp/terraform:0.12.29
         entrypoint: ["/bin/sh"]
     environment:
-      terraform_directory: sandbox
       AWS_DEFAULT_REGION: us-east-1
     steps: *apply-steps
 
@@ -91,22 +61,6 @@ workflows:
   version: 2
   commit:
     jobs:
-      - iam-validate
-      - iam-plan:
-          requires:
-            - iam-validate
-      - iam-approve:
-          type: approval
-          requires:
-            - iam-plan
-          filters:
-            branches:
-              only:
-                - master
-      - iam-apply:
-          requires:
-            - iam-approve
-
       - sandbox-validate
       - sandbox-plan:
           requires:
