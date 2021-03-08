@@ -37,16 +37,6 @@ output "dashboard_db_host" {
   value     = module.dashboard.db_server
 }
 
-output "inventory_db_password" {
-  sensitive = true
-  value     = module.inventory.db_password
-}
-
-output "inventory_db_host" {
-  sensitive = true
-  value     = module.inventory.db_server
-}
-
 output "inventory_next_db_password" {
   sensitive = true
   value     = module.inventory_next.db_password
