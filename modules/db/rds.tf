@@ -12,4 +12,10 @@ resource "aws_db_instance" "default" {
   parameter_group_name   = var.db_parameter_group_name
   skip_final_snapshot    = var.db_skip_final_snapshot
   multi_az               = var.db_multi_az
+
+  lifecycle {
+    ignore_changes = [
+      engine_version,
+    ]
+  }
 }
