@@ -1,5 +1,5 @@
 module "dashboard" {
-  source = "./modules/dashboard"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/dashboard?ref=v3.5.2"
 
   providers = {
     aws = aws

@@ -1,5 +1,5 @@
 module "catalog" {
-  source = "./modules/catalog"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/catalog?ref=v4.2.1"
 
   providers = {
     aws = aws

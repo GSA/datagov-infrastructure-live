@@ -1,5 +1,5 @@
 module "inventory_next" {
-  source = "./modules/inventory"
+  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/inventory?ref=v4.2.1"
 
   providers = {
     aws = aws
