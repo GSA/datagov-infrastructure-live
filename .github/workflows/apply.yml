@@ -1,0 +1,42 @@
+name: apply
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+  AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+  AWS_DEFAULT_REGION: us-east-1
+  TF_VAR_catalog_db_password: "${{ secrets.TF_VAR_catalog_db_password }}"
+  TF_VAR_dashboard_db_password: "${{ secrets.TF_VAR_dashboard_db_password }}"
+  TF_VAR_catalog_next_db_password: "${{ secrets.TF_VAR_catalog_next_db_password }}"
+  TF_VAR_inventory_next_db_password: "${{ secrets.TF_VAR_inventory_next_db_password }}"
+  TF_VAR_inventory_db_password: "${{ secrets.TF_VAR_inventory_db_password }}"
+  TF_VAR_wordpress_db_password: "${{ secrets.TF_VAR_wordpress_db_password }}"
+  TF_VAR_catalog_next_redis_password: "${{ secrets.TF_VAR_catalog_next_redis_password }}"
+  TF_VAR_inventory_next_redis_password: "${{ secrets.TF_VAR_inventory_next_redis_password }}"
+
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    name: apply
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Add the sandbox ssh key for terraform remote script provisioning
+      - name: configure ssh-agent
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: |
+            ${{ secrets.SSH_DATAGOV_SANDBOX }}
+
+      - name: terraform apply
+        uses: dflook/terraform-apply@v1
+        with:
+          path: .

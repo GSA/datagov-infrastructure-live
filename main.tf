@@ -12,6 +12,8 @@ terraform {
     encrypt        = true
     dynamodb_table = "datagov-lock-table"
   }
+
+  required_version = "~> 0.12.0"
 }
 
 module "vpc" {
