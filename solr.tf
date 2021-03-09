@@ -1,5 +1,5 @@
 module "solr" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/solr?ref=v3.0.0"
+  source = "./modules/solr"
 
   providers = {
     aws = aws

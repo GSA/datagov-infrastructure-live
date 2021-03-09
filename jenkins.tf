@@ -1,5 +1,5 @@
 module "jenkins" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jenkins?ref=v4.2.2"
+  source = "./modules/jenkins"
 
   providers = {
     aws = aws

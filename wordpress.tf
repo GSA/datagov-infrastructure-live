@@ -1,5 +1,5 @@
 module "wordpress" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/wordpress?ref=v3.5.2"
+  source = "./modules/wordpress"
 
   providers = {
     aws = aws
