@@ -29,10 +29,6 @@ variable "env" {
   default     = "sandbox"
 }
 
-variable "inventory_db_password" {
-  description = "Master password for the inventory database server."
-}
-
 variable "inventory_next_db_password" {
   description = "Master password for the inventory-next database server."
 }

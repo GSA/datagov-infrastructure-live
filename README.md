@@ -23,6 +23,11 @@ usage instructions in their respective README's. This section contains the usage
 instructions common to _all_ environments.
 
 
+### Prerequisites
+
+- Terraform 0.12
+
+
 ### First-time setup
 
 Create the s3 bucket (`datagov-terraform-state`) to hold the terraform state defined
