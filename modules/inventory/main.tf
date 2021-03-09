@@ -88,9 +88,9 @@ module "web" {
   vpc_id               = var.vpc_id
 
   security_groups = concat(
-    var.security_groups, 
+    var.security_groups,
     [
-      module.db.security_group, 
+      module.db.security_group,
       aws_security_group.inventory.id,
     ]
   )

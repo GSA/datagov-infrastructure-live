@@ -19,6 +19,7 @@ clean:
 	rm -rf .terraform $(foreach subdir, $(SUBDIRS), $(subdir)/.terraform)
 
 fmt:
+	terraform fmt
 	$(foreach subdir, $(SUBDIRS), terraform fmt $(subdir);)
 
 test: $(SUBDIRS)
