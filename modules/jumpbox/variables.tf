@@ -9,7 +9,7 @@ variable "ansible_group" {
 }
 
 variable "default_security_group_id" {
-  type = string
+  type        = string
   description = "The \"default\" or vpc-wide security group to modify for Ansible access."
 }
 

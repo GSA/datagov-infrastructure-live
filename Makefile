@@ -4,6 +4,7 @@ SUBDIRS := \
   modules/db \
   modules/inventory \
   modules/jenkins \
+  modules/jumpbox \
   modules/mysql \
   modules/postgresdb \
   modules/redis \

@@ -56,7 +56,7 @@ resource "aws_security_group" "default" {
   }
 
   tags = {
-    env            = var.env
+    env = var.env
   }
 }
 
@@ -64,11 +64,11 @@ resource "aws_security_group" "default" {
 resource "aws_security_group_rule" "ansible" {
   description = "Allow Ansible access from the Jumpbox to VPC resources."
 
-  type = "ingress"
-  from_port = 22
-  to_port = 22
-  protocol = "tcp"
-  security_group_id = var.default_security_group_id
+  type                     = "ingress"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  security_group_id        = var.default_security_group_id
   source_security_group_id = aws_security_group.default.id
 }
 
