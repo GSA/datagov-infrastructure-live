@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-[![CircleCI](https://circleci.com/gh/GSA/datagov-infrastructure-live.svg?style=svg)](https://circleci.com/gh/GSA/datagov-infrastructure-live)
-
 # datagov-infrastructure-live
 
 This repo contains terraform configurations to deploy to different
