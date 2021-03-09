@@ -1,5 +1,5 @@
 module "jumpbox" {
-  source = "github.com/gsa/datagov-infrastructure-modules.git//modules/jumpbox?ref=v3.5.0"
+  source = "./modules/jumpbox"
 
   providers = {
     aws = aws
