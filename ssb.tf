@@ -1,7 +1,7 @@
 resource "aws_route53_record" "ssb" {
   allow_overwrite = true
   name            = "ssb"
-  ttl             = 30
+  ttl             = 1800
   type            = "NS"
   zone_id         = "Z2QMRHTV5AP7G6"
 
@@ -16,7 +16,7 @@ resource "aws_route53_record" "ssb" {
 resource "aws_route53_record" "ssb_staging" {
   allow_overwrite = true
   name            = "ssb-staging"
-  ttl             = 30
+  ttl             = 1800
   type            = "NS"
   zone_id         = "Z2QMRHTV5AP7G6"
 
