@@ -27,3 +27,18 @@ resource "aws_route53_record" "ssb_staging" {
     "ns-965.awsdns-56.net",
   ]
 }
+
+resource "aws_route53_record" "ssb_dev" {
+  allow_overwrite = true
+  name            = "ssb-dev"
+  ttl             = 1800
+  type            = "NS"
+  zone_id         = "Z2QMRHTV5AP7G6"
+
+  records = [
+    "ns-504.awsdns-63.com",
+    "ns-1496.awsdns-59.org",
+    "ns-737.awsdns-28.net",
+    "ns-1674.awsdns-17.co.uk"
+  ]
+}
