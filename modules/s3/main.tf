@@ -6,6 +6,12 @@ terraform {
 }
 
 
+resource "aws_kms_key" "mykey" {
+  description             = "This key is used to encrypt bucket objects"
+  deletion_window_in_days = 10
+}
+
+
 resource "aws_s3_bucket" "default" {
   bucket = var.bucket_name
   acl    = var.bucket_acl
