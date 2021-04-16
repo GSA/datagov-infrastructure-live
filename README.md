@@ -1,9 +1,7 @@
 # datagov-infrastructure-live
 
-This repo contains terraform configurations to deploy to different
-[data.gov](https://www.data.gov/) environments. The reusable source for modules
-used by these terraform configurations can be found in
-[datagov-infrastructure-modules](https://github.com/GSA/datagov-infrastructure-modules).
+This repo contains terraform configurations to deploy the
+[data.gov](https://www.data.gov/) sandbox environment.
 
 _Note: production and staging environments are hosted in BSP and are
 **not** provisioned with terraform._
@@ -16,11 +14,6 @@ environment.
 
 ## Usage
 
-Each environment is really its own project and contains additional setup and
-usage instructions in their respective README's. This section contains the usage
-instructions common to _all_ environments.
-
-
 ### Prerequisites
 
 - Terraform 0.12
@@ -29,28 +22,8 @@ instructions common to _all_ environments.
 ### First-time setup
 
 Create the s3 bucket (`datagov-terraform-state`) to hold the terraform state defined
-in [iam/main.tf](./iam/main.tf).
+in [main.tf](./main.tf).
 
-Manually create the IAM CI deploy user (`datagov-ci`) for use with CI. An
-appropriate terraform-managed policy will be attached to this user.
-
-The first execution of `iam` should be done manually with admin permissions.
-
-    $ terraform init
-    $ terraform apply
-
-Once provisioned, the appropriate permissions will be attached to the
-`datagov-ci` user and execution of the other projects can be done via CI/CD.
-
-
-### Environments
-
-Each directory represents an "environment".
-
-Name | Description | Jumpbox
----- | ----------- | -------
-[`iam`](iam/README.md) | Global "environment" that applies IAM settings to to the sandbox account. | N/A
-[`sandbox`](sandbox/README.md) | WIP continuous integration environment automatically runs datagov-deploy playbooks from `develop`. | jump.sandbox.datagov.us
 
 
 ## Development
@@ -214,31 +187,38 @@ sudo ln -s /home/ubuntu/datagov-deploy/ansible/inventories/sandbox /etc/ansible/
 
 ## Continuous delivery
 
-We use CircleCI for continuous integration and delivery.
+We use GitHub Actions for continuous integration and delivery. As with all of
+our code repositories, changes to the `main` branch is automatically deployed.
 
-You must configure CircleCI with secrets in order to apply the terraform files.
+As part of CI, the terraform plan will be posted to the PR as a comment. The
+plan represents the actions terraform will take once approved. It is both the
+author and reviewer's responsibility to review the plan in addition to the code
+changes.
 
-- AWS IAM credentials of the deploy user
+
+### Secrets
+
+You must configure GH with secrets in order to apply the terraform files.
+
+- AWS IAM credentials of the deploy user (see [GSA/datagov-iam](https://github.com/GSA/datagov-iam/blob/main/ci.tf))
 - Application secrets to set (e.g. database passwords)
 - Root ssh keys in order to provision through the jumpbox
 
 First, set these [environment variables in
-CircleCI](https://app.circleci.com/settings/project/github/GSA/datagov-infrastructure-live/environment-variables)
-using the credentials from the deploy user (`datagov-ci`):
+GH](https://github.com/GSA/datagov-infrastructure-live/settings/secrets/actions)
+using the credentials from the deploy user (see [GSA/datagov-iam](https://github.com/GSA/datagov-iam/blob/main/ci.tf)):
 
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 
 Next, set any `TF_VAR_*` [environment variables in
-CircleCI](https://app.circleci.com/settings/project/github/GSA/datagov-infrastructure-live/environment-variables)
+GH](https://github.com/GSA/datagov-infrastructure-live/settings/secrets/actions)
 from your `.env`. Reach out to a team member if you are missing any or pull them
 from the terraform state (`terraform output`).
 
 Finally, add the [root ssh
 key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr)
-(datagov-sandbox) in
-[CircleCI](https://app.circleci.com/settings/project/github/GSA/datagov-infrastructure-live/ssh)
-under "additional keys".
+(datagov-sandbox) as the `SSH_DATAGOV_SANDBOX` GH secret.
 
 
 ## Modules
@@ -249,24 +229,18 @@ for a Data.gov component.
 
 ## Working with ansible
 
-We use AWS dynamic inventory for ansible in our test environments. The dynamic
-inventory works by using the `group` tag on any instances to organize the hosts
-into groups. You may create multiple groups by using a comma-separated list.
-e.g. `group=harvester,solr`.
-
-In your `hosts` file, this would look like:
+Instances must be manually added to the static sandbox hosts file. This gives us
+full control to assign hosts to Ansible groups within
+[GSA/datagov-deploy](https://github.com/GSA/datagov-deploy) without having to
+make changes within datagov-infrastructure-live. For example:
 
 ```ini
-[solr:children]
-tag_group_solr
+[solr]
+datagov-solr1tf.internal.sandbox.datagov.us
 
-[harvester:children]
-tag_group_harvester
+[harvester]
+catalog-harvester1tf.internal.sandbox.datagov.us
 ```
-
-_Note: even though you may specify the ansible_group as a comma-separated list,
-the best practice is to use a single, unique tag that can then be mapped to
-multiple Ansible groups in the inventory file._
 
 
 ## Tests

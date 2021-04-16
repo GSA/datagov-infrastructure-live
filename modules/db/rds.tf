@@ -17,5 +17,10 @@ resource "aws_db_instance" "default" {
     ignore_changes = [
       engine_version,
     ]
+
+    # For most applications, re-creating the database is currently a manual
+    # task. Avoid destroying the database unless we're absolutely sure. Database
+    # must be destroyed manually outside of Terraform.
+    prevent_destroy = true
   }
 }
