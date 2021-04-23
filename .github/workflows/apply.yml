@@ -37,6 +37,6 @@ jobs:
             ${{ secrets.SSH_DATAGOV_SANDBOX }}
 
       - name: terraform apply
-        uses: dflook/terraform-apply@v1
+        uses: dflook/terraform-plan@v1.9.0
         with:
           path: .
