@@ -40,7 +40,8 @@ resource "aws_security_group" "lb" {
 
 module "lb" {
   source  = "terraform-aws-modules/alb/aws"
-  version = "~> 5.3"
+  # Pinning to keep on Terraform 0.12
+  version = ">= 5.3.0, < 5.14.0"
 
   load_balancer_type = "application"
   name               = "${var.name}-${var.env}-tf"
