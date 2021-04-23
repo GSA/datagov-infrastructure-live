@@ -23,6 +23,10 @@ fmt:
 	terraform fmt
 	$(foreach subdir, $(SUBDIRS), terraform fmt $(subdir);)
 
+glob-modules:
+	@# Output a comma-separated list of subdirs for CI matrix build
+	@echo $(SUBDIRS) | jq --raw-input --compact-output 'split(" ")'
+
 test: $(SUBDIRS)
 $(SUBDIRS):
 	@echo Testing $@ ...
@@ -30,4 +34,4 @@ $(SUBDIRS):
 	terraform init -backend=false $@
 	AWS_DEFAULT_REGION=us-east-1 terraform validate $@
 
-.PHONY: test $(SUBDIRS)
+.PHONY: glob-modules test $(SUBDIRS)
