@@ -26,6 +26,7 @@ fmt:
 test: $(SUBDIRS)
 $(SUBDIRS):
 	@echo Testing $@ ...
+  terraform version
 	terraform init -backend=false $@
 	AWS_DEFAULT_REGION=us-east-1 terraform validate $@
 
