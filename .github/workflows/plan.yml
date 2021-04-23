@@ -29,6 +29,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: terraform plan
-        uses: dflook/terraform-plan@v1.9.0
+        uses: dflook/terraform-plan@v1
         with:
           path: .
