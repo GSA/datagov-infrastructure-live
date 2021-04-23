@@ -12,6 +12,9 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: Test terraform-version
+        uses: dflook/terraform-version@v1
+
       - name: terraform fmt
         uses: dflook/terraform-fmt-check@v1
         with:
