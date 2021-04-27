@@ -54,6 +54,7 @@ module "lb" {
     {
       port            = 443
       certificate_arn = aws_acm_certificate.lb.arn
+      ssl_policy      = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
     },
   ]
 
