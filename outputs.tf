@@ -1,13 +1,3 @@
-output "catalog_db_host" {
-  sensitive = true
-  value     = module.catalog.db_server
-}
-
-output "catalog_db_password" {
-  sensitive = true
-  value     = module.catalog.db_password
-}
-
 output "catalog_next_db_host" {
   sensitive = true
   value     = module.catalog_next.db_server
