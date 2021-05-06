@@ -39,6 +39,4 @@ jobs:
       - name: terraform apply
         uses: dflook/terraform-apply@v1
         with:
-          # TODO disable auto_approve https://github.com/dflook/terraform-github-actions/issues/62
-          auto_approve: true
           path: .
