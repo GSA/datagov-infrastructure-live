@@ -26,3 +26,6 @@ module "vpc" {
   env      = var.env
   vpc_name = "datagov-sandbox"
 }
+
+resource "null_resource" "dummy" {
+}
