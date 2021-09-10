@@ -16,7 +16,7 @@ environment.
 
 ### Prerequisites
 
-- Terraform 0.12
+- Terraform 1.0.6+
 
 
 ### First-time setup
@@ -33,7 +33,7 @@ in [main.tf](./main.tf).
 - [Configure AWS Access Key](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
 - [jq](https://stedolan.github.io/jq/)
 - [awscli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html)
-- [terraform](https://www.terraform.io/downloads.html) v0.12
+- [terraform](https://www.terraform.io/downloads.html) v1.0.6+
 
 These tools are available through your package manager, or through pip.
 
