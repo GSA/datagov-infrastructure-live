@@ -7,7 +7,7 @@ resource "aws_route53_record" "lb" {
   name    = var.name
   type    = "CNAME"
   ttl     = 300
-  records = [module.lb.this_lb_dns_name]
+  records = [module.lb.lb_dns_name]
 }
 
 resource "aws_acm_certificate" "lb" {
