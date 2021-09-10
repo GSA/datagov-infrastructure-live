@@ -44,7 +44,7 @@ variable "key_name" {
 }
 
 variable "lb_target_groups" {
-  type        = list
+  type        = list(any)
   description = "Target group to attach to the load balancer."
   # example
   # lb_target_groups = [{

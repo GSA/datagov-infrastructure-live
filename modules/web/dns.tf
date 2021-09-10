@@ -7,7 +7,7 @@ resource "aws_route53_record" "lb" {
   name    = var.name
   type    = "CNAME"
   ttl     = 300
-  records = [module.lb.this_lb_dns_name]
+  records = [module.lb.lb_dns_name]
 }
 
 resource "aws_acm_certificate" "lb" {
@@ -25,10 +25,10 @@ resource "aws_acm_certificate" "lb" {
 
 # DNS record for LB certificate validation
 resource "aws_route53_record" "lb_cert_validation" {
-  name    = aws_acm_certificate.lb.domain_validation_options[0].resource_record_name
-  type    = aws_acm_certificate.lb.domain_validation_options[0].resource_record_type
+  name    = tolist(aws_acm_certificate.lb.domain_validation_options)[0].resource_record_name
+  type    = tolist(aws_acm_certificate.lb.domain_validation_options)[0].resource_record_type
   zone_id = data.aws_route53_zone.public.zone_id
-  records = [aws_acm_certificate.lb.domain_validation_options[0].resource_record_value]
+  records = [tolist(aws_acm_certificate.lb.domain_validation_options)[0].resource_record_value]
   ttl     = 60
 }
 
