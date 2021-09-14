@@ -24,6 +24,9 @@ jobs:
   apply:
     runs-on: ubuntu-latest
     name: apply
+    container:
+      volumes:
+        - /tmp:/tmp  # Mount the tmp dir so that the ssh-agent socket is available within the terraform container.
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
