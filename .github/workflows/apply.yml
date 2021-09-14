@@ -36,7 +36,10 @@ jobs:
         with:
           ssh-private-key: |
             ${{ secrets.SSH_DATAGOV_SANDBOX }}
-
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
       - name: terraform apply
         uses: dflook/terraform-apply@v1
         with:
