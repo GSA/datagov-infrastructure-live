@@ -83,7 +83,7 @@ module "solr" {
 
 The initial provisioning requires SSH access to the jumpbox. Since the jumpbox
 playbooks have not been run, you must use the environment's [root SSH
-key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr).
+key](https://drive.google.com/drive/folders/1moQOfC26SfHi0kmDRCDzCGD_8rbHhIF0).
 Please see a team member for access.
 
 Add the SSH key to your SSH agent.
