@@ -1,6 +1,7 @@
-# The two records for ssb and ssb-staging should not actually be managed here;
-# they belong in the data.gov zone, which is not under Terraform. However,
-# they're recorded here for completeness and for checking against the live values.
+# The NS and DS records for ssb, ssb-staging, and ssb-dev should not actually be
+# managed here; they are now properly managed in the data.gov zone, which is not
+# directly managed by datagov-infrastructure-live. However, they're recorded
+# here for completeness and for checking against the live values.
 
 # production - actually managed in the data.gov domain, but recorded here
 # resource "aws_route53_record" "ssb" {
@@ -53,21 +54,22 @@
 # }
 
 
-# development 
-resource "aws_route53_record" "ssb_dev" {
-  allow_overwrite = true
-  name            = "ssb-dev"
-  ttl             = 1800
-  type            = "NS"
-  zone_id         = "Z2QMRHTV5AP7G6"
+# development - actually managed in the data.gov domain, but recorded here
 
-  records = [
-    "ns-504.awsdns-63.com",
-    "ns-1496.awsdns-59.org",
-    "ns-737.awsdns-28.net",
-    "ns-1674.awsdns-17.co.uk"
-  ]
-}
+# resource "aws_route53_record" "ssb_dev" {
+#   allow_overwrite = true
+#   name            = "ssb-dev"
+#   ttl             = 1800
+#   type            = "NS"
+#   zone_id         = "Z2QMRHTV5AP7G6"
+
+#   records = [
+#     "ns-1422.awsdns-49.org", 
+#     "ns-1839.awsdns-37.co.uk", 
+#     "ns-297.awsdns-37.com", 
+#     "ns-673.awsdns-20.net"
+#   ]
+# }
 
 # resource "aws_route53_record" "ssb_dev-ds" {
 #   allow_overwrite = true
@@ -76,6 +78,6 @@ resource "aws_route53_record" "ssb_dev" {
 #   type            = "DS"
 #   zone_id         = "Z2QMRHTV5AP7G6"
 
-#   records = ["46864 13 2 D72F6FAF00EDF20B70F89D2D9F7C8203FEC78F820A06EF8B169A627B2CE9B1AE"]
+#   records = ["46864 13 2 B834DCEE0727D7864D11E31276F3BDE5B35F7D9744F3BEFF042F21B9FF864E1D"]
 # }
 
