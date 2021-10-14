@@ -69,13 +69,13 @@ resource "aws_route53_record" "ssb_dev" {
   ]
 }
 
-resource "aws_route53_record" "ssb_dev-ds" {
-  allow_overwrite = true
-  name            = "ssb-dev"
-  ttl             = 1800
-  type            = "DS"
-  zone_id         = "Z2QMRHTV5AP7G6"
+# resource "aws_route53_record" "ssb_dev-ds" {
+#   allow_overwrite = true
+#   name            = "ssb-dev"
+#   ttl             = 1800
+#   type            = "DS"
+#   zone_id         = "Z2QMRHTV5AP7G6"
 
-  records = ["46864 13 2 D72F6FAF00EDF20B70F89D2D9F7C8203FEC78F820A06EF8B169A627B2CE9B1AE"]
-}
+#   records = ["46864 13 2 D72F6FAF00EDF20B70F89D2D9F7C8203FEC78F820A06EF8B169A627B2CE9B1AE"]
+# }
 
