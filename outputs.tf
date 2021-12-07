@@ -17,16 +17,6 @@ output "catalog_next_redis_password" {
   value     = module.catalog_next.redis_auth_token
 }
 
-output "dashboard_db_password" {
-  sensitive = true
-  value     = module.dashboard.db_password
-}
-
-output "dashboard_db_host" {
-  sensitive = true
-  value     = module.dashboard.db_server
-}
-
 output "inventory_next_db_password" {
   sensitive = true
   value     = module.inventory_next.db_password
