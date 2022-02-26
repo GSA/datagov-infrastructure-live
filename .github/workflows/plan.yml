@@ -27,7 +27,16 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-
+      # Add the sandbox ssh key for terraform remote script provisioning
+      - name: configure ssh-agent
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: |
+            ${{ secrets.SSH_DATAGOV_SANDBOX }}
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
       - name: terraform plan
         uses: dflook/terraform-plan@v1
         with:
